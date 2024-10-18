@@ -1,4 +1,19 @@
 package com.example.ElectricityTokenGenerator.dto;
 
-public class notifications {
+import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Notifications {
+    private Long Id;
+    private Long userId;
+    private String title;
+    private String type;
+    private String priority;
+    private LocalDateTime timestamp;
 }
