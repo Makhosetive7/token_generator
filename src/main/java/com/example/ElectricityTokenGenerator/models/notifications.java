@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class notifications {
+public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
