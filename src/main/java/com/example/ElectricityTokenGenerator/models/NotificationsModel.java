@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class NotificationsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String userName;
-    private String phoneNumber;
-    private String homeAddress;
-    private LocalDateTime timeStamp;
+    private Long userId;
+    private String title;
+    private String type;
+    private String priority;
+    private LocalDateTime timestamp;
 }

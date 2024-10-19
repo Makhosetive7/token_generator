@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tokens {
+public class NotificationsDTO {
     private Long Id;
-    private Long UserId;
-    private String userName;
-    private LocalDateTime timeStamp;
-    private Long batchNumber;
-    private Long serialNumber;
+    private Long userId;
+    private String title;
+    private String type;
+    private String priority;
+    private LocalDateTime timestamp;
 }

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Tokens {
+public class TokensModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

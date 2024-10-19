@@ -1,4 +1,4 @@
-package com.example.ElectricityTokenGenerator.models;
+package com.example.ElectricityTokenGenerator.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,13 +16,12 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Notifications {
+public class UsersEntity { // Ensure this is named correctly
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    private Long userId;
-    private String title;
-    private String type;
-    private String priority;
-    private LocalDateTime timestamp;
+    private Long id; // Changed to lowercase for consistency
+    private String userName;
+    private String phoneNumber;
+    private String homeAddress;
+    private LocalDateTime timeStamp;
 }

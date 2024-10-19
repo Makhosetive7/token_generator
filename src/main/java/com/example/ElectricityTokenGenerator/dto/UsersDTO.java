@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Users {
+public class UsersDTO {
     private Long Id;
     private String userName;
     private String phoneNumber;
