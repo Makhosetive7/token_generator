@@ -1,14 +1,10 @@
 package com.example.ElectricityTokenGenerator.repository;
 
-import com.example.ElectricityTokenGenerator.models.NotificationsModel;
+import com.example.ElectricityTokenGenerator.entity.NotificationsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
-
 @Repository
-public interface NotificationsRepository extends JpaRepository<NotificationsModel, Long>{
+public interface NotificationsRepository extends JpaRepository<NotificationsEntity, Long> {
 
 }
-
-

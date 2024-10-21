@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationEntity {
+public class NotificationsEntity {
     private Long Id;
     private Long userId;
     private String title;

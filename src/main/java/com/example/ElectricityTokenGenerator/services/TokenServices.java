@@ -1,8 +1,9 @@
 package com.example.ElectricityTokenGenerator.services;
 
-import com.example.ElectricityTokenGenerator.models.TokensModel;
+import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,19 @@ public TokenServices (TokensRepository tokensRepository) {
 }
 
 //create tokens 
-public TokensModel createTokens(TokensModel tokens) {
+public TokensEntity createTokens(TokensEntity tokens) {
     return tokensRepository.save(tokens);
 }
 
 
 //retrieve all tokens
-public List <TokensModel> getAllTokens() {
+public List <TokensEntity> getAllTokens() {
     return tokensRepository.findAll();
+}
+
+//get tokens by id
+public Optional<TokensEntity> getTokensById(Long id){
+    return tokensRepository.findById(id);
 }
 
 //cancel  created  tokens

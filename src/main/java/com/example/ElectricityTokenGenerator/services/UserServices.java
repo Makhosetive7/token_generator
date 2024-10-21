@@ -11,7 +11,7 @@ import com.example.ElectricityTokenGenerator.repository.UserRepository;
 
 @Service
 public class UserServices {
-    
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -24,14 +24,14 @@ public class UserServices {
         return userRepository.save(user);
     }
 
-    // Get a user by ID
-    public Optional<UsersEntity> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
     // Get all users
     public List<UsersEntity> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    // Get a user by ID
+    public Optional<UsersEntity> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     // Delete a user by ID

@@ -1,6 +1,6 @@
 package com.example.ElectricityTokenGenerator.services;
 
-import com.example.ElectricityTokenGenerator.models.NotificationsModel; // Import your Notifications model
+import com.example.ElectricityTokenGenerator.entity.NotificationsEntity;// Import your Notifications model
 import com.example.ElectricityTokenGenerator.repository.NotificationsRepository; // Import the repository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class NotificationsService {
     }
 
     // Create a new notification
-    public NotificationsModel createNotification(NotificationsModel notification) {
+    public NotificationsEntity createNotification(NotificationsEntity notification) {
         return notificationsRepository.save(notification);
     }
 
     // Get a notification by ID
-    public Optional<NotificationsModel> getNotificationById(Long id) {
+    public Optional<NotificationsEntity> getNotificationById(Long id) {
         return notificationsRepository.findById(id);
     }
 
     // Get all notifications
-    public List<NotificationsModel> getAllNotifications() {
+    public List<NotificationsEntity> getAllNotifications() {
         return notificationsRepository.findAll();
     }
 

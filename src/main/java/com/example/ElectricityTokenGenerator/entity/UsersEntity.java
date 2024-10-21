@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsersEntity { // Ensure this is named correctly
+public class UsersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Changed to lowercase for consistency
+    private Long id;
     private String userName;
     private String phoneNumber;
     private String homeAddress;
