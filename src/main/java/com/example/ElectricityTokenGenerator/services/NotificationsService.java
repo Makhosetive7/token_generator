@@ -33,17 +33,6 @@ public class NotificationsService {
         return notificationsRepository.findAll();
     }
 
-    // Update an existing notification
-    public NotificationsModel updateNotification(Long id, NotificationsModel updatedNotification) {
-        return notificationsRepository.findById(id)
-                .map(notification -> {
-                    notification.setMessage(updatedNotification.getMessage());  // Assuming there's a message field
-                    notification.setTimestamp(updatedNotification.getTimestamp());  // Assuming there's a timestamp field
-                    return notificationsRepository.save(notification);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Notification not found with id: " + id));
-    }
-
     // Delete a notification by ID
     public void deleteNotification(Long id) {
         notificationsRepository.deleteById(id);

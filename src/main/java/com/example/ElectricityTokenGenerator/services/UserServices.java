@@ -34,18 +34,6 @@ public class UserServices {
         return userRepository.findAll();
     }
 
-    // Update an existing user
-    public UsersEntity updateUser(Long id, UsersEntity updatedUser) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    user.setUserName(updatedUser.getUserName());
-                    user.setPhoneNumber(updatedUser.getPhoneNumber());
-                    user.setHomeAddress(updatedUser.getHomeAddress());
-                    return userRepository.save(user); // Corrected from usersRepository to userRepository
-                })
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
-    }
-
     // Delete a user by ID
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
