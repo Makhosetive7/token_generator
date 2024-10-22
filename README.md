@@ -18,7 +18,21 @@ features like user authentication, validation, and token lifecycle management.
 - **User Dashboard**: Users can view their token history and status.
 - **Email Notifications**: Notifications for token expiry and successful usage.
 - **Security**: Role-based authentication for users and admins.
----
+
+## Endpoints
+
+| Method    | Endpoint                          | Description                           |
+|-----------|-----------------------------------|---------------------------------------|
+| GET       | `/api/tokens/`                    | Retrieve all tokens.                  |
+| GET       | `/api/tokens/{id}`                | Get a token by ID.                    |
+| POST      | `/api/tokens/generateToken/`      | Create a new token.                   |
+| DELETE    | `/api/tokens/delete/{id}`         | Delete a token by ID.                 |
+|---------------------------------------------------------------------------------------|
+| GET       | '/api/users/                      | Retrieve all users                    |
+| GET       | `/api/users/{id}`                 | Retrieve user details by ID.          |
+| POST      | `/api/users/register`             | Register a new user.                  |
+| DELETE    | `/api/users/{id}`                 | Delete user details by ID.            |
+
 ## Tech Stack
 - **Java**: Core language.
 - **Spring Boot**: Framework for building the REST API and services.
