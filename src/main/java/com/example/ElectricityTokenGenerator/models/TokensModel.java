@@ -22,9 +22,10 @@ public class TokensModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private Long UserId;
     private String userName;
-    private LocalDateTime timeStamp;
-    private Long batchNumber;
+    private Long accountNumber;
+    private Double amountPaid;
+    private String tokenGenerated;
     private Long serialNumber;
+    private LocalDateTime timeStamp;
 }

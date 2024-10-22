@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TokensRepository extends JpaRepository<TokensEntity, Long> {
+    boolean existsByTokenGenerated(String tokenGenerated);
+    boolean existsBySerialNumber(String serialNumber);
 }
