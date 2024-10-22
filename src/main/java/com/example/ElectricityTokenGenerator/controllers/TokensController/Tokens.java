@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,7 @@ public class Tokens {
         this.tokenServices = tokenServices;
     }
 
-    //retrive all tokens available in the system
+    //retrieve all tokens available in the system
     @GetMapping("/")
   public List<TokensEntity> getAllTokens(@PathVariable Long id){
     return tokenServices.getAllTokens();
