@@ -27,7 +27,6 @@ features like user authentication, validation, and token lifecycle management.
 | GET       | `/api/tokens/{id}`                | Get a token by ID.                    |
 | POST      | `/api/tokens/generateToken/`      | Create a new token.                   |
 | DELETE    | `/api/tokens/delete/{id}`         | Delete a token by ID.                 |
-|---------------------------------------------------------------------------------------|
 | GET       | '/api/users/                      | Retrieve all users                    |
 | GET       | `/api/users/{id}`                 | Retrieve user details by ID.          |
 | POST      | `/api/users/register`             | Register a new user.                  |
