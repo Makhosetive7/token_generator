@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ElectricityTokenGenerator.dto.Users.userRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.UsersEntity;
 import com.example.ElectricityTokenGenerator.services.UserServices;
 
@@ -37,7 +38,7 @@ public class Users {
         return userServices.getAllUsers();
     }
 
-    // getting user by id
+    // return user by id
     @GetMapping("/{id}")
     public ResponseEntity<UsersEntity> getUserById(@PathVariable Long id) {
         Optional<UsersEntity> user = userServices.getUserById(id);
@@ -45,10 +46,15 @@ public class Users {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // creating new user
-    @PostMapping
-    public ResponseEntity<UsersEntity> createUser(@RequestBody UsersEntity user) {
-        UsersEntity newUser = userServices.createUser(user);
+    // user registration
+    @PostMapping("/register")
+    public ResponseEntity<UsersEntity> createUser(@RequestBody userRegistrationDTO request) {
+        UsersEntity newUser = userServices.createUser(
+                request.getUserName(), 
+                request.getLastName(), 
+                request.getPhoneNumber(), 
+                request.getHomeAddress()
+        );
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 

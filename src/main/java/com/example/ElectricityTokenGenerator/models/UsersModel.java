@@ -21,6 +21,7 @@ public class UsersModel {
     private Long Id;
     private String userName;
     private String phoneNumber;
+    private String accountNumber;
     private String homeAddress;
     private LocalDateTime timeStamp;
 }

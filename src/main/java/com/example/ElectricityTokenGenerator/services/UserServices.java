@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.ElectricityTokenGenerator.repository.UserRepository;
 
+import java.util.Random;
+
 @Service
 public class UserServices {
 
@@ -19,17 +21,36 @@ public class UserServices {
         this.userRepository = userRepository;
     }
 
-    // Create a new user
-    public UsersEntity createUser(UsersEntity user) {
+    // register user
+    public UsersEntity createUser(String userName,String lastName, String phoneNumber, String homeAddress ) {
+      UsersEntity  user = new UsersEntity();
+        user.setUserName(userName);
+        user.setLastName(lastName);
+        user.setPhoneNumber(phoneNumber);
+        user.setHomeAddress(homeAddress);
+        user.setAccountNumber(generateUniqueAccountNumber());
+
         return userRepository.save(user);
     }
 
-    // Get all users
+    private String generateUniqueAccountNumber() {
+        String accountNumber;
+        Random random = new Random();
+
+        // Ensure the account number is unique
+        do {
+            accountNumber = String.format("%010d", random.nextInt(1000000000));  // Generates 10-digit number
+        } while (userRepository.existsByAccountNumber(accountNumber));
+
+        return accountNumber;
+    }
+
+    //return all users
     public List<UsersEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Get a user by ID
+    // return user by user id
     public Optional<UsersEntity> getUserById(Long id) {
         return userRepository.findById(id);
     }
