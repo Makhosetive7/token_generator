@@ -25,5 +25,6 @@ public class TokensModel {
     private Double amountPaid;
     private String tokenGenerated;
     private Long serialNumber;
-    private LocalDateTime timeStamp;
+    private LocalDateTime createdAt;
+    private LocalDateTime expiredAt;
 }

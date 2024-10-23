@@ -41,12 +41,12 @@ public class Tokens {
     // Create new tokens
     @PostMapping("generateToken/")
     public ResponseEntity<TokensEntity> createTokens(@RequestBody TokensGenerationDTO request) {
-        // Call the createTokens method without the tokenGenerated parameter
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
                 request.getSerialNumber(),
                 LocalDateTime.now() 
+
         );
     
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);

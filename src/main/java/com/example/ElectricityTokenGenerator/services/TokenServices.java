@@ -32,7 +32,8 @@ public class TokenServices {
         tokens.setAmountPaid(amountPaid);
         tokens.setTokenGenerated(generateUniqueToken());
         tokens.setSerialNumber(generateUniqueSerialNumber());
-        tokens.setCreatedAt(timeStamp); 
+        tokens.setCreatedAt(LocalDateTime.now()); 
+        tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
     
         return tokensRepository.save(tokens);
     }
