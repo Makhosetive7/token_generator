@@ -13,7 +13,6 @@ public class TokensGenerationDTO {
     private Long accountNumber;
     private Double amountPaid;
     private String tokenGenerated;
-    private Long batchNumber;
     private String serialNumber;
-    private LocalDateTime timeStamp;
+    private LocalDateTime createdAt;
 }

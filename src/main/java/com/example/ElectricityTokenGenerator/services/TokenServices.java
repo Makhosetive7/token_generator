@@ -26,13 +26,13 @@ public class TokenServices {
     }
 
     // create tokens
-    public TokensEntity createTokens(Long accountNumber, Double amountPaid, Long batchNumber, String serialNumber, LocalDateTime timeStamp) {
+    public TokensEntity createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
         TokensEntity tokens = new TokensEntity();
         tokens.setAccountNumber(accountNumber);
         tokens.setAmountPaid(amountPaid);
         tokens.setTokenGenerated(generateUniqueToken());
         tokens.setSerialNumber(generateUniqueSerialNumber());
-        tokens.setTimeStamp(timeStamp); 
+        tokens.setCreatedAt(timeStamp); 
     
         return tokensRepository.save(tokens);
     }

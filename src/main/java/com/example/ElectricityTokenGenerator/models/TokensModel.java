@@ -21,8 +21,6 @@ public class TokensModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    private String userName;
     private Long accountNumber;
     private Double amountPaid;
     private String tokenGenerated;

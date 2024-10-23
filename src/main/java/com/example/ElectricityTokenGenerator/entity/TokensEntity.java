@@ -24,9 +24,6 @@ public class TokensEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "first_name", nullable = false, length = 20)
-    private String userName;
-
     @Column(name = "account_number", unique = true, nullable = false, length = 20)
     private Long accountNumber;
 
@@ -39,5 +36,5 @@ public class TokensEntity {
     @Column(name = "serial_number", unique = true, nullable = false, length = 20)
     private String serialNumber;
 
-    private LocalDateTime timeStamp;
+    private LocalDateTime createdAt;
 }

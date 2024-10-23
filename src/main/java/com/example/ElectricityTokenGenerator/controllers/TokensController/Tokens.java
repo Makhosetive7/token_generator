@@ -45,7 +45,6 @@ public class Tokens {
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
-                request.getBatchNumber(),
                 request.getSerialNumber(),
                 LocalDateTime.now() 
         );
