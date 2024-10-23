@@ -45,9 +45,9 @@ public class Tokens {
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
-                request.getBatchNumber(), // Ensure this exists in DTO
+                request.getBatchNumber(),
                 request.getSerialNumber(),
-                LocalDateTime.now() // Use current time for the timestamp
+                LocalDateTime.now() 
         );
     
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);

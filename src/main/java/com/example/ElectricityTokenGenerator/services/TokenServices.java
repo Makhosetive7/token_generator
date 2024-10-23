@@ -30,9 +30,9 @@ public class TokenServices {
         TokensEntity tokens = new TokensEntity();
         tokens.setAccountNumber(accountNumber);
         tokens.setAmountPaid(amountPaid);
-        tokens.setTokenGenerated(generateUniqueToken()); // Generate token internally
-        tokens.setSerialNumber(serialNumber);
-        tokens.setTimeStamp(timeStamp); // Use the provided timestamp
+        tokens.setTokenGenerated(generateUniqueToken());
+        tokens.setSerialNumber(generateUniqueSerialNumber());
+        tokens.setTimeStamp(timeStamp); 
     
         return tokensRepository.save(tokens);
     }
