@@ -9,11 +9,15 @@ The main goal of this project is to explore **Spring Boot** and **microservices 
 features like user authentication, validation, and token lifecycle management.
 ---
 ## Features
-- **User Registration & Authentication**: Users can register and log in to the system.
+- **User Registration & Authentication**: Users can register.
 - **User Account Management**: Users register their account details, including a unique Identity number.
 - **Token Generation**: Users can purchase and generate tokens.
 - **Token Validation**: The system verifies tokens during usage, ensuring they are valid for the specified user account.
 - **Token Expiry**: Tokens have an expiration date and can only be used within a defined period.
+- **Token history purchases**: This includes details like when tokens were generated, their expiration, and the amount of electricity they correspond to.
+- **Token transfer**:  users to transfer tokens to other users, such as friends or family.
+- **Token investing**:  users can borrow the system their tokens for a certain period to earn interest or additional tokens as rewards.
+- **Dynamic Pricing**:  token prices adjust based number of purchases within a same month.
 - **Admin Portal**: Admins can manage users accounts, and tokens.
 - **User Dashboard**: Users can view their token history and status.
 - **Email Notifications**: Notifications for token expiry and successful usage.
