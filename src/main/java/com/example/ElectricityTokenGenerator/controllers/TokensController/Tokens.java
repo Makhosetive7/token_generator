@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.ElectricityTokenGenerator.services.TokenServices;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("api/tokens/")
@@ -46,12 +48,16 @@ public class Tokens {
                 request.getAmountPaid(),
                 request.getSerialNumber(),
                 LocalDateTime.now() 
-
         );
     
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);
     }
     
+    //Retrieve all expired Tokens
+    @GetMapping("/expiredTokens")
+    public List<TokensEntity> getAllExpiredTokens() {
+        return tokenServices.getAllExpiredTokens();
+    }
     
 
     // Delete created tokens

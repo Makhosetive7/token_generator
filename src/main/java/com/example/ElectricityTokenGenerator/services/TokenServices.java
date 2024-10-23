@@ -67,7 +67,7 @@ private String generateUniqueSerialNumber() {
     return serialNumber;
 }
 
-    // retrieve all tokens
+    // Retrieve all tokens
     public List<TokensEntity> getAllTokens() {
         return tokensRepository.findAll();
     }
@@ -75,6 +75,11 @@ private String generateUniqueSerialNumber() {
     // get tokens by id
     public Optional<TokensEntity> getTokensById(Long id) {
         return tokensRepository.findById(id);
+    }
+
+    //Retrieved all expired tokens
+    public List<TokensEntity> getAllExpiredTokens() {
+        return tokensRepository.findAll();
     }
 
     // cancel created tokens
