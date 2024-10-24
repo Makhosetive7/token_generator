@@ -2,11 +2,7 @@
 # Makhosetive Sibanda
 
 ## Overview
-This project is a Spring Boot-based application that generates tokens for users. Each token is linked to a 
-specific User Account and can only be used for that account it was issued to. The system validates tokens, ensuring they 
-are valid for the correct user account and haven't expired or been used already.
-The main goal of this project is to explore **Spring Boot** and **microservices architecture**, with additional 
-features like user authentication, validation, and token lifecycle management.
+This Spring Boot application generates user-specific tokens linked to individual accounts and validates their authenticity, expiration, and usage status.
 ---
 ## Features
 - **User Registration & Authentication**: Users can register.
