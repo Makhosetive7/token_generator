@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 
@@ -45,19 +46,24 @@ public class Tokens {
                 request.getAccountNumber(),
                 request.getAmountPaid(),
                 request.getSerialNumber(),
-                LocalDateTime.now() 
+                LocalDateTime.now()
 
         );
-    
+
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);
     }
-    
-    
 
     // Delete created tokens
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTokens(@PathVariable Long id) {
         tokenServices.deleteTokens(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Transfer tokens
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferTokens(@RequestBody TokenTransferDTO tokenTransferDTO) {
+        tokenServices.transferTokens(tokenTransferDTO);
+        return ResponseEntity.ok("Tokens transferred successfully.");
     }
 }
