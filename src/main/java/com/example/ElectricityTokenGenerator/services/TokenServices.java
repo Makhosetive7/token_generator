@@ -12,17 +12,20 @@ import org.springframework.stereotype.Service;
 
 import com.example.ElectricityTokenGenerator.repository.TokensRepository;
 import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTokenConversion;
 
 @Service
 public class TokenServices {
 
     private final TokensRepository tokensRepository;
     private final UserRepository userRepository;
+ private final ElectricityTokenConversion electricityTokenConversion;
 
     @Autowired
-    public TokenServices(TokensRepository tokensRepository, UserRepository userRepository) {
+    public TokenServices(TokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion){
         this.tokensRepository = tokensRepository;
         this.userRepository = userRepository;
+        this.electricityTokenConversion = electricityTokenConversion;
     }
 
     // create tokens
@@ -34,6 +37,7 @@ public class TokenServices {
         tokens.setSerialNumber(generateUniqueSerialNumber());
         tokens.setCreatedAt(LocalDateTime.now()); 
         tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
+       tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
     
         return tokensRepository.save(tokens);
     }

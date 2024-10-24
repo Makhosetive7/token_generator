@@ -36,6 +36,9 @@ public class TokensEntity {
     @Column(name = "serial_number", unique = true, nullable = false, length = 20)
     private String serialNumber;
 
+    @Column(name = "kiloWatts")
+    private Double kiloWatts;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime expiredAt;
