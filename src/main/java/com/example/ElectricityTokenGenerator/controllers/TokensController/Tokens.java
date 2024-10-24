@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.ElectricityTokenGenerator.services.TokenServices;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 
 @RestController
 @RequestMapping("api/tokens/")

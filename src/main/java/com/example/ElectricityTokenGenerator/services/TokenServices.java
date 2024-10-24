@@ -1,6 +1,7 @@
 package com.example.ElectricityTokenGenerator.services;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
+
 
 import java.util.List;
 import java.util.Optional;

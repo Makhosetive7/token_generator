@@ -3,7 +3,7 @@ package com.example.ElectricityTokenGenerator.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.ElectricityTokenGenerator.entity.UsersEntity; // Change to entity package
+import com.example.ElectricityTokenGenerator.entity.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
