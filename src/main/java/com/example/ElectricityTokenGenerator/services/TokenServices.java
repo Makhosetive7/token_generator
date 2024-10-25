@@ -1,6 +1,5 @@
 package com.example.ElectricityTokenGenerator.services;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 
 import java.util.List;
@@ -31,8 +30,7 @@ public class TokenServices {
     }
 
     // create tokens
-    public TokensEntity createTokens(Long accountNumber, Double amountPaid, String serialNumber,
-            LocalDateTime timeStamp) {
+    public TokensEntity createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp, Long kiloWatts) {
         TokensEntity tokens = new TokensEntity();
         tokens.setAccountNumber(accountNumber);
         tokens.setAmountPaid(amountPaid);
@@ -40,10 +38,13 @@ public class TokenServices {
         tokens.setSerialNumber(generateUniqueSerialNumber());
         tokens.setCreatedAt(LocalDateTime.now());
         tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
-        tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
-
+        
+        // Convert Double to Long
+        tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid).longValue());
+    
         return tokensRepository.save(tokens);
     }
+    
 
     // Token Generation Logic
     private String generateUniqueToken() {
@@ -91,53 +92,53 @@ public class TokenServices {
     }
 
     //Transfer Tokens
-   public void transferTokens(Long sendingAccountNumber, Long receivingAccountNumber, Long accountNumber, Long amountTransferred, Double kiloWatts) {
+    public void transferTokens(Long sendingAccountNumber, Long receivingAccountNumber, Long amountTransferred, Long kiloWatts) {
         // Validate the sender's account exists
-        if (!userRepository.existsBySendingAccountNumber(sendingAccountNumber)) {
+        if (!userRepository.existsByAccountNumber(sendingAccountNumber)) {
             throw new IllegalArgumentException("Sending account does not exist.");
         }
-
+    
         // Validate the receiver's account exists
-        if (!userRepository.existsByReceivingAccountNumber(receivingAccountNumber)) {
+        if (!userRepository.existsByAccountNumber(receivingAccountNumber)) {
             throw new IllegalArgumentException("Receiving account does not exist.");
         }
-
+    
         // Retrieve sender's tokens
         List<TokensEntity> senderTokens = tokensRepository.findByAccountNumber(sendingAccountNumber);
-
+    
         // Calculate total available tokens for the sender
         double totalAvailableTokens = senderTokens.stream().mapToDouble(TokensEntity::getKiloWatts).sum();
-
+    
         // Check if the sender has enough tokens
-        if (totalAvailableTokens < amountTransferred) {
+        if (totalAvailableTokens < kiloWatts) {
             throw new IllegalArgumentException("Insufficient tokens in the sending account.");
         }
-
+    
         // Deduct tokens from the sender
-        double remainingAmount = amountTransferred;
+        double remainingAmount = kiloWatts.doubleValue();
         for (TokensEntity token : senderTokens) {
-            double tokenBalance = token.getKiloWatts();
+            double tokenBalance = token.getKiloWatts().doubleValue(); 
             if (tokenBalance >= remainingAmount) {
-                token.setKiloWatts(tokenBalance - remainingAmount);
+                token.setKiloWatts((long)(tokenBalance - remainingAmount)); 
                 tokensRepository.save(token);
                 break;
             } else {
-                token.setKiloWatts(0.0);
+                token.setKiloWatts(0L);
                 remainingAmount -= tokenBalance;
                 tokensRepository.save(token);
             }
         }
-
+        
         // Add tokens to the receiver's account
         TokensEntity receiverToken = new TokensEntity();
-        receiverToken.setAccountNumber(accountNumber);
-        receiverToken.setKiloWatts(kiloWatts);
+        receiverToken.setAccountNumber(receivingAccountNumber);
+        receiverToken.setKiloWatts(kiloWatts); // This is already Long
         receiverToken.setCreatedAt(LocalDateTime.now());
         receiverToken.setExpiredAt(LocalDateTime.now().plusDays(75));
         receiverToken.setTokenGenerated(generateUniqueToken());
         receiverToken.setSerialNumber(generateUniqueSerialNumber());
-
+    
         tokensRepository.save(receiverToken);
     }
-
+    
 }

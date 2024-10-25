@@ -61,9 +61,16 @@ public class Tokens {
     }
 
     // Transfer tokens
-    @PostMapping("/transfer")
-    public ResponseEntity<String> transferTokens(@RequestBody TokenTransferDTO tokenTransferDTO) {
-        tokenServices.transferTokens(tokenTransferDTO);
-        return ResponseEntity.ok("Tokens transferred successfully.");
-    }
+@PostMapping("/transfer")
+public ResponseEntity<TokensEntity> transferTokens(@RequestBody TokenTransferDTO request) {
+    tokenServices.transferTokens(
+        request.getSendingAccountNumber(), // Use the getter method
+        request.getReceivingAccountNumber(), // Use the getter method
+        request.getAmountTransferred(), 
+        request.getKiloWatts()
+    );
+    
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build(); // Adjusted this return statement
+}
+
 }

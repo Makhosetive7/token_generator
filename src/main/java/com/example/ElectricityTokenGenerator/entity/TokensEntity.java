@@ -49,7 +49,7 @@ public class TokensEntity {
     private LocalDateTime transferDate;
 
     @Column(name = "kiloWatts")
-    private Double kiloWatts;
+    private Long kiloWatts;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
