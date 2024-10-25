@@ -16,7 +16,6 @@ This Spring Boot application generates user-specific tokens linked to individual
 - **Dynamic Pricing**:  token prices adjust based number of purchases within a same month.
 - **Admin Portal**: Admins can manage users accounts, and tokens.
 - **User Dashboard**: Users can view their token history and status.
-- **Email Notifications**: Notifications for token expiry and successful usage.
 - **Security**: Role-based authentication for users and admins.
 
 ## Endpoints
