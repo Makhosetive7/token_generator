@@ -40,13 +40,14 @@ public class Tokens {
     }
 
     // Create new tokens
-    @PostMapping("generateToken/")
+    @PostMapping("generateToken")
     public ResponseEntity<TokensEntity> createTokens(@RequestBody TokensGenerationDTO request) {
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
                 request.getSerialNumber(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                request.getKiloWatts()
 
         );
 
@@ -64,13 +65,13 @@ public class Tokens {
 @PostMapping("/transfer")
 public ResponseEntity<TokensEntity> transferTokens(@RequestBody TokenTransferDTO request) {
     tokenServices.transferTokens(
-        request.getSendingAccountNumber(), // Use the getter method
-        request.getReceivingAccountNumber(), // Use the getter method
+        request.getSendingAccountNumber(), 
+        request.getReceivingAccountNumber(),
         request.getAmountTransferred(), 
         request.getKiloWatts()
     );
     
-    return ResponseEntity.status(HttpStatus.ACCEPTED).build(); // Adjusted this return statement
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build(); 
 }
 
 }

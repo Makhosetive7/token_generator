@@ -36,15 +36,6 @@ public class TokensEntity {
     @Column(name = "serial_number", unique = true, nullable = false, length = 20)
     private String serialNumber;
 
-    @Column(name = "sending_account", nullable = false)
-    private Long sendingAccountNumber;
-
-    @Column(name = "receiving_account", nullable = false)
-    private Long receivingAccountNumber;
-
-    @Column(name = "amount_transferred")
-    private Long  amountTransferred;
-
     @Column(name = "transfer_date")
     private LocalDateTime transferDate;
 
@@ -56,4 +47,5 @@ public class TokensEntity {
     
     @Column(name = "expirersAt")
     private LocalDateTime expiredAt;
+
 }

@@ -132,7 +132,7 @@ public class TokenServices {
         // Add tokens to the receiver's account
         TokensEntity receiverToken = new TokensEntity();
         receiverToken.setAccountNumber(receivingAccountNumber);
-        receiverToken.setKiloWatts(kiloWatts); // This is already Long
+        receiverToken.setKiloWatts(kiloWatts);
         receiverToken.setCreatedAt(LocalDateTime.now());
         receiverToken.setExpiredAt(LocalDateTime.now().plusDays(75));
         receiverToken.setTokenGenerated(generateUniqueToken());
@@ -141,4 +141,5 @@ public class TokenServices {
         tokensRepository.save(receiverToken);
     }
     
+    //request total amount of kiloWatts in account
 }
