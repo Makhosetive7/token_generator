@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface TokensRepository extends JpaRepository<TokensEntity, Long> {
+public interface tokensRepository extends JpaRepository<TokensEntity, Long> {
     boolean existsByTokenGenerated(String tokenGenerated);
     boolean existsBySerialNumber(String serialNumber);
     void deleteByExpiredAt(LocalDateTime expiredAt);
