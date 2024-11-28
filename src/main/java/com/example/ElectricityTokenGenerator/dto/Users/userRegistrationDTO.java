@@ -13,4 +13,6 @@ public class userRegistrationDTO {
     private String lastName;
     private String phoneNumber;
     private String homeAddress;
+    private Long accountNumber;
+
 }

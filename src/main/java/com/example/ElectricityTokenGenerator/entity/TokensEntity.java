@@ -36,10 +36,16 @@ public class TokensEntity {
     @Column(name = "serial_number", unique = true, nullable = false, length = 20)
     private String serialNumber;
 
+    @Column(name = "transfer_date")
+    private LocalDateTime transferDate;
+
     @Column(name = "kiloWatts")
-    private Double kiloWatts;
+    private Long kiloWatts;
 
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
-
+    
+    @Column(name = "expirersAt")
     private LocalDateTime expiredAt;
+
 }
