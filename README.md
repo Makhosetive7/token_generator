@@ -6,9 +6,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 ---
 ## Features
 - **User Registration & Authentication**: Users can register.
-- **User Account Management**: Users register their account details, including a unique Identity number.
-- **Token Generation**: Users can purchase and generate tokens.
-- **Token Validation**: The system verifies tokens during usage, ensuring they are valid for the specified user account.
+- **Token Generation and validation**: Users can purchase and generate tokens.The system verifies tokens during usage, ensuring they are valid for the specified user account.
 - **Token Expiry**: Tokens have an expiration date and can only be used within a defined period.
 - **Token history purchases**: This includes details like when tokens were generated, their expiration, and the amount of electricity they correspond to.
 - **Token transfer**:  users to transfer tokens to other users, such as friends or family.
