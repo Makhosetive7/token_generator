@@ -22,7 +22,7 @@ public class UserServices {
     }
 
     // register user
-    public UsersEntity createUser(String userName,String lastName, String phoneNumber, String homeAddress, Long accountNumber ) {
+    public UsersEntity createUser(String userName,String lastName, String phoneNumber, String homeAddress ) {
       UsersEntity  user = new UsersEntity();
         user.setUserName(userName);
         user.setLastName(lastName);
@@ -33,13 +33,13 @@ public class UserServices {
         return userRepository.save(user);
     }
 
-    private Long generateUniqueAccountNumber() {
-        Long accountNumber;
+    private String generateUniqueAccountNumber() {
+        String accountNumber;
         Random random = new Random();
 
         // Ensure the account number is unique
         do {
-            accountNumber = random.nextLong(1000000000L); // Generates 10-digit number
+            accountNumber = String.format("%010d", random.nextInt(1000000000));  // Generates 10-digit number
         } while (userRepository.existsByAccountNumber(accountNumber));
 
         return accountNumber;

@@ -53,9 +53,7 @@ public class Users {
                 request.getUserName(), 
                 request.getLastName(), 
                 request.getPhoneNumber(), 
-                request.getHomeAddress(),
-                request.getAccountNumber()
-
+                request.getHomeAddress()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }

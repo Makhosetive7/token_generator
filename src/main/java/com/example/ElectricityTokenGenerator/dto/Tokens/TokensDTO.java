@@ -13,6 +13,6 @@ public class TokensDTO {
     private Long accountNumber;
     private Double amountPaid;
     private String tokenGenerated;
-    private String serialNumber;
+    private Long serialNumber;
     private LocalDateTime createdAt;
 }

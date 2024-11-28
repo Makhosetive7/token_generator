@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.ElectricityTokenGenerator.services.TokenServices;
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 
@@ -40,19 +39,20 @@ public class Tokens {
     }
 
     // Create new tokens
-    @PostMapping("generateToken")
+    @PostMapping("generateToken/")
     public ResponseEntity<TokensEntity> createTokens(@RequestBody TokensGenerationDTO request) {
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
                 request.getSerialNumber(),
-                LocalDateTime.now(),
-                request.getKiloWatts()
+                LocalDateTime.now() 
 
         );
-
+    
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);
     }
+    
+    
 
     // Delete created tokens
     @DeleteMapping("/delete/{id}")
@@ -60,18 +60,4 @@ public class Tokens {
         tokenServices.deleteTokens(id);
         return ResponseEntity.noContent().build();
     }
-
-    // Transfer tokens
-@PostMapping("/transfer")
-public ResponseEntity<TokensEntity> transferTokens(@RequestBody TokenTransferDTO request) {
-    tokenServices.transferTokens(
-        request.getSendingAccountNumber(), 
-        request.getReceivingAccountNumber(),
-        request.getAmountTransferred(), 
-        request.getKiloWatts()
-    );
-    
-    return ResponseEntity.status(HttpStatus.ACCEPTED).build(); 
-}
-
 }

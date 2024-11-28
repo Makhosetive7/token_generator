@@ -31,7 +31,7 @@ public class UsersEntity {
     private String lastName;
 
     @Column(name = "account_number", nullable = false, unique = true ,length = 15)
-    private Long accountNumber;
+    private String accountNumber;
 
     @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
