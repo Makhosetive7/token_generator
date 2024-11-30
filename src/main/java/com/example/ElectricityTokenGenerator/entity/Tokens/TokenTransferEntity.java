@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,11 +29,11 @@ public class TokenTransferEntity {
     private Long Id;
 
     @ManyToOne
-    @Column(name = "receiverAccount_number", unique = true, nullable = false, length = 20)
+    @JoinColumn(name = "receiverAccount_number", unique = true, nullable = false)
     private TokensEntity receiverAccountNumber;
     
     @ManyToOne
-    @Column(name = "senderAccount_number", unique = true, nullable = false, length = 20)
+    @JoinColumn(name = "senderAccount_number", unique = true, nullable = false)
     private TokensEntity senderAccountNumber;
 
     @Column(name = "Token_Transfer_Id", unique = true, nullable = false)

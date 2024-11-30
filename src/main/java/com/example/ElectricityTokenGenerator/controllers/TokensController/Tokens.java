@@ -10,18 +10,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.services.Tokens.TokenTransferService;
+import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
+
 
 @RestController
 @RequestMapping("api/tokens/")
 public class Tokens {
 
     private final TokenServices tokenServices;
+    private final TokenTransferService tokenTransferService;
 
     @Autowired
-    public Tokens(TokenServices tokenServices) {
+    public Tokens(TokenServices tokenServices, TokenTransferService tokenTransferService) {
         this.tokenServices = tokenServices;
+        this.tokenTransferService = tokenTransferService;
     }
 
     // Retrieve all tokens available in the system
@@ -51,10 +57,19 @@ public class Tokens {
         return ResponseEntity.status(HttpStatus.CREATED).body(newToken);
     }
 
-    
-    
-    
+    @PostMapping("/tokenTransfer")
+    public ResponseEntity<TokenTransferEntity> transferToken(@RequestBody TokenTransferDTO request) {
+        TokenTransferEntity transferredTokens = tokenTransferService.transferTokens(
+            request.getSenderAccountNumber(),
+            request.getReceiverAccountNumber(),
+            request.getKilowatts(),
+            request.getTransferTokenId(),
+            request.getCreatedAt()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(transferredTokens);
+    }
 
+    
     // Delete created tokens
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTokens(@PathVariable Long id) {
