@@ -28,7 +28,7 @@ public class TokenGenerateController {
 
 
         // Create new tokens
-    @PostMapping("generateToken")
+    @PostMapping("/generateToken")
     public ResponseEntity<TokensEntity> createTokens(@RequestBody TokensGenerationDTO request) {
         TokensEntity newToken = tokenServices.createTokens(
                 request.getAccountNumber(),

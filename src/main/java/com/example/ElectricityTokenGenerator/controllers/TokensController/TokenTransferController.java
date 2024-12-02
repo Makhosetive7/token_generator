@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("api/token/")
+@RequestMapping("api/tokens/")
 public class TokenTransferController {
 
     private final TokenTransferService tokenTransferService;
