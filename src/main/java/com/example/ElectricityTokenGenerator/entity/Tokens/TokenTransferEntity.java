@@ -29,14 +29,14 @@ public class TokenTransferEntity {
     private Long Id;
 
     @ManyToOne
-    @JoinColumn(name = "receiverAccount_number", unique = true, nullable = false)
+    @JoinColumn(name = "receiverAccount_number", unique = true)
     private TokensEntity receiverAccountNumber;
     
     @ManyToOne
-    @JoinColumn(name = "senderAccount_number", unique = true, nullable = false)
+    @JoinColumn(name = "senderAccount_number", unique = true)
     private TokensEntity senderAccountNumber;
 
-    @Column(name = "Token_Transfer_Id", unique = true, nullable = false)
+    @Column(name = "Token_Transfer_Id", unique = true, nullable = true)
     private Long TransferTokenId;
 
     @Column(name = "kiloWatts")

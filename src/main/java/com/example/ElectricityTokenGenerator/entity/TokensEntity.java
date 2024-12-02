@@ -24,16 +24,16 @@ public class TokensEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "account_number", unique = true, nullable = false, length = 20)
+    @Column(name = "account_number", unique = true, length = 20)
     private Long accountNumber;
 
-    @Column(name = "amount_paid", nullable = false)
+    @Column(name = "amount_paid")
     private Double amountPaid;
 
-    @Column(name = "token_generated", unique = true, nullable = false, length = 20)
+    @Column(name = "token_generated", unique = true, length = 20)
     private String tokenGenerated;
 
-    @Column(name = "serial_number", unique = true, nullable = false, length = 20)
+    @Column(name = "serial_number", unique = true, length = 20)
     private String serialNumber;
 
     @Column(name = "kiloWatts")
