@@ -39,7 +39,7 @@ public class UserServices {
 
         // Ensure the account number is unique
         do {
-            accountNumber = String.format("%010d", random.nextInt(1000000000));  // Generates 10-digit number
+            accountNumber = String.format("%010d", random.nextInt(1000000000));
         } while (userRepository.existsByAccountNumber(accountNumber));
 
         return accountNumber;
