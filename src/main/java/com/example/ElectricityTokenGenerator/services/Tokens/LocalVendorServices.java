@@ -11,7 +11,15 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+@Service
 public class LocalVendorServices {
+
+    public static final Double CONVERSION_RATE = 2.5 / 5;
+    private static final Double MINIMUM_KILOWATTS_CONVERTED = 250.0;
+    private static final Double MINIMUM_PURCHASE_AMOUNT = 10.0;
     
     private final LocalVendorRepository localVendorRepository;
     private final tokensRepository tokensRepository;
@@ -23,37 +31,55 @@ public class LocalVendorServices {
     }
 
     @Transactional
-    public LocalVendorEntity purchaseProduct(LocalVendorEnumerator vendorType, Double convertedValue, Long accountNumber, Double kilowatts, LocalDateTime createdAt) {
+public LocalVendorEntity purchaseProduct(LocalVendorEnumerator vendorType, Double convertedValue, Long accountNumber, Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
+    // Fetch the user account from TokensEntity
+    Optional<TokensEntity> userAccountOptional = tokensRepository.findById(accountNumber);
+    if (userAccountOptional.isEmpty()) {
+        throw new IllegalArgumentException("User account not found.");
+    }
 
-        Optional<LocalVendorEntity> vendorAccountOptional = localVendorRepository.findById(accountNumber); 
-        if (vendorAccountOptional.isEmpty()) 
-        { throw new IllegalArgumentException("Vendor account not found."); }
+    TokensEntity userAccount = userAccountOptional.get();
 
+     // Validate if the user has enough kilowatts
+    if(userAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED){
+        throw new IllegalArgumentException("Insufficient KiloWatts to convert, user account required to have more than 250.0 KiloWatts");
+    }
 
-        Optional<TokensEntity> userAccountOptional = tokensRepository.findById(accountNumber);
-         if (userAccountOptional.isEmpty()) 
-         { throw new IllegalArgumentException("User account not found."); }
+    if (userAccount.getKiloWatts() < kilowatts) {
+        throw new IllegalArgumentException("Insufficient kilowatts available.");
+    }
 
-         TokensEntity userAccount = userAccountOptional.get();
-         LocalVendorEntity vendorAccount = vendorAccountOptional.get();
+    // Convert kilowatts to dollars
+     convertedValue = convertedValue * CONVERSION_RATE;
 
+    // Validate converted value
+    if (convertedValue <= 0) {
+        throw new IllegalArgumentException("Converted value must be greater than 0.0");
+    }
+    // Validate purchase amount
+    if (purchaseAmount <= 0) {
+        throw new IllegalArgumentException("Purchase amount must be greater than 0.0");
+    }
 
-         if (userAccount.getKiloWatts() < convertedValue) {
-            throw new IllegalArgumentException("Insufficient balance to purchase product.");
-        }
+    // Validate if converted value is at least $10.0
+    if (convertedValue < MINIMUM_PURCHASE_AMOUNT) {
+        throw new IllegalArgumentException("Converted value must be at least $10.0");
+    }
 
+    // Deduct the kilowatts
+    userAccount.setKiloWatts(userAccount.getKiloWatts() - kilowatts);
+    tokensRepository.save(userAccount);
 
-         userAccount.setKiloWatts(userAccount.getKiloWatts() - convertedValue);
-         tokensRepository.save(userAccount);
+    // Create and save the vendor purchase
+    LocalVendorEntity purchaseProduct = LocalVendorEntity.builder()
+        .accountNumber(userAccount)
+        .vendorTypeEnumerator(vendorType)
+        .convertedValue(convertedValue)
+        .createdAt(createdAt)
+        .purchaseAmount(purchaseAmount)
+        .build();
 
-         LocalVendorEntity purchaseProduct = new LocalVendorEntity();
-        vendorAccount.setAccountNumber(userAccount);
-        vendorAccount.setVendorTypeEnumerator(vendorType);
-        vendorAccount.setConvertedValue(convertedValue);
-        vendorAccount.setCreatedAt(createdAt);
-
-
-         return localVendorRepository.save(purchaseProduct);
-
+    return localVendorRepository.save(purchaseProduct);
 }
+
 }

@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 public class LocalVendorDTO {
     public TokensEntity accountNumber;
     public String vendorName;
-    public double convertedValue;
+    public Double convertedValue;
     public LocalDateTime createdAt;
 }

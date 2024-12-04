@@ -39,12 +39,11 @@ public class LocalVendorEntity {
     @Column(name = "vendor_type")
     public LocalVendorEnumerator vendorTypeEnumerator;
 
-    @ManyToOne
-    @JoinColumn(name = "kiloWatts")
-    public TokensEntity kiloWatts;
-
     @Column(name = "converted_value")
-    public double convertedValue;
+    public Double convertedValue;
+
+    @Column(name = "purchase_amount")
+    public Double purchaseAmount;
 
     @Column(name = "created_at")
     public LocalDateTime createdAt;

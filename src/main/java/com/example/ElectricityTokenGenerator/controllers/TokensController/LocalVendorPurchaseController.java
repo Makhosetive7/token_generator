@@ -28,10 +28,14 @@ public class LocalVendorPurchaseController {
         LocalVendorEntity newPurchase = localVendorServices.purchaseProduct(
             request.getVendorTypeEnumerator(),
             request.getConvertedValue(),
-            request.getAccountNumber(),
+            request.getAccountNumber().getAccountNumber(), 
+            request.getPurchaseAmount(),
+            request.getAccountNumber().getKiloWatts(),
             LocalDateTime.now()
         );
-
+    
         return ResponseEntity.status(HttpStatus.OK).body(newPurchase);
     }
+    
+
 }
