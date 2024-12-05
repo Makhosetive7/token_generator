@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
+import com.example.ElectricityTokenGenerator.services.Tokens.TokenService;
 
 @RestController
 @RequestMapping("api/tokens")
 public class TokensByIdController {
 
-    private final TokenServices tokenServices;
+    private final TokenService tokenServices;
 
-    public TokensByIdController(TokenServices tokenServices) {
+    public TokensByIdController(TokenService tokenServices) {
         this.tokenServices = tokenServices;
     }
 

@@ -1,4 +1,4 @@
-package com.example.ElectricityTokenGenerator.entity;
+package com.example.ElectricityTokenGenerator.entity.Users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

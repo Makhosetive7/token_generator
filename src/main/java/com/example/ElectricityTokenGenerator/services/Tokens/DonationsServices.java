@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
+import com.example.ElectricityTokenGenerator.repository.Tokens.tokensRepository;
 
 import jakarta.transaction.Transactional;
 

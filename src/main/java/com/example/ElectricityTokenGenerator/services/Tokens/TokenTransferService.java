@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenTransferRepository;
+import com.example.ElectricityTokenGenerator.repository.Tokens.tokensRepository;
 
 @Service
 public class TokenTransferService {

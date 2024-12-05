@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Users.userRegistrationDTO;
-import com.example.ElectricityTokenGenerator.entity.UsersEntity;
-import com.example.ElectricityTokenGenerator.services.UserServices;
+import com.example.ElectricityTokenGenerator.entity.Users.UsersEntity;
+import com.example.ElectricityTokenGenerator.services.Users.UserServices;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

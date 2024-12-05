@@ -1,13 +1,13 @@
-package com.example.ElectricityTokenGenerator.services;
+package com.example.ElectricityTokenGenerator.services.Users;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.ElectricityTokenGenerator.entity.UsersEntity; // Change to entity package
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.entity.Users.UsersEntity;
+import com.example.ElectricityTokenGenerator.repository.Users.UserRepository;
 
 import java.util.Random;
 

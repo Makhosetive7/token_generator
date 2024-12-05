@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
+import com.example.ElectricityTokenGenerator.services.Tokens.TokenService;
 
 
 @RestController
 @RequestMapping("api/tokens")
 public class TokenGenerateController {
 
-    private final TokenServices tokenServices;
+    private final TokenService tokenServices;
 
     @Autowired
-    public TokenGenerateController(TokenServices tokenServices) {
+    public TokenGenerateController(TokenService tokenServices) {
         this.tokenServices = tokenServices;
     }
 

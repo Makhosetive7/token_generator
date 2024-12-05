@@ -2,7 +2,7 @@ package com.example.ElectricityTokenGenerator.controllers.TokensController;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.services.Tokens.TokenService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/tokens")
 public class TokensDeleteController {
 
-    private final TokenServices tokenServices;
+    private final TokenService tokenServices;
 
-    public TokensDeleteController(TokenServices tokenServices) {
+    public TokensDeleteController(TokenService tokenServices) {
         this.tokenServices = tokenServices;
     }
         // Delete created tokens

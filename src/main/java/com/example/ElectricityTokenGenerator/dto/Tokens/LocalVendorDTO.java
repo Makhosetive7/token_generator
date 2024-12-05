@@ -2,7 +2,7 @@ package com.example.ElectricityTokenGenerator.dto.Tokens;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

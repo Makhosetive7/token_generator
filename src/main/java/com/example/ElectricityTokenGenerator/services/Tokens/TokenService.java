@@ -1,6 +1,4 @@
-package com.example.ElectricityTokenGenerator.services;
-
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+package com.example.ElectricityTokenGenerator.services.Tokens;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,12 +8,13 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
+import com.example.ElectricityTokenGenerator.repository.Tokens.tokensRepository;
+import com.example.ElectricityTokenGenerator.repository.Users.UserRepository;
 import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTokenConversion;
 
 @Service
-public class TokenServices {
+public class TokenService {
 
     private final tokensRepository tokensRepository;
     private final UserRepository userRepository;
@@ -24,7 +23,7 @@ public class TokenServices {
  private final ElectricityTokenConversion electricityTokenConversion;
 
     @Autowired
-    public TokenServices(tokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion){
+    public TokenService(tokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion){
         this.tokensRepository = tokensRepository;
         this.userRepository = userRepository;
         this.electricityTokenConversion = electricityTokenConversion;

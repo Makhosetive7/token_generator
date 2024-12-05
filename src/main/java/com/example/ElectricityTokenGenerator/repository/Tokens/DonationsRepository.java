@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 
 public interface DonationsRepository extends JpaRepository<DonationsEntity, Long> {
     List<DonationsEntity> findByAccountNumber(TokensEntity accountNumber);

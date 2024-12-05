@@ -2,7 +2,6 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package com.example.ElectricityTokenGenerator.entity;
+package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 

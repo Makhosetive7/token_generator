@@ -1,10 +1,10 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokensEntity;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
+import com.example.ElectricityTokenGenerator.repository.Tokens.tokensRepository;
 
 import jakarta.transaction.Transactional;
 
