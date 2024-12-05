@@ -10,15 +10,8 @@ This Spring Boot application generates user-specific tokens linked to individual
 - **Token Expiry**: Tokens have an expiration date and can only be used within a defined period.
 - **Token history purchases**: This includes details like when tokens were generated, their expiration, and the amount of electricity they correspond to.
 - **Token transfer**:  users to transfer tokens to other users, such as friends or family.
-- **Token investing**:  users can borrow the system their tokens for a certain period to earn interest or additional tokens as rewards.
-- **Dynamic Pricing**:  token prices adjust based number of purchases within a same month.
-- **Admin Portal**: Admins can manage users accounts, and tokens.
-- **User Dashboard**: Users can view their token history and status.
-- **Security**: Role-based authentication for users and admins.
 - **Charity and Donations**: Add an option for users to donate tokens to charitable causes or transfer their tokens to a shared pool that contributes to social good projects.
-- **Token Rental System**: Implement a system where users can rent out their unused tokens to others who need them temporarily, creating a marketplace for token rentals.
-- **Local Vendor Support**: Partner with local vendors to accept tokens as a form of payment. This can stimulate the local economy and provide users with more options for using 
-    their tokens.
+- **Local Vendor Support**: Partner with local vendors to accept tokens as a form of payment. This can stimulate the local economy and provide users with more options for using their tokens.
 
 ## Endpoints
 
