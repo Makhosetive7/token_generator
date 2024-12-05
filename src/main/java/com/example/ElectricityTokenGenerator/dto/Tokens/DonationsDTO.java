@@ -21,6 +21,7 @@ public class DonationsDTO {
     private Double amountDonated;
     private DonationsEnumerator donationType;
     private LocalDateTime createdAt;
+    
 
     
 }

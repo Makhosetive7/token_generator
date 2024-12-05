@@ -9,35 +9,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ElectricityTokenGenerator.dto.Tokens.DonationsDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
 import com.example.ElectricityTokenGenerator.services.Tokens.DonationsServices;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping("/tokens/donations")
+@RequestMapping("api/tokens/")
 public class DonationsController {
-
     private final DonationsServices donationsServices;
 
-    private DonationsController(DonationsServices donationsServices) {
+    public DonationsController(DonationsServices donationsServices) { // Change to public
         this.donationsServices = donationsServices;
     }
 
     @PostMapping("/createDonation")
-    public ResponseEntity <DonationsEntity> createDonation(@RequestBody DonationsEntity request) {
+    public ResponseEntity<DonationsEntity> createDonation(@RequestBody DonationsDTO request) {
         DonationsEntity newDonations = donationsServices.createDonation(
             request.getAccountNumber().getAccountNumber(), 
-            request.getAccountNumber().getKiloWatts(),
-            request.getAmountPaid(),
-            request.getSerialNumber(),
+            request.getAccountNumber().getKiloWatts(), 
+            request.getAmountDonated(),
+            request.getId(),
             request.getDonationType(),
             LocalDateTime.now()
         );
-
         return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);
     }
-
-
-    
 }

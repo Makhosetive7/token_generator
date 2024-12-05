@@ -23,28 +23,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DonationsEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "account_number")
-    private TokensEntity accountNumber;
+  @ManyToOne
+  @JoinColumn(name = "account_number")
+  private TokensEntity accountNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "kiloWatts")
-    private TokensEntity  kiloWatts;
-
-    private Double amountPaid;
-
-      @Column(name = "converted_value")
-    public Double convertedValue;
-
-
-    private Long serialNumber;
-
-    private DonationsEnumerator donationType;
-
-    private LocalDateTime createdAt;
-
+  private Double kiloWatts; 
+  private Double amountPaid;
+  @Column(name = "converted_value")
+  private Double convertedValue;
+  private Long serialNumber;
+  private DonationsEnumerator donationType;
+  private LocalDateTime createdAt;
 }
