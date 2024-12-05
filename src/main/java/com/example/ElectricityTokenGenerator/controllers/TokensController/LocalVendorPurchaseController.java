@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
-import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
 import com.example.ElectricityTokenGenerator.services.Tokens.LocalVendorServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

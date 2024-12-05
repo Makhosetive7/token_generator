@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +36,10 @@ public class DonationsEntity {
     private TokensEntity  kiloWatts;
 
     private Double amountPaid;
+
+      @Column(name = "converted_value")
+    public Double convertedValue;
+
 
     private Long serialNumber;
 
