@@ -34,7 +34,6 @@ This Spring Boot application generates user-specific tokens linked to individual
  - Spring Data JPA: For database interactions.
 - **Database**: MySQL/PostgreSQL for storing users, accounts, and tokens.
 - **Docker**: Containerization for deployment.
-- **JUnit & Mockito**: Unit testing.
 - **ReactJs(Optional)**: For a web-based user interface (if needed).
 - **Email Service (Optional)**: For sending notifications to users.
 ---
