@@ -59,6 +59,7 @@ This Spring Boot application generates user-specific tokens linked to individual
    "phoneNumber": "0713000000",
    "homeAddress": "0000 Main Street", 
 }
+```
 
 ## Tokens Endpoints Details
 
@@ -70,12 +71,13 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 -this /api/tokens/generateToken endpoint generates a new tokens for registered users
 
+```json
 {
     "accountNumber" : "0347133011",
     "amountPaid": 2500,
     "serielNumber": 1234567898
 }
-
+```
 - The intended response to this endpoint is a JSON response containing the following fields: 
 
 ```json
@@ -89,6 +91,7 @@ This Spring Boot application generates user-specific tokens linked to individual
     "expiredAt": "2025-02-22T15:03:27.7277533",
     "id": 15
 }
+```
 
 ### GET /api/tokens/{id}
 
@@ -106,6 +109,7 @@ This Spring Boot application generates user-specific tokens linked to individual
     "expiredAt":"2025-02-22T15:03:27.727753",
     "id":15
 }
+```
 
 ### DELETE /api/tokens/{id}
 
@@ -123,4 +127,4 @@ This Spring Boot application generates user-specific tokens linked to individual
     "receiverAccountNumber" : "0761345112",
     "kilowatts" : 120.5
 }
-
+```
