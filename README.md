@@ -52,7 +52,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 - This /api/users/register endpoint registers a new user into the Token Generator application system
 - The implementation of this endpoint is as follows:
 
-```JSON
+```json
 {
    "userName": "Laurren",
    "lastName": "Madlodlo_Omuhle",
@@ -60,31 +60,67 @@ This Spring Boot application generates user-specific tokens linked to individual
    "homeAddress": "0000 Main Street", 
 }
 
-
 ## Tokens Endpoints Details
 
+### GET /api/tokens/
+
+-This /api/tokens endpoint retrieves tokens that have been created in the last 30 days
+
+### POST /api/tokens/generateToken
+
+-this /api/tokens/generateToken endpoint generates a new tokens for registered users
+
+{
+    "accountNumber" : "0347133011",
+    "amountPaid": 2500,
+    "serielNumber": 1234567898
+}
+
+- The intended response to this endpoint is a JSON response containing the following fields: 
+
+```json
+{
+    "accountNumber": 347133011,
+    "amountPaid": 2500.0,
+    "tokenGenerated": "LEIKIV4ZSOD2476SU2PM",
+    "serialNumber": "0415404665",
+    "kiloWatts": 3500.0,
+    "createdAt": "2024-12-09T15:03:27.7277533",
+    "expiredAt": "2025-02-22T15:03:27.7277533",
+    "id": 15
+}
+
+### GET /api/tokens/{id}
+
+- This /api/tokens/{id} endpoint returns available tokens by identity
+- The endpoint intended response is as follows:
+
+```json
+{
+    "accountNumber":347133011,
+    "amountPaid":2500.0,
+    "tokenGenerated":"LEIKIV4ZSOD2476SU2PM",
+    "serialNumber":"0415404665",
+    "kiloWatts":3500.0,
+    "createdAt":"2024-12-09T15:03:27.727753",
+    "expiredAt":"2025-02-22T15:03:27.727753",
+    "id":15
+}
+
+### DELETE /api/tokens/{id}
+
+- This endpoint /api/tokens/{id} deletes created tokens from the database
 
 
-## Tech Stack
-- **Java**: Core language.
-- **Spring Boot**: Framework for building the REST API and services.
- - Spring Web: For building REST
- - Spring Security: For user authentication and authorization.
- - Spring Data JPA: For database interactions.
-- **Database**: MySQL/PostgreSQL for storing users, accounts, and tokens.
-- **Docker**: Containerization for deployment.
-- **JUnit & Mockito**: Unit testing.
-- **ReactJs(Optional)**: For a web-based user interface (if needed).
-- **Email Service (Optional)**: For sending notifications to users.
----
-## Setup Instructions
-### 1. Prerequisites
-Before you start, ensure you have the following installed:
-- **Java 17** (LTS)
-- **Maven** (for dependency management)
-- **MySQL** (for the database)
-- **Docker** (for containerization, optional)
-### 2. Clone the Repository
-```bash
-git clone https://github.com/your-username/token_generator.git
-cd token_generator
+### POST /api/tokens/TokenTransfer
+
+- This /api/tokens/TokenTransfer endpoint allows two different registered users to transfer tokens to each other
+- The token transfer endpoint is implemented in the following example:
+
+```json
+{
+    "senderAccountNumber" : "0241682637",
+    "receiverAccountNumber" : "0761345112",
+    "kilowatts" : 120.5
+}
+
