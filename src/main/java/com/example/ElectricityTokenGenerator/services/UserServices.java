@@ -55,6 +55,10 @@ public class UserServices {
         return userRepository.findById(id);
     }
 
+    //return user by account number
+    public Optional<UsersEntity> getUserByAccountNumber(String accountNumber) {
+         return userRepository.findByAccountNumber(accountNumber); }
+
     // Delete a user by ID
     public void deleteUser(Long id) {
         userRepository.deleteById(id);

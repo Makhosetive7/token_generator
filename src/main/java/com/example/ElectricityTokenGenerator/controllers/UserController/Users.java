@@ -58,6 +58,14 @@ public class Users {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
+// retrieve user by account number
+    @GetMapping("/account/{accountNumber}")
+    public ResponseEntity<UsersEntity> getUserByAccountNumber(@PathVariable String accountNumber) {
+         Optional<UsersEntity> user = userServices.getUserByAccountNumber(accountNumber); 
+         return user.map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)); }
+
+
     // delete available user by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
