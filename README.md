@@ -52,6 +52,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 - This /api/users/register endpoint registers a new user into the Token Generator application system
 - The implementation of this endpoint is as follows:
 
+```JSON
 {
    "userName": "Laurren",
    "lastName": "Madlodlo_Omuhle",
