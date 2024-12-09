@@ -26,6 +26,44 @@ This Spring Boot application generates user-specific tokens linked to individual
 | POST      | `/api/users/register`             | Register a new user.                  |
 | DELETE    | `/api/users/{id}`                 | Delete user details by ID.            |
 
+
+## Endpoint Details
+
+## User endpoint details
+
+### GET /api/users
+
+- This /api/users endpoint returns a list of users registered with Token Generator application
+
+### GET /api/users/{id}
+
+- This /api/users/{id} returns a user account by account identity number
+
+### GET /api/users/account/{accountNumber}
+
+- This /api/users/account/{accountNumber} returns a user account by account number
+
+### Delete /api/users/account/{accountNumber}
+
+- This /api/users/account/{accountNumber} deletes a user account by account number
+
+### POST /api/users/register
+
+- This /api/users/register endpoint registers a new user into the Token Generator application system
+- The implementation of this endpoint is as follows:
+
+{
+   "userName": "Laurren",
+   "lastName": "Madlodlo_Omuhle",
+   "phoneNumber": "0713000000",
+   "homeAddress": "0000 Main Street", 
+}
+
+
+## Tokens Endpoints Details
+
+
+
 ## Tech Stack
 - **Java**: Core language.
 - **Spring Boot**: Framework for building the REST API and services.

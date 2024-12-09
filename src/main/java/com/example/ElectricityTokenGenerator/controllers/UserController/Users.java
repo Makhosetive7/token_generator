@@ -67,7 +67,7 @@ public class Users {
 
 
     // delete available user by id
-    @DeleteMapping("/{id}")
+    @DeleteMapping("account/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userServices.deleteUser(id);
         return ResponseEntity.noContent().build();
