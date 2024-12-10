@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
-import com.example.ElectricityTokenGenerator.services.UserServices;
 import com.example.ElectricityTokenGenerator.services.Tokens.TokenTransferService;
 
 import org.springframework.http.HttpStatus;

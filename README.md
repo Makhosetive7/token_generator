@@ -125,8 +125,40 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "senderAccountNumber" : "0241682637",
-    "receiverAccountNumber" : "0761345112",
-    "kilowatts" : 120.5
+    "senderAccountNumber" : "0287205907",
+    "receiverAccountNumber" : "0611376174",
+    "kilowatts" : 100,
+    "transferTokenId": "1234567890"
+}
+```
+
+- The expected response body is  a JSON object containing the following: 
+
+```json
+{
+    "receiverAccountNumber": {
+        "accountNumber": 611376174,
+        "amountPaid": 1007.0,
+        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+        "serialNumber": "0945436946",
+        "kiloWatts": 1509.8,
+        "createdAt": "2024-12-10T01:38:01.579584",
+        "expiredAt": "2025-02-23T01:38:01.579584",
+        "id": 20
+    },
+    "senderAccountNumber": {
+        "accountNumber": 287205907,
+        "amountPaid": 1009.0,
+        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+        "serialNumber": "0536367267",
+        "kiloWatts": 1312.6,
+        "createdAt": "2024-12-10T01:38:41.15296",
+        "expiredAt": "2025-02-23T01:38:41.15296",
+        "id": 21
+    },
+    "kiloWatts": 100.0,
+    "createdAt": null,
+    "id": 1,
+    "transferTokenId": 1234567890
 }
 ```
