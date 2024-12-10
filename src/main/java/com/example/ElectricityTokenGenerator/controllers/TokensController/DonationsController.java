@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DonationsController {
     private final DonationsServices donationsServices;
 
-    public DonationsController(DonationsServices donationsServices) { // Change to public
+    public DonationsController(DonationsServices donationsServices) {
         this.donationsServices = donationsServices;
     }
 
