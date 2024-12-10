@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
+import com.example.ElectricityTokenGenerator.repository.UserRepository;
 import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenTransferRepository;
 
@@ -16,26 +17,29 @@ public class TokenTransferService {
 
     private final tokensRepository tokensRepository;
     private final TokenTransferRepository tokenTransferRepository;
+    private final UserRepository userRepository;
 
-    public TokenTransferService(tokensRepository tokensRepository, TokenTransferRepository tokenTransferRepository) {
+    public TokenTransferService(tokensRepository tokensRepository, TokenTransferRepository tokenTransferRepository, UserRepository userRepository) {
         this.tokensRepository = tokensRepository;
         this.tokenTransferRepository = tokenTransferRepository;
+        this.userRepository = userRepository;
+
     }
 
     @Transactional
     public TokenTransferEntity transferTokens(Long senderAccountNumber, Long receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
         // Validate sender account exists
-        Optional<TokensEntity> senderAccountOptional = tokensRepository.findById(senderAccountNumber);
+        Optional<TokensEntity> senderAccountOptional = tokensRepository.findByAccountNumber(senderAccountNumber);
         if (senderAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Sender account not found.");
         }
-
+        
         // Validate receiver account exists
-        Optional<TokensEntity> receiverAccountOptional = tokensRepository.findById(receiverAccountNumber);
+        Optional<TokensEntity> receiverAccountOptional = tokensRepository.findByAccountNumber(receiverAccountNumber);
         if (receiverAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Receiver account not found.");
         }
-
+        
         // Extract sender and receiver
         TokensEntity senderAccount = senderAccountOptional.get();
         TokensEntity receiverAccount = receiverAccountOptional.get();

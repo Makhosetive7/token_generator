@@ -1,10 +1,13 @@
 # Token Generating System
+
 # Makhosetive Sibanda
 
 ## Overview
+
 This Spring Boot application generates user-specific tokens linked to individual accounts and validates their authenticity, expiration, and usage status.
----
+
 ## Features
+
 - **User Registration & Authentication**: Users can register.
 - **Token Generation and validation**: Users can purchase and generate tokens.The system verifies tokens during usage, ensuring they are valid for the specified user account.
 - **Token Expiry**: Tokens have an expiration date and can only be used within a defined period.
@@ -25,7 +28,6 @@ This Spring Boot application generates user-specific tokens linked to individual
 | GET       | `/api/users/{id}`                 | Retrieve user details by ID.          |
 | POST      | `/api/users/register`             | Register a new user.                  |
 | DELETE    | `/api/users/{id}`                 | Delete user details by ID.            |
-
 
 ## Endpoint Details
 
@@ -65,11 +67,11 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ### GET /api/tokens/
 
--This /api/tokens endpoint retrieves tokens that have been created in the last 30 days
+- This /api/tokens endpoint retrieves tokens that have been created in the last 30 days
 
 ### POST /api/tokens/generateToken
 
--this /api/tokens/generateToken endpoint generates a new tokens for registered users
+- This /api/tokens/generateToken endpoint generates a new tokens for registered users
 
 ```json
 {
@@ -78,6 +80,7 @@ This Spring Boot application generates user-specific tokens linked to individual
     "serielNumber": 1234567898
 }
 ```
+
 - The intended response to this endpoint is a JSON response containing the following fields: 
 
 ```json
@@ -114,7 +117,6 @@ This Spring Boot application generates user-specific tokens linked to individual
 ### DELETE /api/tokens/{id}
 
 - This endpoint /api/tokens/{id} deletes created tokens from the database
-
 
 ### POST /api/tokens/TokenTransfer
 
