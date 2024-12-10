@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
