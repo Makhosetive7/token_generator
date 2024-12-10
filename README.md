@@ -162,3 +162,21 @@ This Spring Boot application generates user-specific tokens linked to individual
     "transferTokenId": 1234567890
 }
 ```
+
+### POST /api/tokens/createDonation
+
+- This /api/tokens/createDonations endpoint allows users with extra tokens that they feel like they can convert to monetory value a the systems rate to convert and donate towards education support, food programs and towards health care.
+- This endpoint is implemented in the following way:
+
+```json
+{
+    "accountNumber": {
+        "accountNumber": "0287205907",
+        "kiloWatts": 100
+    },
+    "amountDonated": 50.0,
+    "id": "1",
+    "donationType": "HEALTH_PROGRAMS"
+}
+
+```
