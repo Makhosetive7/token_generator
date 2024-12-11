@@ -19,5 +19,6 @@ public class LocalVendorDTO {
     public LocalVendorEnumerator vendorTypeEnumerator;
     public Double convertedValue;
     public Double purchaseAmount;
+    private Double kiloWatts;
     public LocalDateTime createdAt;
 }

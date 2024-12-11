@@ -30,6 +30,7 @@ public class LocalVendorPurchaseController {
             request.getPurchaseAccountNumber(),
             request.getVendorTypeEnumerator(),
             request.getConvertedValue(),
+            request.getKiloWatts(),
             request.getPurchaseAmount(),
             LocalDateTime.now()
         );

@@ -49,6 +49,9 @@ public class LocalVendorEntity {
     @Column(name = "purchase_amount")
     public Double purchaseAmount;
 
+
+    private Double kiloWatts;
+
     @Column(name = "created_at")
     public LocalDateTime createdAt;
 

@@ -24,7 +24,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 | GET       | `/api/tokens/{id}`                | Get a token by ID.                    |
 | POST      | `/api/tokens/generateToken/`      | Create a new token.                   |
 | DELETE    | `/api/tokens/delete/{id}`         | Delete a token by ID.                 |
-| GET       | '/api/users/                      | Retrieve all users                    |
+| GET       | `/api/users/                      | Retrieve all users                    |
 | GET       | `/api/users/{id}`                 | Retrieve user details by ID.          |
 | POST      | `/api/users/register`             | Register a new user.                  |
 | DELETE    | `/api/users/{id}`                 | Delete user details by ID.            |
@@ -36,14 +36,58 @@ This Spring Boot application generates user-specific tokens linked to individual
 ### GET /api/users
 
 - This /api/users endpoint returns a list of users registered with Token Generator application
+- The expected response is a list of users
+
+```json
+  {
+        "id": 1,
+        "userName": "John",
+        "lastName": "Doe",
+        "accountNumber": "150376333",
+        "phoneNumber": "123456789",
+        "homeAddress": "123 Main St"
+    },
+    {
+        "id": 2,
+        "userName": "Makhosetive",
+        "lastName": "Sibanda",
+        "accountNumber": "315633594",
+        "phoneNumber": "123456789",
+        "homeAddress": "442 Main St"
+    },
+```
 
 ### GET /api/users/{id}
 
 - This /api/users/{id} returns a user account by account identity number
+- The expected response body is a JSON object containing the following:
+
+```json
+{
+    "id": 15,
+    "userName": "Imagine",
+    "lastName": "Imagine",
+    "accountNumber": "0292406856",
+    "phoneNumber": "0713000001",
+    "homeAddress": "1234 Elm Street"
+}
+```
 
 ### GET /api/users/account/{accountNumber}
 
 - This /api/users/account/{accountNumber} returns a user account by account number
+- The expected response body is a JSON object containing the following:
+
+```json
+{
+    "id": 15,
+    "userName": "Imagine",
+    "lastName": "Imagine",
+    "accountNumber": "0292406856",
+    "phoneNumber": "0713000001",
+    "homeAddress": "1234 Elm Street"
+}
+```
 
 ### Delete /api/users/account/{accountNumber}
 
@@ -68,6 +112,20 @@ This Spring Boot application generates user-specific tokens linked to individual
 ### GET /api/tokens/
 
 - This /api/tokens endpoint retrieves tokens that have been created in the last 30 days
+- This endpoint returns response structured as a JSON object
+
+```json
+ {
+        "accountNumber": 962475096,
+        "amountPaid": 50000.0,
+        "tokenGenerated": "SGIR4TM5H50DM8Q16GYL",
+        "serialNumber": "0323431849",
+        "kiloWatts": 70000.0,
+        "createdAt": "2024-12-02T17:55:54.371897",
+        "expiredAt": "2025-02-15T17:55:54.371897",
+        "id": 12
+    },
+```
 
 ### POST /api/tokens/generateToken
 
@@ -208,5 +266,54 @@ This Spring Boot application generates user-specific tokens linked to individual
     "convertedValue": null,
     "donationType": "HEALTH_PROGRAMS",
     "createdAt": "2024-12-11T02:17:39.4127519"
+}
+```
+
+### POST api/tokens/localVendor/purchase
+
+- This endpoint /api/tokens/localVendor/purchase allows regestered users with Tokens to convert them to monetary value and be able to purchase at groceries and appliances at selected stores
+- The endpoint is implemented as follows:
+
+```json
+{
+  "vendorAccountNumber": "287205907",
+  "purchaseAccountNumber": "0611376174",
+  "vendorTypeEnumerator": "ZAPALALA",
+  "convertedValue": 45.5,
+  "kiloWatts": 50,
+  "purchaseAmount": 100
+}
+```
+
+- The expected response is as follows:
+
+```json
+{
+    "id": 1,
+    "vendorAccountNumber": {
+        "accountNumber": 287205907,
+        "amountPaid": 1009.0,
+        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+        "serialNumber": "0536367267",
+        "kiloWatts": 1262.6,
+        "createdAt": "2024-12-10T01:38:41.15296",
+        "expiredAt": "2025-02-23T01:38:41.15296",
+        "id": 21
+    },
+    "purchaseAccountNumber": {
+        "accountNumber": 611376174,
+        "amountPaid": 1007.0,
+        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+        "serialNumber": "0945436946",
+        "kiloWatts": 1409.8,
+        "createdAt": "2024-12-10T01:38:01.579584",
+        "expiredAt": "2025-02-23T01:38:01.579584",
+        "id": 20
+    },
+    "vendorTypeEnumerator": "ZAPALALA",
+    "convertedValue": 22.75,
+    "purchaseAmount": 100.0,
+    "kiloWatts": null,
+    "createdAt": "2024-12-11T09:21:11.7464155"
 }
 ```
