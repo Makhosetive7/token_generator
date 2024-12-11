@@ -170,13 +170,43 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "accountNumber": {
-        "accountNumber": "0287205907",
-        "kiloWatts": 100
-    },
-    "amountDonated": 50.0,
-    "id": "1",
-    "donationType": "HEALTH_PROGRAMS"
+  "donationAccountNumber": "0287205907",
+  "donatorsAccountNumber": "0611376174",
+  "amountDonated": 50.0,
+  "kiloWatts": 100.0,
+  "donationType": "HEALTH_PROGRAMS"
 }
+```
 
+- The expected response body should be a JSON object  with the following:
+
+```json
+{
+    "id": 1,
+    "donationAccountNumber": {
+        "accountNumber": 287205907,
+        "amountPaid": 1009.0,
+        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+        "serialNumber": "0536367267",
+        "kiloWatts": 1312.6,
+        "createdAt": "2024-12-10T01:38:41.15296",
+        "expiredAt": "2025-02-23T01:38:41.15296",
+        "id": 21
+    },
+    "donatorsAccountNumber": {
+        "accountNumber": 611376174,
+        "amountPaid": 1007.0,
+        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+        "serialNumber": "0945436946",
+        "kiloWatts": 1409.8,
+        "createdAt": "2024-12-10T01:38:01.579584",
+        "expiredAt": "2025-02-23T01:38:01.579584",
+        "id": 20
+    },
+    "kiloWatts": null,
+    "amountDonated": 50.0,
+    "convertedValue": null,
+    "donationType": "HEALTH_PROGRAMS",
+    "createdAt": "2024-12-11T02:17:39.4127519"
+}
 ```

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
+import com.example.ElectricityTokenGenerator.repository.UserRepository;
 import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
 
@@ -22,25 +23,33 @@ public class DonationsServices {
 
     private final tokensRepository tokensRepository;
     private final DonationsRepository donationsRepository;
+    private final UserRepository  userRepository;
 
-    public DonationsServices(DonationsRepository donationsRepository, tokensRepository tokensRepository) {
+    public DonationsServices(DonationsRepository donationsRepository, tokensRepository tokensRepository, UserRepository userRepository) {
         this.donationsRepository = donationsRepository;
         this.tokensRepository = tokensRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
-    public DonationsEntity createDonation(Long accountNumber, Double kiloWatts, Double amountPaid, 
-                                          Long serialNumber, DonationsEnumerator donationType, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(Long donationAccountNumber, Long donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
 
-        // Fetch the TokensEntity using account number
-        Optional<TokensEntity> userAccountOptional = tokensRepository.findById(accountNumber);
-        if (userAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("User account not found.");
+        // Fetch account number information for donation account Number
+        Optional<TokensEntity> donationAccountOptional = tokensRepository.findByAccountNumber(donationAccountNumber);
+        if (donationAccountOptional.isEmpty()) {
+            throw new IllegalArgumentException("Donation account not found.");
         }
-        TokensEntity userAccount = userAccountOptional.get();
+
+        Optional<TokensEntity> donatorsAccountOptional = tokensRepository.findByAccountNumber(donatorsAccountNumber);
+        if (donatorsAccountOptional.isEmpty()) {
+            throw new IllegalArgumentException("Donators account not found.");
+        }
+
+        TokensEntity donationAccount = donationAccountOptional.get();
+        TokensEntity donatorsAccount = donatorsAccountOptional.get();
 
         // Validate the donation
-        if (userAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
+        if (donatorsAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
             throw new IllegalArgumentException("Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
         }
 
@@ -50,16 +59,15 @@ public class DonationsServices {
             throw new IllegalArgumentException("Donation amount must be at least $10.0.");
         }
 
-        // Update the user account
-        userAccount.setKiloWatts(userAccount.getKiloWatts() - kiloWatts);
-        tokensRepository.save(userAccount);
+        // Update donations Account
+        donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
+        tokensRepository.save(donatorsAccount);
 
         // Create the donation entity
         DonationsEntity newDonation = new DonationsEntity();
-        newDonation.setAccountNumber(userAccount);
-        newDonation.setAmountPaid(amountPaid);
-        newDonation.setSerialNumber(serialNumber);
-        newDonation.setConvertedValue(convertedValue);
+        newDonation.setDonationAccountNumber(donationAccount);
+        newDonation.setDonatorsAccountNumber(donatorsAccount);
+        newDonation.setAmountDonated(amountDonated);
         newDonation.setDonationType(donationType);
         newDonation.setCreatedAt(createdAt);
 
