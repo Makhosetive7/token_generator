@@ -1,6 +1,5 @@
 package com.example.ElectricityTokenGenerator.controllers.TokensController;
 
-
 import java.time.LocalDateTime;
 
 import org.springframework.http.ResponseEntity;
@@ -23,17 +22,17 @@ public class DonationsController {
     public DonationsController(DonationsServices donationsServices) {
         this.donationsServices = donationsServices;
     }
-
     @PostMapping("/createDonation")
     public ResponseEntity<DonationsEntity> createDonation(@RequestBody DonationsDTO request) {
         DonationsEntity newDonations = donationsServices.createDonation(
-            request.getAccountNumber().getAccountNumber(), 
-            request.getAccountNumber().getKiloWatts(), 
+            request.getDonationAccountNumber(),
+            request.getDonatorsAccountNumber(), 
             request.getAmountDonated(),
-            request.getId(),
+            request.getKiloWatts(),
             request.getDonationType(),
             LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);
     }
+    
 }

@@ -2,7 +2,7 @@ package com.example.ElectricityTokenGenerator.dto.Tokens;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalVendorDTO {
-    public TokensEntity accountNumber;
-    public String vendorName;
+    public Long vendorAccountNumber;
+    public Long purchaseAccountNumber;
+    public LocalVendorEnumerator vendorTypeEnumerator;
     public Double convertedValue;
+    public Double purchaseAmount;
+    private Double kiloWatts;
     public LocalDateTime createdAt;
 }

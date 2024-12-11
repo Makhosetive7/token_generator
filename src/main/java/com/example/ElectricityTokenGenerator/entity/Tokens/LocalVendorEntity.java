@@ -32,8 +32,12 @@ public class LocalVendorEntity {
     public Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_number", unique = true)
-    public TokensEntity accountNumber;
+    @JoinColumn(name = "vendor_account_number", unique = true)
+    public TokensEntity vendorAccountNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "purchase_account_number")
+    public TokensEntity purchaseAccountNumber;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "vendor_type")
@@ -44,6 +48,9 @@ public class LocalVendorEntity {
 
     @Column(name = "purchase_amount")
     public Double purchaseAmount;
+
+
+    private Double kiloWatts;
 
     @Column(name = "created_at")
     public LocalDateTime createdAt;

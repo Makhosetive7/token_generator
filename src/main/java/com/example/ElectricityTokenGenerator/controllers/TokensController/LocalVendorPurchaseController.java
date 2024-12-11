@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
 import com.example.ElectricityTokenGenerator.services.Tokens.LocalVendorServices;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +24,14 @@ public class LocalVendorPurchaseController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<LocalVendorEntity> purchaseProduct(@RequestBody LocalVendorEntity request) {
+    public ResponseEntity<LocalVendorEntity> purchaseProduct(@RequestBody LocalVendorDTO request) {
         LocalVendorEntity newPurchase = localVendorServices.purchaseProduct(
+            request.getVendorAccountNumber(),
+            request.getPurchaseAccountNumber(),
             request.getVendorTypeEnumerator(),
             request.getConvertedValue(),
-            request.getAccountNumber().getAccountNumber(), 
+            request.getKiloWatts(),
             request.getPurchaseAmount(),
-            request.getAccountNumber().getKiloWatts(),
             LocalDateTime.now()
         );
     
