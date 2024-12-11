@@ -3,6 +3,7 @@ package com.example.ElectricityTokenGenerator.services.Tokens;
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
+import com.example.ElectricityTokenGenerator.repository.UserRepository;
 import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
 
@@ -23,29 +24,38 @@ public class LocalVendorServices {
     
     private final LocalVendorRepository localVendorRepository;
     private final tokensRepository tokensRepository;
+    private final UserRepository userRepository;
 
 
-    public LocalVendorServices(LocalVendorRepository localVendorRepository, tokensRepository tokensRepository) {
+    public LocalVendorServices(LocalVendorRepository localVendorRepository, tokensRepository tokensRepository, UserRepository userRepository) {
         this.localVendorRepository = localVendorRepository;
         this.tokensRepository = tokensRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
-public LocalVendorEntity purchaseProduct(LocalVendorEnumerator vendorType, Double convertedValue, Long accountNumber, Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
-    // Fetch the user account from TokensEntity
-    Optional<TokensEntity> userAccountOptional = tokensRepository.findById(accountNumber);
-    if (userAccountOptional.isEmpty()) {
-        throw new IllegalArgumentException("User account not found.");
+public LocalVendorEntity purchaseProduct(Long vendorAccountNumber,Long purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
+    // Fetch the vendor Account Number
+    Optional<TokensEntity> vendorAccountOptional = tokensRepository.findByAccountNumber(vendorAccountNumber);
+    if (vendorAccountOptional.isEmpty()) {
+        throw new IllegalArgumentException("User account number not found.");
     }
 
-    TokensEntity userAccount = userAccountOptional.get();
+    //Fetch buyer account number
+    Optional<TokensEntity> purchaseAccountOptional = tokensRepository.findByAccountNumber(purchaseAccountNumber);
+    if (purchaseAccountOptional.isEmpty()) {
+        throw new IllegalArgumentException("Purchase account number not found.");
+    }
+
+    TokensEntity vendorAccount = vendorAccountOptional.get();
+    TokensEntity purchaseAccount = purchaseAccountOptional.get();
 
      // Validate if the user has enough kilowatts
-    if(userAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED){
+    if(vendorAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED){
         throw new IllegalArgumentException("Insufficient KiloWatts to convert, user account required to have more than 250.0 KiloWatts");
     }
 
-    if (userAccount.getKiloWatts() < kilowatts) {
+    if (vendorAccount.getKiloWatts() < kilowatts) {
         throw new IllegalArgumentException("Insufficient kilowatts available.");
     }
 
@@ -67,17 +77,17 @@ public LocalVendorEntity purchaseProduct(LocalVendorEnumerator vendorType, Doubl
     }
 
     // Deduct the kilowatts
-    userAccount.setKiloWatts(userAccount.getKiloWatts() - kilowatts);
-    tokensRepository.save(userAccount);
+    vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() - kilowatts);
+    tokensRepository.save(vendorAccount);
 
     // Create and save the vendor purchase
-    LocalVendorEntity purchaseProduct = LocalVendorEntity.builder()
-        .accountNumber(userAccount)
-        .vendorTypeEnumerator(vendorType)
-        .convertedValue(convertedValue)
-        .createdAt(createdAt)
-        .purchaseAmount(purchaseAmount)
-        .build();
+    LocalVendorEntity purchaseProduct = new LocalVendorEntity();
+        purchaseProduct.setVendorAccountNumber(vendorAccount);
+        purchaseProduct.setPurchaseAccountNumber(purchaseAccount);
+        purchaseProduct.setVendorTypeEnumerator(vendorTypeEnumerator);
+        purchaseProduct.setConvertedValue(convertedValue);
+        purchaseProduct.setPurchaseAmount(purchaseAmount);
+        purchaseProduct.setCreatedAt(createdAt);
 
     return localVendorRepository.save(purchaseProduct);
 }
