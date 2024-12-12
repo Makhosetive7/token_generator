@@ -10,23 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.services.TokenServices;
+import com.example.ElectricityTokenGenerator.services.Tokens.returnTokensByIdServices;
 
 @RestController
 @RequestMapping("api/tokens")
 public class TokensByIdController {
 
-    private final TokenServices tokenServices;
+  private final returnTokensByIdServices returnTokensByIdServices;
 
-    public TokensByIdController(TokenServices tokenServices) {
-        this.tokenServices = tokenServices;
-    }
-
+  public TokensByIdController(returnTokensByIdServices returnTokensByIdServices) {
+    this.returnTokensByIdServices = returnTokensByIdServices;
+  }
 
        // Get tokens by user id
     @GetMapping("/{id}")
     public ResponseEntity<TokensEntity> getTokensById(@PathVariable Long id) {
-        Optional<TokensEntity> tokens = tokenServices.getTokensById(id);
+        Optional<TokensEntity> tokens = returnTokensByIdServices.getTokensById(id);
         return tokens.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

@@ -1,36 +1,29 @@
-package com.example.ElectricityTokenGenerator.services;
+package com.example.ElectricityTokenGenerator.services.Tokens;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-
-import java.util.List;
-import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
+import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTokenConversion;
 
 @Service
-public class TokenServices {
+public class createTokenService {
 
-    private final tokensRepository tokensRepository;
-    private final UserRepository userRepository;
+    public final tokensRepository   tokensRepository;
+    public final ElectricityTokenConversion electricityTokenConversion;
+    public final UserRepository userRepository;
 
-
- private final ElectricityTokenConversion electricityTokenConversion;
-
-    @Autowired
-    public TokenServices(tokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion){
+    public createTokenService(tokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion) {
         this.tokensRepository = tokensRepository;
-        this.userRepository = userRepository;
         this.electricityTokenConversion = electricityTokenConversion;
+        this.userRepository = userRepository;
     }
 
-    // create tokens
+        // create tokens
     public TokensEntity createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
         TokensEntity tokens = new TokensEntity();
         tokens.setAccountNumber(accountNumber);
@@ -43,6 +36,7 @@ public class TokenServices {
     
         return tokensRepository.save(tokens);
     }
+    
     
   // Token Generation Logic (20-character alphanumeric token)
   private String generateUniqueToken() {
@@ -73,20 +67,6 @@ private String generateUniqueSerialNumber() {
     return serialNumber;
 }
 
-    // retrieve all tokens
-    public List<TokensEntity> getAllTokens() {
-        return tokensRepository.findAll();
-    }
 
-    // get tokens by id
-    public Optional<TokensEntity> getTokensById(Long id) {
-        return tokensRepository.findById(id);
-    }
-
-    // cancel created tokens
-
-    public void deleteTokens(Long id) {
-        tokensRepository.deleteById(id);
-    }
-
+    
 }
