@@ -1,6 +1,14 @@
-# Token Generating System
+# **Title** : Token Generating System
 
-# Makhosetive Sibanda
+# **Author** : Makhosetive Sibanda
+
+## Table of Contents
+
+- [Overview](#overview)  
+- [Features](#features)
+- [Endpoints](#endpoints)  
+- [Functionality Details](#functionality-details)
+- [Endpoint Details](#endpoint-details)
 
 ## Overview
 
@@ -22,15 +30,58 @@ This Spring Boot application generates user-specific tokens linked to individual
 |-----------|-----------------------------------|
 | GET       | `/api/tokens/`                    |
 | GET       | `/api/tokens/{id}`                |
-| POST      | `/api/tokens/generateToken/`      |
-| DELETE    | `/api/tokens/delete/{id}`         |
 | GET       | `/api/users/`                     |
 | GET       | `/api/users/{id}`                 |
+| POST      | `/api/tokens/generateToken/`      |
 | POST      | `/api/users/register`             |
-| DELETE    | `/api/users/{id}`                 |
 | POST      | `/api/tokens/TokenTransfer`       |
 | POST      | `/api/tokens/createDonation`      |
 | POST      | `api/tokens/localVendor/purchase` |
+| DELETE    | `/api/users/{id}`                 |
+| DELETE    | `/api/tokens/delete/{id}`         |
+
+## Functionality Details
+
+### Token Generation
+
+- **User Registration**: Users must registered and authenticated to participate in the token  generating system.
+- **Token Creation**: Tokens are generated based on user actions or purchases, each linked to a specific user account.
+- **Token Details**: Each token includes a unique ID, value, and expiration date.
+
+### Token Validation
+
+- **Authenticity Check**: Tokens are validated against a secure database to ensure they are legitimate.
+- **Expiration Check**: Tokens are checked for expiration before any transaction.
+- **Usage Verification and validation**: Ensures that tokens being used match the user's account.
+
+### Token Transfer
+
+- **Initiation**: Users can transfer tokens to other users by specifying the and sender and recipient’s account numbers.
+- **Validation**: Both accounts are validated to prevent fraud.
+- **Completion**: Upon successful validation, the tokens are transferred, and both accounts are updated.
+
+### Token Donation
+
+- **Conversion**: Users can convert tokens into monetary value.
+- **Selection of Cause**: Users select from available donation causes (Education Support, Food Programs, Health Programs).
+- **Transaction**: The donation is processed, and the user's token balance is updated.
+
+### Local Vendor Purchases
+
+- **Conversion**: Users can convert tokens into monetary value for use at local vendors.
+- **Partner Integration**: Local vendors are integrated into the system, allowing users to make purchases (Zapalala, Doves, Choppies, Edgars).
+- **Transaction**: Users can complete purchases at local vendors using their tokens.
+
+### Error Handling
+
+- **Invalid Tokens**: Invalid tokens are flagged, and the transaction is immediately stopped.
+- **Insufficient Tokens**: Users are notified if they do not have enough tokens for a transaction.
+- **Failed Transactions**: Failed transactions are logged, and users are notified.
+
+### Logging and Auditing
+
+- **Transaction Logs**: All token transactions are logged for security and auditing.
+- **Audit Trails**: Maintains records of all transactions for transparency and accountability.
 
 ## Endpoint Details
 
