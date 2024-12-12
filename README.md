@@ -28,10 +28,10 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 | Method    | Endpoint                          |
 |-----------|-----------------------------------|
-| GET       | `/api/tokens/`                    |
-| GET       | `/api/tokens/{id}`                |
 | GET       | `/api/users/`                     |
 | GET       | `/api/users/{id}`                 |
+| GET       | `/api/tokens/`                    |
+| GET       | `/api/tokens/{id}`                |
 | POST      | `/api/tokens/generateToken/`      |
 | POST      | `/api/users/register`             |
 | POST      | `/api/tokens/TokenTransfer`       |

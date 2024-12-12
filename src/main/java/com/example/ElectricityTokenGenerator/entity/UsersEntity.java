@@ -30,12 +30,33 @@ public class UsersEntity {
     @Column(name = "surname", nullable = false, length = 20)
     private String lastName;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "account_number", nullable = false, unique = true ,length = 15)
     private String accountNumber;
 
     @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Column(name = "home_address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String homeAddress;
+
+    @Column(name="token_balance")
+    private Double tokenBalance;
+
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "transaction_history")
+    private String transactionHistory;
+
+    @Column(name = "donation_history")
+    private String DonationHistory;
+
+    @Column(name = "local_vendor_history")
+    private String localVendorHistory;
 }
