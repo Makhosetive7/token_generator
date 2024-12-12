@@ -18,7 +18,6 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ## Endpoints
 
-|-----------------------------------------------|
 | Method    | Endpoint                          |
 |-----------|-----------------------------------|
 | GET       | `/api/tokens/`                    |
