@@ -1,4 +1,5 @@
-package com.example.ElectricityTokenGenerator.entity;
+package com.example.ElectricityTokenGenerator.entity.Tokens;
+
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "TOKENS")
-public class TokensEntity {
+public class TokenEntities {
         @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

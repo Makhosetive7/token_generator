@@ -1,6 +1,7 @@
-package com.example.ElectricityTokenGenerator.repository;
+package com.example.ElectricityTokenGenerator.repository.Tokens;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,10 +11,10 @@ import java.util.Optional;
 
 
 @Repository
-public interface tokensRepository extends JpaRepository<TokensEntity, Long> {
+public interface TokenRepository extends JpaRepository<TokenEntities, Long> {
     boolean existsByTokenGenerated(String tokenGenerated);
     boolean existsBySerialNumber(String serialNumber);
     void deleteByExpiredAt(LocalDateTime expiredAt);
 
-    Optional<TokensEntity> findByAccountNumber(Long accountNumber);
+    Optional<TokenEntities> findByAccountNumber(Long accountNumber);
 }

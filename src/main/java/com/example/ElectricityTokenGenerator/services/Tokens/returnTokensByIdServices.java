@@ -4,21 +4,21 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 
 @Service
 public class returnTokensByIdServices {
 
-    public final tokensRepository tokensRepository;
+    public final TokenRepository tokenRepository;
 
-    public returnTokensByIdServices(tokensRepository tokensRepository) {
-        this.tokensRepository = tokensRepository;
+    public returnTokensByIdServices(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
         // get tokens by id
-    public Optional<TokensEntity> getTokensById(Long id) {
-        return tokensRepository.findById(id);
+    public Optional<TokenEntities> getTokensById(Long id) {
+        return tokenRepository.findById(id);
     }
 
     

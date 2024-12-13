@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 
 @Service
 public class returnAllTokensServices {
     
-    public final  tokensRepository tokensRepository;
+   public final TokenRepository tokenRepository;
 
-    public returnAllTokensServices(tokensRepository tokensRepository) {
-        this.tokensRepository = tokensRepository;
+    public returnAllTokensServices(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
     
     // retrieve all tokens
-    public List<TokensEntity> getAllTokens() {
-        return tokensRepository.findAll();
+    public List<TokenEntities> getAllTokens() {
+        return tokenRepository.findAll();
     }
     
 }

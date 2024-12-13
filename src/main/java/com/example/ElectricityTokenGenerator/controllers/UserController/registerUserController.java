@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Users.userRegistrationDTO;
-import com.example.ElectricityTokenGenerator.entity.UsersEntity;
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.services.Users.registerUserService;
 
 @RestController
@@ -25,8 +25,8 @@ public class registerUserController {
 
      // user registration
     @PostMapping("/register")
-    public ResponseEntity<UsersEntity> createUser(@RequestBody userRegistrationDTO request) {
-        UsersEntity newUser = registerUserService.createUser(
+    public ResponseEntity<UserEntities> createUser(@RequestBody userRegistrationDTO request) {
+        UserEntities newUser = registerUserService.createUser(
                 request.getUserName(), 
                 request.getLastName(), 
                 request.getPassword(), 

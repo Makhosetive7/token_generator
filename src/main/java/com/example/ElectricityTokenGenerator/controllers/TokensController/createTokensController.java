@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.services.Tokens.createTokenService;
 
 
@@ -28,8 +28,8 @@ public class createTokensController {
 
         // Create new tokens
     @PostMapping("/generateToken")
-    public ResponseEntity<TokensEntity> createTokens(@RequestBody TokensGenerationDTO request) {
-        TokensEntity newToken = createTokenService.createTokens(
+    public ResponseEntity<TokenEntities> createTokens(@RequestBody TokensGenerationDTO request) {
+        TokenEntities newToken = createTokenService.createTokens(
                 request.getAccountNumber(),
                 request.getAmountPaid(),
                 request.getSerialNumber(),

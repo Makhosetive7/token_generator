@@ -5,27 +5,27 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTokenConversion;
 
 @Service
 public class createTokenService {
 
-    public final tokensRepository   tokensRepository;
+    public final TokenRepository tokenRepository;
     public final ElectricityTokenConversion electricityTokenConversion;
-    public final UserRepository userRepository;
+    public final userRepository userRepository;
 
-    public createTokenService(tokensRepository tokensRepository, UserRepository userRepository, ElectricityTokenConversion electricityTokenConversion) {
-        this.tokensRepository = tokensRepository;
+    public createTokenService(TokenRepository tokensRepository, userRepository userRepository, ElectricityTokenConversion electricityTokenConversion) {
+        this.tokenRepository = tokensRepository;
         this.electricityTokenConversion = electricityTokenConversion;
         this.userRepository = userRepository;
     }
 
         // create tokens
-    public TokensEntity createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
-        TokensEntity tokens = new TokensEntity();
+    public TokenEntities createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
+        TokenEntities tokens = new TokenEntities();
         tokens.setAccountNumber(accountNumber);
         tokens.setAmountPaid(amountPaid);
         tokens.setTokenGenerated(generateUniqueToken());
@@ -34,7 +34,7 @@ public class createTokenService {
         tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
        tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
     
-        return tokensRepository.save(tokens);
+        return tokenRepository.save(tokens);
     }
     
     
@@ -50,7 +50,7 @@ public class createTokenService {
             token.append(characters.charAt(random.nextInt(characters.length())));
         }
         tokenGenerated = token.toString();
-    } while (tokensRepository.existsByTokenGenerated(tokenGenerated));
+    } while (tokenRepository.existsByTokenGenerated(tokenGenerated));
 
     return tokenGenerated;
 }
@@ -62,7 +62,7 @@ private String generateUniqueSerialNumber() {
 
     do {
         serialNumber = String.format("%010d", random.nextInt(1000000000));
-    } while (tokensRepository.existsBySerialNumber(serialNumber));
+    } while (tokenRepository.existsBySerialNumber(serialNumber));
 
     return serialNumber;
 }

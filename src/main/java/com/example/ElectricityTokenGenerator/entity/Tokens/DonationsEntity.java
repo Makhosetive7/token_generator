@@ -2,7 +2,6 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 
 import jakarta.persistence.Column;
@@ -29,15 +28,15 @@ public class DonationsEntity {
 
   @ManyToOne
   @JoinColumn(name = "donation_account_number")
-  private TokensEntity donationAccountNumber;
+  private TokenEntities donationAccountNumber;
 
   @ManyToOne
   @JoinColumn(name = "donator_account_number")
-  private TokensEntity donatorsAccountNumber;
+  private TokenEntities donatorsAccountNumber;
 
   @ManyToOne
   @JoinColumn(name = "kiloWatts")
-  private TokensEntity kiloWatts; 
+  private TokenEntities kiloWatts; 
 
   private Double amountDonated;
 

@@ -1,4 +1,5 @@
-package com.example.ElectricityTokenGenerator.entity;
+package com.example.ElectricityTokenGenerator.entity.Users;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-public class UsersEntity {
+public class UserEntities{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "identity_number", unique = true, length = 10)

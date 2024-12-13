@@ -1,11 +1,12 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
+
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
+import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -23,32 +24,32 @@ public class LocalVendorServices {
     private static final Double MINIMUM_PURCHASE_AMOUNT = 10.0;
     
     private final LocalVendorRepository localVendorRepository;
-    private final tokensRepository tokensRepository;
-    private final UserRepository userRepository;
+   private final TokenRepository tokenRepository;
+   private final userRepository userRepository;
 
 
-    public LocalVendorServices(LocalVendorRepository localVendorRepository, tokensRepository tokensRepository, UserRepository userRepository) {
+    public LocalVendorServices(LocalVendorRepository localVendorRepository, TokenRepository tokenRepository, userRepository userRepository) {
         this.localVendorRepository = localVendorRepository;
-        this.tokensRepository = tokensRepository;
+        this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
     }
 
     @Transactional
 public LocalVendorEntity purchaseProduct(Long vendorAccountNumber,Long purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
     // Fetch the vendor Account Number
-    Optional<TokensEntity> vendorAccountOptional = tokensRepository.findByAccountNumber(vendorAccountNumber);
+    Optional<TokenEntities> vendorAccountOptional = tokenRepository.findByAccountNumber(vendorAccountNumber);
     if (vendorAccountOptional.isEmpty()) {
         throw new IllegalArgumentException("User account number not found.");
     }
 
     //Fetch buyer account number
-    Optional<TokensEntity> purchaseAccountOptional = tokensRepository.findByAccountNumber(purchaseAccountNumber);
+    Optional<TokenEntities> purchaseAccountOptional = tokenRepository.findByAccountNumber(purchaseAccountNumber);
     if (purchaseAccountOptional.isEmpty()) {
         throw new IllegalArgumentException("Purchase account number not found.");
     }
 
-    TokensEntity vendorAccount = vendorAccountOptional.get();
-    TokensEntity purchaseAccount = purchaseAccountOptional.get();
+    TokenEntities vendorAccount = vendorAccountOptional.get();
+    TokenEntities purchaseAccount = purchaseAccountOptional.get();
 
      // Validate if the user has enough kilowatts
     if(vendorAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED){
@@ -78,7 +79,7 @@ public LocalVendorEntity purchaseProduct(Long vendorAccountNumber,Long purchaseA
 
     // Deduct the kilowatts
     vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() - kilowatts);
-    tokensRepository.save(vendorAccount);
+    tokenRepository.save(vendorAccount);
 
     // Create and save the vendor purchase
     LocalVendorEntity purchaseProduct = new LocalVendorEntity();

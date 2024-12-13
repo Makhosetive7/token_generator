@@ -4,22 +4,22 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.UsersEntity;
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 @Service
 public class registerUserService {
     
-private final UserRepository userRepository;
+private final userRepository userRepository;
 
-public registerUserService(UserRepository userRepository) {
+public registerUserService(userRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
         // register user
-    public UsersEntity createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
-      UsersEntity  user = new UsersEntity();
+    public UserEntities createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
+      UserEntities  user = new UserEntities();
         user.setUserName(userName);
         user.setLastName(lastName);
         user.setPassword(password);

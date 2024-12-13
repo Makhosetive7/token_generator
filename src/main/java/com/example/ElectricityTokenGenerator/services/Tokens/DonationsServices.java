@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.TokensEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
-import com.example.ElectricityTokenGenerator.repository.tokensRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
+import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -21,13 +21,13 @@ public class DonationsServices {
     private final Double MINIMUM_KILOWATTS_CONVERTED = 250.0;
     private final Double MINIMUM_DONATION_AMOUNT = 10.0;
 
-    private final tokensRepository tokensRepository;
+   private final TokenRepository tokenRepository;
     private final DonationsRepository donationsRepository;
-    private final UserRepository  userRepository;
+    private final userRepository userRepository;
 
-    public DonationsServices(DonationsRepository donationsRepository, tokensRepository tokensRepository, UserRepository userRepository) {
+    public DonationsServices(DonationsRepository donationsRepository, TokenRepository tokenRepository, userRepository userRepository) {
         this.donationsRepository = donationsRepository;
-        this.tokensRepository = tokensRepository;
+        this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
     }
 
@@ -35,18 +35,18 @@ public class DonationsServices {
     public DonationsEntity createDonation(Long donationAccountNumber, Long donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
 
         // Fetch account number information for donation account Number
-        Optional<TokensEntity> donationAccountOptional = tokensRepository.findByAccountNumber(donationAccountNumber);
+        Optional<TokenEntities> donationAccountOptional = tokenRepository.findByAccountNumber(donationAccountNumber);
         if (donationAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donation account not found.");
         }
 
-        Optional<TokensEntity> donatorsAccountOptional = tokensRepository.findByAccountNumber(donatorsAccountNumber);
+        Optional<TokenEntities> donatorsAccountOptional = tokenRepository.findByAccountNumber(donatorsAccountNumber);
         if (donatorsAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donators account not found.");
         }
 
-        TokensEntity donationAccount = donationAccountOptional.get();
-        TokensEntity donatorsAccount = donatorsAccountOptional.get();
+        TokenEntities donationAccount = donationAccountOptional.get();
+        TokenEntities donatorsAccount = donatorsAccountOptional.get();
 
         // Validate the donation
         if (donatorsAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
@@ -61,7 +61,7 @@ public class DonationsServices {
 
         // Update donations Account
         donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
-        tokensRepository.save(donatorsAccount);
+        tokenRepository.save(donatorsAccount);
 
         // Create the donation entity
         DonationsEntity newDonation = new DonationsEntity();

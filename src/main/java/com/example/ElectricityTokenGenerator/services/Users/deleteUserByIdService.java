@@ -2,14 +2,14 @@ package com.example.ElectricityTokenGenerator.services.Users;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.repository.UserRepository;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 @Service
 public class deleteUserByIdService {
 
-    private final UserRepository userRepository;
+    private final userRepository userRepository;
 
-    public deleteUserByIdService(UserRepository userRepository) {
+    public deleteUserByIdService(userRepository userRepository) {
         this.userRepository = userRepository;
     }
 
