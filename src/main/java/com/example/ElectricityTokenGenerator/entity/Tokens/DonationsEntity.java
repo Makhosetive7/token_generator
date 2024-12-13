@@ -2,9 +2,11 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Embaddables.DonationHistory;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,6 +44,9 @@ public class DonationsEntity {
 
   @Column(name = "converted_value")
   private Double convertedValue;
+
+  @Embedded
+  private DonationHistory DonationHistory;
 
   private DonationsEnumerator donationType;
 

@@ -2,9 +2,11 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Embaddables.TransactionHistory;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,37 +23,39 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "LOCAL_VENDOR"  )
+@Table(name = "LOCAL_VENDOR")
 @Entity
 @Data
 @Builder
 public class LocalVendorEntity {
-    @Id
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  public Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "vendor_account_number", unique = true)
-    public TokenEntities vendorAccountNumber;
+  @ManyToOne
+  @JoinColumn(name = "vendor_account_number", unique = true)
+  public TokenEntities vendorAccountNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "purchase_account_number")
-    public TokenEntities purchaseAccountNumber;
-    
-    @Enumerated(EnumType.STRING)
-    @Column(name = "vendor_type")
-    public LocalVendorEnumerator vendorTypeEnumerator;
+  @ManyToOne
+  @JoinColumn(name = "purchase_account_number")
+  public TokenEntities purchaseAccountNumber;
 
-    @Column(name = "converted_value")
-    public Double convertedValue;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "vendor_type")
+  public LocalVendorEnumerator vendorTypeEnumerator;
 
-    @Column(name = "purchase_amount")
-    public Double purchaseAmount;
+  @Column(name = "converted_value")
+  public Double convertedValue;
 
+  @Column(name = "purchase_amount")
+  public Double purchaseAmount;
 
-    private Double kiloWatts;
+  @Embedded
+  private TransactionHistory TransactionHistory;
 
-    @Column(name = "created_at")
-    public LocalDateTime createdAt;
+  private Double kiloWatts;
+
+  @Column(name = "created_at")
+  public LocalDateTime createdAt;
 
 }

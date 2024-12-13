@@ -1,7 +1,11 @@
 package com.example.ElectricityTokenGenerator.entity.Users;
 
 
+import com.example.ElectricityTokenGenerator.entity.Embaddables.Address;
+import com.example.ElectricityTokenGenerator.entity.Embaddables.TransactionHistory;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,8 +47,9 @@ public class UserEntities{
     @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
+    @Embedded
     @Column(name = "address", nullable = false)
-    private String homeAddress;
+    private Address Address;
 
     @Column(name="token_balance")
     private Double tokenBalance;
@@ -52,8 +57,9 @@ public class UserEntities{
     @Column(name = "role")
     private String role;
 
+    @Embedded
     @Column(name = "transaction_history")
-    private String transactionHistory;
+    private TransactionHistory TransactionHistory;
 
     @Column(name = "donation_history")
     private String DonationHistory;

@@ -1,5 +1,8 @@
 package com.example.ElectricityTokenGenerator.dto.Users;
 
+import com.example.ElectricityTokenGenerator.entity.Embaddables.Address;
+
+import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +17,6 @@ public class userRegistrationDTO {
     private String password;
     private String email;
     private String phoneNumber;
-    private String homeAddress;
+    @Embedded
+    private Address Address;
 }

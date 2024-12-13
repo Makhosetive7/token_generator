@@ -2,8 +2,10 @@ package com.example.ElectricityTokenGenerator.dto.Tokens;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Embaddables.TransactionHistory;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
 
+import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,9 @@ public class LocalVendorDTO {
     public LocalVendorEnumerator vendorTypeEnumerator;
     public Double convertedValue;
     public Double purchaseAmount;
+
+    @Embedded
+    public TransactionHistory TransactionHistory;
     private Double kiloWatts;
     public LocalDateTime createdAt;
 }
