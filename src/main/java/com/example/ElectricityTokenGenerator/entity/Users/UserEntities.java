@@ -48,7 +48,7 @@ public class UserEntities{
     private String phoneNumber;
 
     @Embedded
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private Address Address;
 
     @Column(name="token_balance")

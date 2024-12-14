@@ -32,7 +32,7 @@ public class registerUserController {
                 request.getPassword(), 
                 request.getEmail(),
                 request.getPhoneNumber(), 
-                request.getHomeAddress()
+                request.getAddress()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
