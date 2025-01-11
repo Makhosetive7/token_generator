@@ -39,19 +39,19 @@ public class LocalVendorEntity {
     public TokenEntities purchaseAccountNumber;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "vendor_type")
+    @Column(name = "VendorType")
     public LocalVendorEnumerator vendorTypeEnumerator;
 
-    @Column(name = "converted_value")
+    @Column(name = "ConvertedValue")
     public Double convertedValue;
 
-    @Column(name = "purchase_amount")
+    @Column(name = "PurchaseAmount")
     public Double purchaseAmount;
 
-
+  @Column(name = "KiloWatts")
     private Double kiloWatts;
 
-    @Column(name = "created_at")
+    @Column(name = "CreatedAt")
     public LocalDateTime createdAt;
 
 }

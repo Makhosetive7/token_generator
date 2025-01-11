@@ -4,9 +4,9 @@
 
 ## Table of Contents
 
-- [Overview](#overview)  
+- [Overview](#overview)
 - [Features](#features)
-- [Endpoints](#endpoints)  
+- [Endpoints](#endpoints)
 - [Functionality Details](#functionality-details)
 - [Endpoint Details](#endpoint-details)
 
@@ -26,25 +26,25 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ## Endpoints
 
-| Method    | Endpoint                          |
-|-----------|-----------------------------------|
-| GET       | `/api/users/`                     |
-| GET       | `/api/users/{id}`                 |
-| GET       | `/api/tokens/`                    |
-| GET       | `/api/tokens/{id}`                |
-| POST      | `/api/tokens/generateToken/`      |
-| POST      | `/api/users/register`             |
-| POST      | `/api/tokens/TokenTransfer`       |
-| POST      | `/api/tokens/createDonation`      |
-| POST      | `api/tokens/localVendor/purchase` |
-| DELETE    | `/api/users/{id}`                 |
-| DELETE    | `/api/tokens/delete/{id}`         |
+| Method | Endpoint                          |
+| ------ | --------------------------------- |
+| GET    | `/api/users/`                     |
+| GET    | `/api/users/{id}`                 |
+| GET    | `/api/tokens/`                    |
+| GET    | `/api/tokens/{id}`                |
+| POST   | `/api/tokens/generateToken/`      |
+| POST   | `/api/users/register`             |
+| POST   | `/api/tokens/TokenTransfer`       |
+| POST   | `/api/tokens/createDonation`      |
+| POST   | `api/tokens/localVendor/purchase` |
+| DELETE | `/api/users/{id}`                 |
+| DELETE | `/api/tokens/delete/{id}`         |
 
 ## Functionality Details
 
 ### Token Generation
 
-- **User Registration**: Users must registered and authenticated to participate in the token  generating system.
+- **User Registration**: Users must registered and authenticated to participate in the token generating system.
 - **Token Creation**: Tokens are generated based on user actions or purchases, each linked to a specific user account.
 - **Token Details**: Each token includes a unique ID, value, and expiration date.
 
@@ -87,6 +87,43 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ## User endpoint details
 
+### POST /api/users/register
+
+- This /api/users/register endpoint is expected to let the user register a user account within the system.
+- The implementation of the endpoint is as follows:
+
+```json
+ {
+        "userName": "John",
+        "lastName": "Doe",
+        "password": "150376333",
+        "email": "john@gmail.com",
+        "phoneNumber": "123456789",
+        "homeAddress": "123 Main St"
+    },
+
+```
+
+- The expected response body is as follows:
+
+```json
+{
+"id": 1,
+"userName": "John",
+"lastName": "Doe",
+"email": "john@gmail.com",
+"password": "150376333",
+"accountNumber": "0718939103",
+"phoneNumber": "123456789",
+"homeAddress": "123 Main St",
+"tokenBalance": null,
+"role": null,
+"transactionHistory": null,
+"localVendorHistory": null,
+"donationHistory": null
+}
+```
+
 ### GET /api/users
 
 - This /api/users endpoint returns a list of users registered with Token Generator application
@@ -118,12 +155,12 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "id": 15,
-    "userName": "Imagine",
-    "lastName": "Imagine",
-    "accountNumber": "0292406856",
-    "phoneNumber": "0713000001",
-    "homeAddress": "1234 Elm Street"
+  "id": 15,
+  "userName": "Imagine",
+  "lastName": "Imagine",
+  "accountNumber": "0292406856",
+  "phoneNumber": "0713000001",
+  "homeAddress": "1234 Elm Street"
 }
 ```
 
@@ -134,12 +171,12 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "id": 15,
-    "userName": "Imagine",
-    "lastName": "Imagine",
-    "accountNumber": "0292406856",
-    "phoneNumber": "0713000001",
-    "homeAddress": "1234 Elm Street"
+  "id": 15,
+  "userName": "Imagine",
+  "lastName": "Imagine",
+  "accountNumber": "0292406856",
+  "phoneNumber": "0713000001",
+  "homeAddress": "1234 Elm Street"
 }
 ```
 
@@ -154,10 +191,10 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-   "userName": "Laurren",
-   "lastName": "Madlodlo_Omuhle",
-   "phoneNumber": "0713000000",
-   "homeAddress": "0000 Main Street", 
+  "userName": "Laurren",
+  "lastName": "Madlodlo_Omuhle",
+  "phoneNumber": "0713000000",
+  "homeAddress": "0000 Main Street"
 }
 ```
 
@@ -187,24 +224,24 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "accountNumber" : "0347133011",
-    "amountPaid": 2500,
-    "serielNumber": 1234567898
+  "accountNumber": "0347133011",
+  "amountPaid": 2500,
+  "serielNumber": 1234567898
 }
 ```
 
-- The intended response to this endpoint is a JSON response containing the following fields: 
+- The intended response to this endpoint is a JSON response containing the following fields:
 
 ```json
 {
-    "accountNumber": 347133011,
-    "amountPaid": 2500.0,
-    "tokenGenerated": "LEIKIV4ZSOD2476SU2PM",
-    "serialNumber": "0415404665",
-    "kiloWatts": 3500.0,
-    "createdAt": "2024-12-09T15:03:27.7277533",
-    "expiredAt": "2025-02-22T15:03:27.7277533",
-    "id": 15
+  "accountNumber": 347133011,
+  "amountPaid": 2500.0,
+  "tokenGenerated": "LEIKIV4ZSOD2476SU2PM",
+  "serialNumber": "0415404665",
+  "kiloWatts": 3500.0,
+  "createdAt": "2024-12-09T15:03:27.7277533",
+  "expiredAt": "2025-02-22T15:03:27.7277533",
+  "id": 15
 }
 ```
 
@@ -215,14 +252,14 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "accountNumber":347133011,
-    "amountPaid":2500.0,
-    "tokenGenerated":"LEIKIV4ZSOD2476SU2PM",
-    "serialNumber":"0415404665",
-    "kiloWatts":3500.0,
-    "createdAt":"2024-12-09T15:03:27.727753",
-    "expiredAt":"2025-02-22T15:03:27.727753",
-    "id":15
+  "accountNumber": 347133011,
+  "amountPaid": 2500.0,
+  "tokenGenerated": "LEIKIV4ZSOD2476SU2PM",
+  "serialNumber": "0415404665",
+  "kiloWatts": 3500.0,
+  "createdAt": "2024-12-09T15:03:27.727753",
+  "expiredAt": "2025-02-22T15:03:27.727753",
+  "id": 15
 }
 ```
 
@@ -237,41 +274,41 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "senderAccountNumber" : "0287205907",
-    "receiverAccountNumber" : "0611376174",
-    "kilowatts" : 100,
-    "transferTokenId": "1234567890"
+  "senderAccountNumber": "0287205907",
+  "receiverAccountNumber": "0611376174",
+  "kilowatts": 100,
+  "transferTokenId": "1234567890"
 }
 ```
 
-- The expected response body is  a JSON object containing the following: 
+- The expected response body is a JSON object containing the following:
 
 ```json
 {
-    "receiverAccountNumber": {
-        "accountNumber": 611376174,
-        "amountPaid": 1007.0,
-        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
-        "serialNumber": "0945436946",
-        "kiloWatts": 1509.8,
-        "createdAt": "2024-12-10T01:38:01.579584",
-        "expiredAt": "2025-02-23T01:38:01.579584",
-        "id": 20
-    },
-    "senderAccountNumber": {
-        "accountNumber": 287205907,
-        "amountPaid": 1009.0,
-        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
-        "serialNumber": "0536367267",
-        "kiloWatts": 1312.6,
-        "createdAt": "2024-12-10T01:38:41.15296",
-        "expiredAt": "2025-02-23T01:38:41.15296",
-        "id": 21
-    },
-    "kiloWatts": 100.0,
-    "createdAt": null,
-    "id": 1,
-    "transferTokenId": 1234567890
+  "receiverAccountNumber": {
+    "accountNumber": 611376174,
+    "amountPaid": 1007.0,
+    "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+    "serialNumber": "0945436946",
+    "kiloWatts": 1509.8,
+    "createdAt": "2024-12-10T01:38:01.579584",
+    "expiredAt": "2025-02-23T01:38:01.579584",
+    "id": 20
+  },
+  "senderAccountNumber": {
+    "accountNumber": 287205907,
+    "amountPaid": 1009.0,
+    "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+    "serialNumber": "0536367267",
+    "kiloWatts": 1312.6,
+    "createdAt": "2024-12-10T01:38:41.15296",
+    "expiredAt": "2025-02-23T01:38:41.15296",
+    "id": 21
+  },
+  "kiloWatts": 100.0,
+  "createdAt": null,
+  "id": 1,
+  "transferTokenId": 1234567890
 }
 ```
 
@@ -290,36 +327,36 @@ This Spring Boot application generates user-specific tokens linked to individual
 }
 ```
 
-- The expected response body should be a JSON object  with the following:
+- The expected response body should be a JSON object with the following:
 
 ```json
 {
-    "id": 1,
-    "donationAccountNumber": {
-        "accountNumber": 287205907,
-        "amountPaid": 1009.0,
-        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
-        "serialNumber": "0536367267",
-        "kiloWatts": 1312.6,
-        "createdAt": "2024-12-10T01:38:41.15296",
-        "expiredAt": "2025-02-23T01:38:41.15296",
-        "id": 21
-    },
-    "donatorsAccountNumber": {
-        "accountNumber": 611376174,
-        "amountPaid": 1007.0,
-        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
-        "serialNumber": "0945436946",
-        "kiloWatts": 1409.8,
-        "createdAt": "2024-12-10T01:38:01.579584",
-        "expiredAt": "2025-02-23T01:38:01.579584",
-        "id": 20
-    },
-    "kiloWatts": null,
-    "amountDonated": 50.0,
-    "convertedValue": null,
-    "donationType": "HEALTH_PROGRAMS",
-    "createdAt": "2024-12-11T02:17:39.4127519"
+  "id": 1,
+  "donationAccountNumber": {
+    "accountNumber": 287205907,
+    "amountPaid": 1009.0,
+    "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+    "serialNumber": "0536367267",
+    "kiloWatts": 1312.6,
+    "createdAt": "2024-12-10T01:38:41.15296",
+    "expiredAt": "2025-02-23T01:38:41.15296",
+    "id": 21
+  },
+  "donatorsAccountNumber": {
+    "accountNumber": 611376174,
+    "amountPaid": 1007.0,
+    "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+    "serialNumber": "0945436946",
+    "kiloWatts": 1409.8,
+    "createdAt": "2024-12-10T01:38:01.579584",
+    "expiredAt": "2025-02-23T01:38:01.579584",
+    "id": 20
+  },
+  "kiloWatts": null,
+  "amountDonated": 50.0,
+  "convertedValue": null,
+  "donationType": "HEALTH_PROGRAMS",
+  "createdAt": "2024-12-11T02:17:39.4127519"
 }
 ```
 
@@ -343,31 +380,31 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-    "id": 1,
-    "vendorAccountNumber": {
-        "accountNumber": 287205907,
-        "amountPaid": 1009.0,
-        "tokenGenerated": "NQY8BF213K74HNGPCP1N",
-        "serialNumber": "0536367267",
-        "kiloWatts": 1262.6,
-        "createdAt": "2024-12-10T01:38:41.15296",
-        "expiredAt": "2025-02-23T01:38:41.15296",
-        "id": 21
-    },
-    "purchaseAccountNumber": {
-        "accountNumber": 611376174,
-        "amountPaid": 1007.0,
-        "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
-        "serialNumber": "0945436946",
-        "kiloWatts": 1409.8,
-        "createdAt": "2024-12-10T01:38:01.579584",
-        "expiredAt": "2025-02-23T01:38:01.579584",
-        "id": 20
-    },
-    "vendorTypeEnumerator": "ZAPALALA",
-    "convertedValue": 22.75,
-    "purchaseAmount": 100.0,
-    "kiloWatts": null,
-    "createdAt": "2024-12-11T09:21:11.7464155"
+  "id": 1,
+  "vendorAccountNumber": {
+    "accountNumber": 287205907,
+    "amountPaid": 1009.0,
+    "tokenGenerated": "NQY8BF213K74HNGPCP1N",
+    "serialNumber": "0536367267",
+    "kiloWatts": 1262.6,
+    "createdAt": "2024-12-10T01:38:41.15296",
+    "expiredAt": "2025-02-23T01:38:41.15296",
+    "id": 21
+  },
+  "purchaseAccountNumber": {
+    "accountNumber": 611376174,
+    "amountPaid": 1007.0,
+    "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
+    "serialNumber": "0945436946",
+    "kiloWatts": 1409.8,
+    "createdAt": "2024-12-10T01:38:01.579584",
+    "expiredAt": "2025-02-23T01:38:01.579584",
+    "id": 20
+  },
+  "vendorTypeEnumerator": "ZAPALALA",
+  "convertedValue": 22.75,
+  "purchaseAmount": 100.0,
+  "kiloWatts": null,
+  "createdAt": "2024-12-11T09:21:11.7464155"
 }
 ```

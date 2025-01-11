@@ -27,20 +27,20 @@ public class TokenTransferEntity {
     private Long Id;
 
     @ManyToOne
-    @JoinColumn(name = "receiverAccount_number")
+    @JoinColumn(name = "ReceiverAccountNumber")
     private TokenEntities receiverAccountNumber;
     
     @ManyToOne
-    @JoinColumn(name = "senderAccount_number")
+    @JoinColumn(name = "SenderAccountNumber")
     private TokenEntities senderAccountNumber;
 
-    @Column(name = "Token_Transfer_Id")
+    @Column(name = "TokenTransferId")
     private Long TransferTokenId;
 
-    @Column(name = "kiloWatts")
+    @Column(name = "KiloWatts")
     private Double kiloWatts;
 
-    @Column(name = "createdAt")
+    @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
 

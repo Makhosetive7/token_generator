@@ -25,22 +25,24 @@ public class TokenEntities {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "account_number", unique = true, length = 20)
+    @Column(name = "AccountNumber", unique = true, length = 20)
     private Long accountNumber;
 
-    @Column(name = "amount_paid")
+    @Column(name = "AmountPaid")
     private Double amountPaid;
 
-    @Column(name = "token_generated", unique = true, length = 20)
+    @Column(name = "TokenGenerated", unique = true, length = 20)
     private String tokenGenerated;
 
-    @Column(name = "serial_number", unique = true, length = 20)
+    @Column(name = "SerialNumber", unique = true, length = 20)
     private String serialNumber;
 
-    @Column(name = "kiloWatts")
+    @Column(name = "KiloWatts")
     private Double kiloWatts;
 
+    @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
+    @Column(name = "ExpiredAt")
     private LocalDateTime expiredAt;
 }

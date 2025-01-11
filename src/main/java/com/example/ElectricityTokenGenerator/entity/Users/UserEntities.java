@@ -25,39 +25,39 @@ public class UserEntities{
     @Column(name = "identity_number", unique = true, length = 10)
     private Long id;
 
-    @Column(name = "first_name", nullable = false, length = 20)
+    @Column(name = "FirstName", nullable = false, length = 20)
     private String userName;
 
-    @Column(name = "surname", nullable = false, length = 20)
+    @Column(name = "LastName", nullable = false, length = 20)
     private String lastName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "Email", nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "Password", nullable = false)
     private String password;
 
-    @Column(name = "account_number", nullable = false, unique = true ,length = 15)
+    @Column(name = "AccountNumber", nullable = false, unique = true ,length = 15)
     private String accountNumber;
 
-    @Column(name = "phone_number", nullable = false, length = 20)
+    @Column(name = "PhoneNumber", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "HomeAddress")
     private String homeAddress;
 
-    @Column(name="token_balance")
+    @Column(name="TokenBalance")
     private Double tokenBalance;
 
-    @Column(name = "role")
+    @Column(name = "Role")
     private String role;
 
-    @Column(name = "transaction_history")
+    @Column(name = "TransactionHistory")
     private String transactionHistory;
 
-    @Column(name = "donation_history")
+    @Column(name = "DonationHistory")
     private String DonationHistory;
 
-    @Column(name = "local_vendor_history")
+    @Column(name = "LocalVendorHistory")
     private String localVendorHistory;
 }

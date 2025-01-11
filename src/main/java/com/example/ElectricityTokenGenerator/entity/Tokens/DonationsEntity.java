@@ -27,23 +27,26 @@ public class DonationsEntity {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "donation_account_number")
+  @JoinColumn(name = "DonationAccountNumber")
   private TokenEntities donationAccountNumber;
 
   @ManyToOne
-  @JoinColumn(name = "donator_account_number")
+  @JoinColumn(name = "DonatorAccountNumber")
   private TokenEntities donatorsAccountNumber;
 
   @ManyToOne
-  @JoinColumn(name = "kiloWatts")
+  @JoinColumn(name = "KiloWatts")
   private TokenEntities kiloWatts; 
 
+  @Column(name = "AmountDonated")
   private Double amountDonated;
 
-  @Column(name = "converted_value")
+  @Column(name = "ConvertedValue")
   private Double convertedValue;
 
+  @Column(name = "DonationType")
   private DonationsEnumerator donationType;
 
+  @Column(name = "CreatedAt")
   private LocalDateTime createdAt;
 }
