@@ -124,7 +124,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 }
 ```
 
-### GET /api/users
+### GET /api/users/allUsers
 
 - This /api/users endpoint returns a list of users registered with Token Generator application
 - The expected response is a list of users
@@ -267,7 +267,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 - This endpoint /api/tokens/{id} deletes created tokens from the database
 
-### POST /api/tokens/TokenTransfer
+### POST /api/tokens/tokenTransfer
 
 - This /api/tokens/TokenTransfer endpoint allows two different registered users to transfer tokens to each other
 - The token transfer endpoint is implemented in the following example:

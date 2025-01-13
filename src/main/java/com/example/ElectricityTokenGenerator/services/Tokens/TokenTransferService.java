@@ -39,6 +39,11 @@ public class TokenTransferService {
         if (receiverAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Receiver account not found.");
         }
+
+        //validate if receiver account is same as receiver account
+        if (senderAccountNumber.equals(receiverAccountNumber)) {
+            throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
+        }
         
         // Extract sender and receiver
         TokenEntities senderAccount = senderAccountOptional.get();
