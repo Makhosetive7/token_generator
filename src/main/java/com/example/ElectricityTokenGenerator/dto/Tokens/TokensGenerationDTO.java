@@ -13,8 +13,9 @@ public class TokensGenerationDTO {
     private Long accountNumber;
     private Double amountPaid;
     private String tokenGenerated;
-    private String serialNumber;
+  //  private String serialNumber;
     private LocalDateTime createdAt;
     private LocalDateTime expiredAt;
     private Double kiloWatts;
+    private Boolean activatedToken = false;
 }

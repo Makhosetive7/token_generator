@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class UserEntities{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "identity_number", unique = true, length = 10)
+    @Column(name = "IdentityNumber", unique = true, length = 10)
     private Long id;
 
     @Column(name = "FirstName", nullable = false, length = 20)

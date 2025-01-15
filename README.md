@@ -184,20 +184,6 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 - This /api/users/account/{accountNumber} deletes a user account by account number
 
-### POST /api/users/register
-
-- This /api/users/register endpoint registers a new user into the Token Generator application system
-- The implementation of this endpoint is as follows:
-
-```json
-{
-  "userName": "Laurren",
-  "lastName": "Madlodlo_Omuhle",
-  "phoneNumber": "0713000000",
-  "homeAddress": "0000 Main Street"
-}
-```
-
 ## Tokens Endpoints Details
 
 ### GET /api/tokens/
