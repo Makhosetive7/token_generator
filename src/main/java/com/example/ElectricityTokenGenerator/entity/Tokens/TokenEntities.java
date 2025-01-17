@@ -3,11 +3,16 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,14 +24,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TOKENS")
+@Table(name = "ALL TOKENS DATABASE TABLE")
 public class TokenEntities {
         @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "AccountNumber", unique = true, length = 20)
-    private Long accountNumber;
+    @ManyToOne
+    @JoinColumn(name = "TokenID", referencedColumnName ="UserID")
+    private UserEntities accountNumber;
 
     @Column(name = "AmountPaid")
     private Double amountPaid;

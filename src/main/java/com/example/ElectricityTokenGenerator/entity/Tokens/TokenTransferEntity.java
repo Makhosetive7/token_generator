@@ -15,24 +15,26 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TOKEN_TRANSFER")
+@Table(name = "TOKEN TRANSFER DATABASE TABLE")
 public class TokenTransferEntity {
         @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @ManyToOne
-    @JoinColumn(name = "ReceiverAccountNumber")
-    private TokenEntities receiverAccountNumber;
+    @JoinColumn(name = "Receiver", referencedColumnName ="UserID")
+    private UserEntities receiverAccountNumber;
     
     @ManyToOne
-    @JoinColumn(name = "SenderAccountNumber")
-    private TokenEntities senderAccountNumber;
+    @JoinColumn(name = "Sender", referencedColumnName ="UserID")
+    private UserEntities senderAccountNumber;
 
     @Column(name = "TokenTransferId")
     private Long TransferTokenId;

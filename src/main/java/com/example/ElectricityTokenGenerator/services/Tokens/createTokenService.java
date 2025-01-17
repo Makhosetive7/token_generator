@@ -7,6 +7,7 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTokenConversion;
@@ -27,16 +28,16 @@ public class createTokenService {
         this.userRepository = userRepository;
     }
         // create tokens
-    public TokenEntities createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
+    public TokenEntities createTokens(TokenEntities accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
 
 
 
 //Validate user Acoount
-Optional<TokenEntities> userAccountOptional = tokenRepository.findByAccountNumber(accountNumber);
+Optional<TokenEntities> userAccountOptional = userRepository.findByAccountNumber(accountNumber);
 
-        // validate user Acoount existanse
+        // validate user Account existanse
         if (userAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("User account not found.");
+            throw new IllegalArgumentException("User account not found." + accountNumber);
         }
 
         // Validate amount paid is a positive number
@@ -81,7 +82,7 @@ Optional<TokenEntities> userAccountOptional = tokenRepository.findByAccountNumbe
     String figures = "0123456789";
 
     do {
-        StringBuilder token = new StringBuilder(20);
+        StringBuilder token = new StringBuilder(12);
         for (int i = 0; i < 20; i++) {
             token.append(figures.charAt(random.nextInt(figures.length())));
         }

@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
+@Table(name = "USERS DATABASE TABLE") 
 public class UserEntities{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdentityNumber", unique = true, length = 10)
+    @Column(name = "UserID", unique = true, length = 10)
     private Long id;
 
     @Column(name = "FirstName", nullable = false, length = 20)
@@ -56,7 +56,7 @@ public class UserEntities{
     private String transactionHistory;
 
     @Column(name = "DonationHistory")
-    private String DonationHistory;
+    private String donationHistory;
 
     @Column(name = "LocalVendorHistory")
     private String localVendorHistory;

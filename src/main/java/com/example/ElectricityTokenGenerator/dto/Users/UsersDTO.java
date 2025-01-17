@@ -16,6 +16,6 @@ public class UsersDTO {
     private String email;
     private String phoneNumber;
     private String homeAddress;
-    private String transfer_history;
-    private String donation_history;
+    private String transactionHistory;
+    private String donationHistory;
 }

@@ -2,6 +2,7 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "LOCAL_VENDOR"  )
+@Table(name = "LOCAL VENDOR TRANSACTIONS DATABASE TABLE"  )
 @Entity
 @Data
 @Builder
@@ -31,12 +32,12 @@ public class LocalVendorEntity {
     public Long id;
 
     @ManyToOne
-    @JoinColumn(name = "vendor_account_number", unique = true)
-    public TokenEntities vendorAccountNumber;
+    @JoinColumn(name = "Vendor", referencedColumnName = "UserID")
+    public UserEntities vendorAccountNumber;
 
     @ManyToOne
-    @JoinColumn(name = "purchase_account_number")
-    public TokenEntities purchaseAccountNumber;
+    @JoinColumn(name = "Buyer", referencedColumnName = "UserID")
+    public UserEntities purchaseAccountNumber;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "VendorType")
