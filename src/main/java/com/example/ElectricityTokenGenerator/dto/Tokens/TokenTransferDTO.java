@@ -15,7 +15,7 @@ import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 public class TokenTransferDTO {
     private UserEntities senderAccountNumber;
     private UserEntities receiverAccountNumber;
-    private Double kiloWattsTransferred;
+    private Double kiloWatts;
     private Long TransferTokenId;
     private LocalDateTime createdAt;
 }

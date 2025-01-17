@@ -29,7 +29,7 @@ public class TokenTransferController {
         TokenTransferEntity transferredTokens = tokenTransferService.transferTokens(
             request.getSenderAccountNumber(),
             request.getReceiverAccountNumber(),
-            request.getKilowatts(),
+            request.getKiloWatts(),
             request.getTransferTokenId(),
             request.getCreatedAt()
         );

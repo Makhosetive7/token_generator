@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
@@ -32,21 +33,21 @@ public class DonationsServices {
     }
 
     @Transactional
-    public DonationsEntity createDonation(Long donationAccountNumber, Long donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(String donationAccountNumber, String donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
 
         // Fetch account number information for donation account Number
-        Optional<TokenEntities> donationAccountOptional = tokenRepository.findByAccountNumber(donationAccountNumber);
+        Optional<UserEntities> donationAccountOptional = userRepository.findByAccountNumber(donationAccountNumber);
         if (donationAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donation account not found.");
         }
 
-        Optional<TokenEntities> donatorsAccountOptional = tokenRepository.findByAccountNumber(donatorsAccountNumber);
+        Optional<UserEntities> donatorsAccountOptional = userRepository.findByAccountNumber(donatorsAccountNumber);
         if (donatorsAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donators account not found.");
         }
 
-        TokenEntities donationAccount = donationAccountOptional.get();
-        TokenEntities donatorsAccount = donatorsAccountOptional.get();
+        UserEntities donationAccount = donationAccountOptional.get();
+        UserEntities donatorsAccount = donatorsAccountOptional.get();
 
         // Validate the donation
         if (donatorsAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
@@ -61,7 +62,7 @@ public class DonationsServices {
 
         // Update donations Account
         donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
-        tokenRepository.save(donatorsAccount);
+        userRepository.save(donatorsAccount);
 
         // Create the donation entity
         DonationsEntity newDonation = new DonationsEntity();

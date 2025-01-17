@@ -14,14 +14,14 @@ public interface TokenTransferMapper {
     //Map Entities to DTO
     @Mapping(source = "senderAccountNumber", target = "senderAccountNumber")
     @Mapping(source = "receiverAccountNumber", target = "receiverAccountNumber")
-    @Mapping(source = "kiloWattsTransferred", target = "kiloWattsTransferred")
+    @Mapping(source = "kiloWatts", target = "kiloWatts")
     @Mapping(source = "createdAt", target = "createdAt")
     TokenTransferDTO toDto(TokenTransferEntity tokenTransferEntity);
 
     //Map DTO to Entities
     @Mapping(source = "senderAccountNumber", target = "senderAccountNumber")
     @Mapping(source = "receiverAccountNumber", target = "receiverAccountNumber")
-    @Mapping(source = "kiloWattsTransferred", target = "kiloWattsTransferred")
+    @Mapping(source = "kiloWatts", target = "kiloWatts")
     @Mapping(source = "createdAt", target = "createdAt")
     TokenTransferEntity toEntity(TokenTransferDTO tokenTransferDTO);
 

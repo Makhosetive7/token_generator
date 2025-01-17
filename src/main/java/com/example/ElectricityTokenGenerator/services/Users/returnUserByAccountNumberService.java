@@ -18,7 +18,7 @@ public class returnUserByAccountNumberService {
     }
 
         //return user by account number
-    public Optional<UserEntities> getUserByAccountNumber(String accountNumber) {
+        Optional<UserEntities> findByAccountNumber(String accountNumber){
          return userRepository.findByAccountNumber(accountNumber); }
 
 }

@@ -55,6 +55,9 @@ public class UserEntities{
     @Column(name = "TransactionHistory")
     private String transactionHistory;
 
+    @Column(name = "KiloWatts")
+    private Double kiloWatts;
+    
     @Column(name = "DonationHistory")
     private String donationHistory;
 

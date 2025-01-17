@@ -18,6 +18,6 @@ public class TokensGenerationDTO {
     private String serialNumber;
     private LocalDateTime createdAt;
     private LocalDateTime expiredAt;
-    private Double kiloWatts;
+    private UserEntities kiloWatts;
     private Boolean activatedToken = false;
 }

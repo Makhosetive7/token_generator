@@ -39,7 +39,7 @@ public class TokenTransferEntity {
     @Column(name = "TokenTransferId")
     private Long TransferTokenId;
 
-    @Column(name = "KiloWatts")
+    @Column(name = "kiloWatts")
     private Double kiloWatts;
 
     @Column(name = "CreatedAt")

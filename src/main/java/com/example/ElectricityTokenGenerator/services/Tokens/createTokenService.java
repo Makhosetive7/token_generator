@@ -1,5 +1,6 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
@@ -28,12 +29,12 @@ public class createTokenService {
         this.userRepository = userRepository;
     }
         // create tokens
-    public TokenEntities createTokens(TokenEntities accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
+    public TokenEntities createTokens(String accountNumber ,Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
 
 
 
 //Validate user Acoount
-Optional<TokenEntities> userAccountOptional = userRepository.findByAccountNumber(accountNumber);
+Optional<UserEntities> userAccountOptional = userRepository.findByAccountNumber(accountNumber);
 
         // validate user Account existanse
         if (userAccountOptional.isEmpty()) {
@@ -47,8 +48,8 @@ Optional<TokenEntities> userAccountOptional = userRepository.findByAccountNumber
 
 
         //extract user Account
-        TokenEntities userAccount = userAccountOptional.get();
-        
+        UserEntities userAccount = userAccountOptional.get();
+
 
         //convert paid amount to kilowatts
         Double kiloWatts = electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid);
@@ -56,9 +57,8 @@ Optional<TokenEntities> userAccountOptional = userRepository.findByAccountNumber
 
         //update user kiloWatts balance
         userAccount.setKiloWatts(userAccount.getKiloWatts() + kiloWatts);
-        tokenRepository.save(userAccount);
+        userRepository.save(userAccount);
 
-    
 
         TokenEntities tokens = new TokenEntities();
         tokens.setAccountNumber(accountNumber);
@@ -68,23 +68,24 @@ Optional<TokenEntities> userAccountOptional = userRepository.findByAccountNumber
         tokens.setCreatedAt(LocalDateTime.now()); 
         tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
        tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
-    
+
         return tokenRepository.save(tokens);
     }
+
 
 
     
     
   // Token Generation Logic (20-character alphanumeric token)
   private String generateUniqueToken() {
-    String tokenGenerated;
-    Random random = new Random();
+    SecureRandom secureRandom = new SecureRandom();
     String figures = "0123456789";
+    String tokenGenerated;
 
     do {
-        StringBuilder token = new StringBuilder(12);
+        StringBuilder token = new StringBuilder(20);
         for (int i = 0; i < 20; i++) {
-            token.append(figures.charAt(random.nextInt(figures.length())));
+            token.append(figures.charAt(secureRandom.nextInt(figures.length())));
         }
         tokenGenerated = token.toString();
     } while (tokenRepository.existsByTokenGenerated(tokenGenerated));

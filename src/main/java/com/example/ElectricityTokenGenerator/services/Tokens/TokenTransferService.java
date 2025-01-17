@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenTransferRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
@@ -27,15 +28,15 @@ public class TokenTransferService {
     }
 
     @Transactional
-    public TokenTransferEntity transferTokens(Long senderAccountNumber, Long receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
+    public TokenTransferEntity transferTokens(String senderAccountNumber, String receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
         // Validate sender account exists
-        Optional<TokenEntities> senderAccountOptional = tokenRepository.findByAccountNumber(senderAccountNumber);
+        Optional<UserEntities> senderAccountOptional = userRepository.findByAccountNumber(senderAccountNumber);
         if (senderAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Sender account not found.");
         }
         
         // Validate receiver account exists
-        Optional<TokenEntities> receiverAccountOptional = tokenRepository.findByAccountNumber(receiverAccountNumber);
+        Optional<UserEntities> receiverAccountOptional = userRepository.findByAccountNumber(receiverAccountNumber);
         if (receiverAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Receiver account not found.");
         }
@@ -46,8 +47,8 @@ public class TokenTransferService {
         }
         
         // Extract sender and receiver
-        TokenEntities senderAccount = senderAccountOptional.get();
-        TokenEntities receiverAccount = receiverAccountOptional.get();
+        UserEntities senderAccount = senderAccountOptional.get();
+        UserEntities receiverAccount = receiverAccountOptional.get();
 
         // Validate sender has enough kilowatts
         if (senderAccount.getKiloWatts() < kilowatts) {
@@ -56,11 +57,11 @@ public class TokenTransferService {
 
         // Deduct kilowatts from sender
         senderAccount.setKiloWatts(senderAccount.getKiloWatts() - kilowatts);
-        tokenRepository.save(senderAccount);
+        userRepository.save(senderAccount);
 
         // Add kilowatts to receiver
         receiverAccount.setKiloWatts(receiverAccount.getKiloWatts() + kilowatts);
-        tokenRepository.save(receiverAccount);
+        userRepository.save(receiverAccount);
 
         // Record the transfer
         TokenTransferEntity tokenTransfer = new TokenTransferEntity();
