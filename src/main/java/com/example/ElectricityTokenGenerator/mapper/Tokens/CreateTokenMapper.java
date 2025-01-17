@@ -1,6 +1,6 @@
 package com.example.ElectricityTokenGenerator.mapper.Tokens;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
+
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.CreateTokenEntities;
 import org.mapstruct.Mapper;
@@ -23,5 +23,5 @@ public interface CreateTokenMapper {
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "amountPaid", target = "amountPaid")
     @Mapping(source = "createdAt", target = "createdAt")
-    CreateTokenEntities toEntity(TokenTransferDTO tokenTransferDTO);
+    CreateTokenEntities toEntity(TokensGenerationDTO tokensGenerationDTO);
 }

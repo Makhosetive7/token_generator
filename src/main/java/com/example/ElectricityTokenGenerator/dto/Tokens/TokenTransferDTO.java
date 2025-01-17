@@ -6,14 +6,16 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenTransferDTO {
-    private Long senderAccountNumber;
-    private Long receiverAccountNumber;
-    private Double kilowatts;
+    private UserEntities senderAccountNumber;
+    private UserEntities receiverAccountNumber;
+    private Double kiloWattsTransferred;
     private Long TransferTokenId;
     private LocalDateTime createdAt;
 }
