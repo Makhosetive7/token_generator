@@ -36,15 +36,15 @@ public class LocalVendorServices {
     }
 
     @Transactional
-public LocalVendorEntity purchaseProduct(String vendorAccountNumber,String purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
+public LocalVendorEntity purchaseProduct(UserEntities vendorAccountNumber,UserEntities purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
     // Fetch the vendor Account Number
-    Optional<UserEntities> vendorAccountOptional = userRepository.findByAccountNumber(vendorAccountNumber);
+    Optional<UserEntities> vendorAccountOptional = userRepository.findByAccountNumber(vendorAccountNumber.getAccountNumber());
     if (vendorAccountOptional.isEmpty()) {
         throw new IllegalArgumentException("User account number not found.");
     }
 
     //Fetch buyer account number
-    Optional<UserEntities> purchaseAccountOptional = userRepository.findByAccountNumber(purchaseAccountNumber);
+    Optional<UserEntities> purchaseAccountOptional = userRepository.findByAccountNumber(purchaseAccountNumber.getAccountNumber());
     if (purchaseAccountOptional.isEmpty()) {
         throw new IllegalArgumentException("Purchase account number not found.");
     }

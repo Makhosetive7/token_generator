@@ -39,7 +39,7 @@ public class DonationsEntity {
 
   @ManyToOne
   @JoinColumn(name = "KiloWatts")
-  private TokenEntities kiloWatts; 
+  private Double kiloWatts; 
 
   @Column(name = "AmountDonated")
   private Double amountDonated;

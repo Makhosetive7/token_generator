@@ -33,15 +33,15 @@ public class DonationsServices {
     }
 
     @Transactional
-    public DonationsEntity createDonation(String donationAccountNumber, String donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(UserEntities donationAccountNumber, UserEntities donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
 
         // Fetch account number information for donation account Number
-        Optional<UserEntities> donationAccountOptional = userRepository.findByAccountNumber(donationAccountNumber);
+        Optional<UserEntities> donationAccountOptional = userRepository.findByAccountNumber(donationAccountNumber.getAccountNumber());
         if (donationAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donation account not found.");
         }
 
-        Optional<UserEntities> donatorsAccountOptional = userRepository.findByAccountNumber(donatorsAccountNumber);
+        Optional<UserEntities> donatorsAccountOptional = userRepository.findByAccountNumber(donatorsAccountNumber.getAccountNumber());
         if (donatorsAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donators account not found.");
         }

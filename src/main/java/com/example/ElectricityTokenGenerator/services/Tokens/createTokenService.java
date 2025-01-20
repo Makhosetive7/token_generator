@@ -29,12 +29,12 @@ public class createTokenService {
         this.userRepository = userRepository;
     }
         // create tokens
-    public TokenEntities createTokens(String accountNumber ,Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
+    public TokenEntities createTokens(UserEntities accountNumber ,Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
 
 
 
 //Validate user Acoount
-Optional<UserEntities> userAccountOptional = userRepository.findByAccountNumber(accountNumber);
+Optional<UserEntities> userAccountOptional = userRepository.findByAccountNumber(accountNumber.getAccountNumber());
 
         // validate user Account existanse
         if (userAccountOptional.isEmpty()) {

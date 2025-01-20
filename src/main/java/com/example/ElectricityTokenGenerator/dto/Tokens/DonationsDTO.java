@@ -2,7 +2,6 @@ package com.example.ElectricityTokenGenerator.dto.Tokens;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
 
@@ -21,7 +20,7 @@ public class DonationsDTO {
     private UserEntities donationAccountNumber;
     private UserEntities donatorsAccountNumber;
     private Double amountDonated;
-    private TokenEntities kiloWatts;
+    private Double kiloWatts;
     private DonationsEnumerator donationType;
     private LocalDateTime createdAt;
     

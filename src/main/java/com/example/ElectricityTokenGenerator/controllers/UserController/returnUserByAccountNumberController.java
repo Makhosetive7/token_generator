@@ -11,24 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
-import com.example.ElectricityTokenGenerator.services.Users.returnUserByAccountNumberService;
-
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 @RestController
 @Controller
 @RequestMapping("/api/users")
 public class returnUserByAccountNumberController {
 
-    public final returnUserByAccountNumberService returnUserByAccountNumberService;
+    public final userRepository userRepository;
 
-    public returnUserByAccountNumberController(returnUserByAccountNumberService returnUserByAccountNumberService) {
-        this.returnUserByAccountNumberService = returnUserByAccountNumberService;
+    public returnUserByAccountNumberController(userRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     // retrieve user by account number
     @GetMapping("/account/{accountNumber}")
     public ResponseEntity<UserEntities> getUserByAccountNumber(@PathVariable String accountNumber) {
-         Optional<UserEntities> user = returnUserByAccountNumberService.getUserByAccountNumber(accountNumber); 
+         Optional<UserEntities> user = userRepository.findByAccountNumber(accountNumber); 
          return user.map(ResponseEntity::ok)
           .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)); }
 

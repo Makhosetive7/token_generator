@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
 import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
@@ -20,7 +19,8 @@ public class TokenTransferService {
     private final TokenTransferRepository tokenTransferRepository;
     private final userRepository userRepository;
 
-    public TokenTransferService(TokenRepository tokenRepository, TokenTransferRepository tokenTransferRepository, userRepository userRepository) {
+    public TokenTransferService(TokenRepository tokenRepository, TokenTransferRepository tokenTransferRepository,
+            userRepository userRepository) {
         this.tokenRepository = tokenRepository;
         this.tokenTransferRepository = tokenTransferRepository;
         this.userRepository = userRepository;
@@ -28,24 +28,22 @@ public class TokenTransferService {
     }
 
     @Transactional
-    public TokenTransferEntity transferTokens(String senderAccountNumber, String receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
+    public TokenTransferEntity transferTokens(UserEntities senderAccountNumber, UserEntities receiverAccountNumber,
+            Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
         // Validate sender account exists
-        Optional<UserEntities> senderAccountOptional = userRepository.findByAccountNumber(senderAccountNumber);
+        Optional<UserEntities> senderAccountOptional = userRepository
+                .findByAccountNumber(senderAccountNumber.getAccountNumber());
         if (senderAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Sender account not found.");
         }
-        
-        // Validate receiver account exists
-        Optional<UserEntities> receiverAccountOptional = userRepository.findByAccountNumber(receiverAccountNumber);
+
+        //Validate if receiver account exists
+        Optional<UserEntities> receiverAccountOptional = userRepository
+                .findByAccountNumber(receiverAccountNumber.getAccountNumber());
         if (receiverAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Receiver account not found.");
         }
 
-        //validate if receiver account is same as receiver account
-        if (senderAccountNumber.equals(receiverAccountNumber)) {
-            throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
-        }
-        
         // Extract sender and receiver
         UserEntities senderAccount = senderAccountOptional.get();
         UserEntities receiverAccount = receiverAccountOptional.get();
