@@ -37,8 +37,7 @@ public class DonationsEntity {
   @JoinColumn(name = "Donor" , referencedColumnName ="UserID")
   private UserEntities donatorsAccountNumber;
 
-  @ManyToOne
-  @JoinColumn(name = "KiloWatts")
+  @Column(name = "KiloWatts")
   private Double kiloWatts; 
 
   @Column(name = "AmountDonated")

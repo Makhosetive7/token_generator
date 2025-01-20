@@ -42,8 +42,7 @@ public class TokenEntities {
     @Column(name = "SerialNumber", unique = true, length = 20)
     private String serialNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "KiloWatts")
+    @Column(name = "KiloWatts")
     private Double kiloWatts;
 
     @Column(name = "CreatedAt")

@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
 
 @Entity
 @Data
@@ -30,11 +29,11 @@ public class TokenTransferEntity {
 
     @ManyToOne
     @JoinColumn(name = "Receiver", referencedColumnName ="UserID")
-    private UserEntities receiverAccountNumber;
+    private String receiverAccountNumber;
     
     @ManyToOne
     @JoinColumn(name = "Sender", referencedColumnName ="UserID")
-    private UserEntities senderAccountNumber;
+    private String senderAccountNumber;
 
     @Column(name = "TokenTransferId")
     private Long TransferTokenId;

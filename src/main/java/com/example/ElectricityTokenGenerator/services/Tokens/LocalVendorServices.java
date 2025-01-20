@@ -40,13 +40,13 @@ public LocalVendorEntity purchaseProduct(UserEntities vendorAccountNumber,UserEn
     // Fetch the vendor Account Number
     Optional<UserEntities> vendorAccountOptional = userRepository.findByAccountNumber(vendorAccountNumber.getAccountNumber());
     if (vendorAccountOptional.isEmpty()) {
-        throw new IllegalArgumentException("User account number not found.");
+        throw new IllegalArgumentException("User account number not found." + vendorAccountNumber);
     }
 
     //Fetch buyer account number
     Optional<UserEntities> purchaseAccountOptional = userRepository.findByAccountNumber(purchaseAccountNumber.getAccountNumber());
     if (purchaseAccountOptional.isEmpty()) {
-        throw new IllegalArgumentException("Purchase account number not found.");
+        throw new IllegalArgumentException("Purchase account number not found." + purchaseAccountNumber);
     }
 
     UserEntities vendorAccount = vendorAccountOptional.get();
