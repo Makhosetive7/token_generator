@@ -1,6 +1,5 @@
 package com.example.ElectricityTokenGenerator.entity.Tokens;
 
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -19,13 +18,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TOKENS")
-public class TokenEntities {
-        @Id
+@Table(name = "tokens_generated")
+public class TokenGeneratorEntity {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    @Column(name = "AccountNumber", unique = true, length = 20)
+     @Column(name = "AccountNumber", unique = true, length = 20)
     private String accountNumber;
 
     @Column(name = "AmountPaid")
@@ -45,4 +44,5 @@ public class TokenEntities {
 
     @Column(name = "ExpiredAt")
     private LocalDateTime expiredAt;
+    
 }

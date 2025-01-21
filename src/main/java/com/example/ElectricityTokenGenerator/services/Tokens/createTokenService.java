@@ -24,19 +24,32 @@ public class createTokenService {
     }
 
         // create tokens
-    public TokenEntities createTokens(Long accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
-        TokenEntities tokens = new TokenEntities();
-        tokens.setAccountNumber(accountNumber);
-        tokens.setAmountPaid(amountPaid);
-        tokens.setTokenGenerated(generateUniqueToken());
-        tokens.setSerialNumber(generateUniqueSerialNumber());
-        tokens.setCreatedAt(LocalDateTime.now()); 
-        tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
-       tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
-    
-        return tokenRepository.save(tokens);
-    }
-    
+        public TokenEntities createTokens(String accountNumber, Double amountPaid, String serialNumber, LocalDateTime timeStamp) {
+            // Create a new token entity
+            TokenEntities tokens = new TokenEntities();
+            tokens.setAccountNumber(accountNumber);
+            tokens.setAmountPaid(amountPaid);
+            tokens.setTokenGenerated(generateUniqueToken());
+            tokens.setSerialNumber(generateUniqueSerialNumber());
+            tokens.setCreatedAt(LocalDateTime.now());
+            tokens.setExpiredAt(LocalDateTime.now().plusDays(75));
+            tokens.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
+        
+            // Save the token to the database
+            tokenRepository.save(tokens);
+        
+            // Update the user's table
+            userRepository.findByAccountNumber(accountNumber).ifPresentOrElse(user -> {
+                user.setKiloWatts(user.getKiloWatts() + electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
+                userRepository.save(user);
+                System.out.println("User updated: " + user);
+            }, () -> {
+                System.out.println("User not found with accountNumber: " + accountNumber);
+            });
+            
+            return tokens; // Return the saved token
+        }
+        
     
   // Token Generation Logic (20-character alphanumeric token)
   private String generateUniqueToken() {

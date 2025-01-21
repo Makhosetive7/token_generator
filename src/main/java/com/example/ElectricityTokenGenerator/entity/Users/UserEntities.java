@@ -46,8 +46,8 @@ public class UserEntities{
     @Column(name = "HomeAddress")
     private String homeAddress;
 
-    @Column(name="TokenBalance")
-    private Double tokenBalance;
+    @Column(name = "KiloWatts")
+    private Double kiloWatts;
 
     @Column(name = "Role")
     private String role;

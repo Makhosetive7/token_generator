@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokensGenerationDTO {
-    private Long accountNumber;
+    private String accountNumber;
     private Double amountPaid;
     private String tokenGenerated;
     private String serialNumber;

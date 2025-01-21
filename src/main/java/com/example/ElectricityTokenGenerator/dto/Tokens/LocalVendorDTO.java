@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalVendorDTO {
-    public Long vendorAccountNumber;
-    public Long purchaseAccountNumber;
+    public String vendorAccountNumber;
+    public String purchaseAccountNumber;
     public LocalVendorEnumerator vendorTypeEnumerator;
     public Double convertedValue;
     public Double purchaseAmount;

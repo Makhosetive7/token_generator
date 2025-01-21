@@ -16,5 +16,5 @@ public interface TokenRepository extends JpaRepository<TokenEntities, Long> {
     boolean existsBySerialNumber(String serialNumber);
     void deleteByExpiredAt(LocalDateTime expiredAt);
 
-    Optional<TokenEntities> findByAccountNumber(Long accountNumber);
+    Optional<TokenEntities> findByAccountNumber(String accountNumber);
 }

@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class DonationsDTO {
 
     private Long Id;
-    private Long donationAccountNumber;
-    private Long donatorsAccountNumber;
+    private String donationAccountNumber;
+    private String donatorsAccountNumber;
     private Double amountDonated;
     private Double kiloWatts;
     private DonationsEnumerator donationType;

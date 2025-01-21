@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenTransferDTO {
-    private Long senderAccountNumber;
-    private Long receiverAccountNumber;
+    private String senderAccountNumber;
+    private String receiverAccountNumber;
     private Double kilowatts;
     private Long TransferTokenId;
     private LocalDateTime createdAt;

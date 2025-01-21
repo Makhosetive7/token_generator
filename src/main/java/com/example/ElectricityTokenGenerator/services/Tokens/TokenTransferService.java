@@ -27,7 +27,7 @@ public class TokenTransferService {
     }
 
     @Transactional
-    public TokenTransferEntity transferTokens(Long senderAccountNumber, Long receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
+    public TokenTransferEntity transferTokens(String senderAccountNumber, String receiverAccountNumber, Double kilowatts, Long transferTokenId, LocalDateTime createdAt) {
         // Validate sender account exists
         Optional<TokenEntities> senderAccountOptional = tokenRepository.findByAccountNumber(senderAccountNumber);
         if (senderAccountOptional.isEmpty()) {

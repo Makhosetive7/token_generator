@@ -32,7 +32,7 @@ public class DonationsServices {
     }
 
     @Transactional
-    public DonationsEntity createDonation(Long donationAccountNumber, Long donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(String donationAccountNumber, String donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
 
         // Fetch account number information for donation account Number
         Optional<TokenEntities> donationAccountOptional = tokenRepository.findByAccountNumber(donationAccountNumber);

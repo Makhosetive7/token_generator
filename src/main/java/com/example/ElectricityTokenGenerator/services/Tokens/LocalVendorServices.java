@@ -35,7 +35,7 @@ public class LocalVendorServices {
     }
 
     @Transactional
-public LocalVendorEntity purchaseProduct(Long vendorAccountNumber,Long purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
+public LocalVendorEntity purchaseProduct(String vendorAccountNumber,String purchaseAccountNumber ,LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue,Double kilowatts,Double purchaseAmount, LocalDateTime createdAt) {
     // Fetch the vendor Account Number
     Optional<TokenEntities> vendorAccountOptional = tokenRepository.findByAccountNumber(vendorAccountNumber);
     if (vendorAccountOptional.isEmpty()) {
