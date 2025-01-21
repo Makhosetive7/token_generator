@@ -47,7 +47,7 @@ public class UserEntities{
     private String homeAddress;
 
     @Column(name = "KiloWatts")
-    private Double kiloWatts;
+    private Double kiloWatts = 0.0;
 
     @Column(name = "Role")
     private String role;

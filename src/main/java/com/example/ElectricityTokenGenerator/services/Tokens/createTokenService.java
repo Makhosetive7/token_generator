@@ -40,12 +40,15 @@ public class createTokenService {
         
             // Update the user's table
             userRepository.findByAccountNumber(accountNumber).ifPresentOrElse(user -> {
-                user.setKiloWatts(user.getKiloWatts() + electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid));
+                double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
+                double newKiloWatts = currentKiloWatts + electricityTokenConversion.convertAmountPaidToKilowatts(amountPaid);
+                user.setKiloWatts(newKiloWatts);
                 userRepository.save(user);
                 System.out.println("User updated: " + user);
             }, () -> {
                 System.out.println("User not found with accountNumber: " + accountNumber);
             });
+            
             
             return tokens; // Return the saved token
         }
