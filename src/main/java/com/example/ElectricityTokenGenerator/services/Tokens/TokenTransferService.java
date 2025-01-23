@@ -23,7 +23,6 @@ public class TokenTransferService {
         this.tokenRepository = tokenRepository;
         this.tokenTransferRepository = tokenTransferRepository;
         this.userRepository = userRepository;
-
     }
 
     @Transactional
@@ -40,7 +39,7 @@ public class TokenTransferService {
             throw new IllegalArgumentException("Receiver account not found.");
         }
 
-        //validate if receiver account is same as receiver account
+        // Validate if sender and receiver accounts are not the same
         if (senderAccountNumber.equals(receiverAccountNumber)) {
             throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
         }
@@ -69,7 +68,24 @@ public class TokenTransferService {
         tokenTransfer.setTransferTokenId(transferTokenId);
         tokenTransfer.setKiloWatts(kilowatts);
         tokenTransfer.setCreatedAt(createdAt);
+        tokenTransfer = tokenTransferRepository.save(tokenTransfer);
 
-        return tokenTransferRepository.save(tokenTransfer);
+        // Update sender and receiver accounts in user table
+        updateUserKiloWatts(senderAccountNumber, kilowatts, false);
+        updateUserKiloWatts(receiverAccountNumber, kilowatts, true);
+
+        return tokenTransfer;
+    }
+
+    private void updateUserKiloWatts(String accountNumber, Double kilowatts, boolean isReceiver) {
+        userRepository.findByAccountNumber(accountNumber).ifPresentOrElse(user -> {
+            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
+            double newKiloWatts = isReceiver ? currentKiloWatts + kilowatts : currentKiloWatts - kilowatts;
+            user.setKiloWatts(newKiloWatts);
+            userRepository.save(user);
+            System.out.println("User updated: " + user);
+        }, () -> {
+            System.out.println("User not found with accountNumber: " + accountNumber);
+        });
     }
 }
