@@ -1,17 +1,18 @@
 package com.example.ElectricityTokenGenerator.enums;
 
 public enum DonationsEnumerator {
-    EDUCATION_SUPPORT("School support"),
-    FOOD_PROGRAMS("Food programs"),
-    HEALTH_PROGRAMS("Health programs");
+    EDUCATION_SUPPORT("0076623901"),
+    HEALTH_SUPPORT("0087632102"),
+    WATER_PROJECT("0098765401"),
+    ELECTRIFICATION("0078632903");
 
-    private final String displayName;
+    private final String requiredAccountNumber;
 
-    DonationsEnumerator(String displayName) {
-        this.displayName = displayName;
+    DonationsEnumerator(String requiredAccountNumber) {
+        this.requiredAccountNumber = requiredAccountNumber;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getRequiredAccountNumber() {
+        return requiredAccountNumber;
     }
 }

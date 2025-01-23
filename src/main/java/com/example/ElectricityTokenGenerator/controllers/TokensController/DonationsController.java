@@ -13,7 +13,6 @@ import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
 import com.example.ElectricityTokenGenerator.services.Tokens.DonationsServices;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @RestController
 @RequestMapping("api/tokens/")
 public class DonationsController {
@@ -22,17 +21,15 @@ public class DonationsController {
     public DonationsController(DonationsServices donationsServices) {
         this.donationsServices = donationsServices;
     }
+
     @PostMapping("/createDonation")
     public ResponseEntity<DonationsEntity> createDonation(@RequestBody DonationsDTO request) {
         DonationsEntity newDonations = donationsServices.createDonation(
-            request.getDonationAccountNumber(),
-            request.getDonatorsAccountNumber(), 
-            request.getAmountDonated(),
-            request.getKiloWatts(),
-            request.getDonationType(),
-            LocalDateTime.now()
-        );
+                request.getDonationType(),
+                request.getDonatorsAccountNumber(),
+                request.getKiloWatts(),
+                LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);
     }
-    
+
 }

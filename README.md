@@ -314,14 +314,12 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ### POST /api/tokens/createDonation
 
-- This /api/tokens/createDonations endpoint allows users with extra tokens that they feel like they can convert to monetory value a the systems rate to convert and donate towards education support, food programs and towards health care.
+- This /api/tokens/createDonations endpoint allows users with extra tokens that they feel like they can convert to monetary value a the systems rate to convert and donate towards education support, food programs and towards health care.
 - This endpoint is implemented in the following way:
 
 ```json
 {
-  "donationAccountNumber": "0287205907",
   "donatorsAccountNumber": "0611376174",
-  "amountDonated": 50.0,
   "kiloWatts": 100.0,
   "donationType": "HEALTH_PROGRAMS"
 }

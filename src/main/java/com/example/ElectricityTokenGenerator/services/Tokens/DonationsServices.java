@@ -14,43 +14,45 @@ import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 import jakarta.transaction.Transactional;
 
-
 @Service
 public class DonationsServices {
     private final Double CONVERSION_RATE = 2.5 / 5;
     private final Double MINIMUM_KILOWATTS_CONVERTED = 250.0;
     private final Double MINIMUM_DONATION_AMOUNT = 10.0;
 
-   private final TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
     private final DonationsRepository donationsRepository;
     private final userRepository userRepository;
 
-    public DonationsServices(DonationsRepository donationsRepository, TokenRepository tokenRepository, userRepository userRepository) {
+    public DonationsServices(DonationsRepository donationsRepository, TokenRepository tokenRepository,
+            userRepository userRepository) {
         this.donationsRepository = donationsRepository;
         this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
     }
 
     @Transactional
-    public DonationsEntity createDonation(String donationAccountNumber, String donatorsAccountNumber, Double amountDonated,Double kiloWatts ,DonationsEnumerator donationType, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(DonationsEnumerator donationType, String donatorsAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
 
-        // Fetch account number information for donation account Number
-        Optional<TokenEntities> donationAccountOptional = tokenRepository.findByAccountNumber(donationAccountNumber);
-        if (donationAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("Donation account not found.");
+        // Validate that the account number matches the required account number for the
+        // given donation type
+        if (!donatorsAccountNumber.equals(donationType.getRequiredAccountNumber())) {
+            throw new IllegalArgumentException("Provided account number does not match the required account number for "
+                    + donationType.name() + ".");
         }
 
+        // Validate that the donators account exists
         Optional<TokenEntities> donatorsAccountOptional = tokenRepository.findByAccountNumber(donatorsAccountNumber);
         if (donatorsAccountOptional.isEmpty()) {
             throw new IllegalArgumentException("Donators account not found.");
         }
 
-        TokenEntities donationAccount = donationAccountOptional.get();
         TokenEntities donatorsAccount = donatorsAccountOptional.get();
 
         // Validate the donation
         if (donatorsAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
-            throw new IllegalArgumentException("Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
+            throw new IllegalArgumentException(
+                    "Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
         }
 
         Double convertedValue = kiloWatts * CONVERSION_RATE;
@@ -59,27 +61,36 @@ public class DonationsServices {
             throw new IllegalArgumentException("Donation amount must be at least $10.0.");
         }
 
+        // Update the user's kiloWatts and save the updated user
+        userRepository.findByAccountNumber(donatorsAccountNumber).ifPresentOrElse(user -> {
+            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
+            double newKiloWatts = currentKiloWatts + kiloWatts;
+            user.setKiloWatts(newKiloWatts);
+            userRepository.save(user);
+            System.out.println("User updated: " + user);
+        }, () -> {
+            System.out.println("User not found with accountNumber: " + donatorsAccountNumber);
+        });
+
         // Update donations Account
-        donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
-        tokenRepository.save(donatorsAccount);
+        // donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
+        // tokenRepository.save(donatorsAccount);
 
         // Create the donation entity
         DonationsEntity newDonation = new DonationsEntity();
-        newDonation.setDonationAccountNumber(donationAccount);
-        newDonation.setDonatorsAccountNumber(donatorsAccount);
-        newDonation.setAmountDonated(amountDonated);
         newDonation.setDonationType(donationType);
+        newDonation.setDonatorsAccountNumber(donatorsAccount);
+        newDonation.setKiloWatts(kiloWatts);
         newDonation.setCreatedAt(createdAt);
 
         return donationsRepository.save(newDonation);
+
     }
     // - Get donation by ID
     // - Get donation by user ID
     // - Get donation by status
     // - Get donation by date
     // - Get donations for a specific user
-     // - Delete a donation
-
-
+    // - Delete a donation
 
 }

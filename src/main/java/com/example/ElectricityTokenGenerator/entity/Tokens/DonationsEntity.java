@@ -37,9 +37,6 @@ public class DonationsEntity {
   @Column(name = "KiloWatts")
   private Double kiloWatts; 
 
-  @Column(name = "AmountDonated")
-  private Double amountDonated;
-
   @Column(name = "ConvertedValue")
   private Double convertedValue;
 

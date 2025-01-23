@@ -77,6 +77,7 @@ public class TokenTransferService {
         return tokenTransfer;
     }
 
+    //update user's table after token transfer
     private void updateUserKiloWatts(String accountNumber, Double kilowatts, boolean isReceiver) {
         userRepository.findByAccountNumber(accountNumber).ifPresentOrElse(user -> {
             double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
