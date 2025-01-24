@@ -32,11 +32,15 @@ public class DonationsServices {
     }
 
     @Transactional
-    public DonationsEntity createDonation(DonationsEnumerator donationType, String donatorsAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
+    public DonationsEntity createDonation(DonationsEnumerator donationType, String donationsAccountNumber,
+            String donatorsAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
 
         // Validate that the account number matches the required account number for the
         // given donation type
-        if (!donatorsAccountNumber.equals(donationType.getRequiredAccountNumber())) {
+        Optional<TokenEntities> donationsAccountOptional = tokenRepository
+                .findByAccountNumber(donationType.getRequiredAccountNumber());
+        if (donationsAccountOptional.isEmpty() ||
+                !donationsAccountOptional.get().getAccountNumber().equals(donationType.getRequiredAccountNumber())) {
             throw new IllegalArgumentException("Provided account number does not match the required account number for "
                     + donationType.name() + ".");
         }
@@ -73,14 +77,16 @@ public class DonationsServices {
         });
 
         // Update donations Account
-        // donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
-        // tokenRepository.save(donatorsAccount);
+        donatorsAccount.setKiloWatts(donatorsAccount.getKiloWatts() - kiloWatts);
+        tokenRepository.save(donatorsAccount);
 
         // Create the donation entity
         DonationsEntity newDonation = new DonationsEntity();
         newDonation.setDonationType(donationType);
         newDonation.setDonatorsAccountNumber(donatorsAccount);
+        newDonation.setDonationAccountNumber(donationsAccountOptional.get());
         newDonation.setKiloWatts(kiloWatts);
+        newDonation.setConvertedValue(convertedValue);
         newDonation.setCreatedAt(createdAt);
 
         return donationsRepository.save(newDonation);

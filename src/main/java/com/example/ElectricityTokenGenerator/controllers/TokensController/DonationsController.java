@@ -27,6 +27,7 @@ public class DonationsController {
         DonationsEntity newDonations = donationsServices.createDonation(
                 request.getDonationType(),
                 request.getDonatorsAccountNumber(),
+                request.getDonationAccountNumber(),
                 request.getKiloWatts(),
                 LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);

@@ -18,6 +18,7 @@ public class DonationsDTO {
 
     private Long Id;
     private String donatorsAccountNumber;
+    private String donationAccountNumber;
     private Double kiloWatts;
     private DonationsEnumerator donationType;
     private LocalDateTime createdAt;
