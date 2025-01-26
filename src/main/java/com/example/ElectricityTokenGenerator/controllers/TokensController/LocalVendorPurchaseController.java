@@ -29,8 +29,8 @@ public class LocalVendorPurchaseController {
             request.getVendorAccountNumber(),
             request.getPurchaseAccountNumber(),
             request.getVendorTypeEnumerator(),
-            request.getConvertedValue(),
-            request.getKiloWatts(),
+            null,
+            null,
             request.getPurchaseAmount(),
             LocalDateTime.now()
         );

@@ -17,8 +17,6 @@ public class LocalVendorDTO {
     public String vendorAccountNumber;
     public String purchaseAccountNumber;
     public LocalVendorEnumerator vendorTypeEnumerator;
-    public Double convertedValue;
     public Double purchaseAmount;
-    private Double kiloWatts;
     public LocalDateTime createdAt;
 }

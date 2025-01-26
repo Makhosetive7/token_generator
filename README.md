@@ -226,7 +226,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 {
   "accountNumber": "0347133011",
   "amountPaid": 2500,
-  "serielNumber": 1234567898
+  "serialNumber": 1234567898
 }
 ```
 
