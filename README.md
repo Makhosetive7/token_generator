@@ -365,12 +365,10 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "vendorAccountNumber": "287205907",
-  "purchaseAccountNumber": "0611376174",
-  "vendorTypeEnumerator": "ZAPALALA",
-  "convertedValue": 45.5,
-  "kiloWatts": 50,
-  "purchaseAmount": 100
+  "vendorAccountNumber": "0248086285",
+  "purchaseAccountNumber": "0984145938",
+  "vendorTypeEnumerator": "CHOPPIES",
+  "purchaseAmount": 200
 }
 ```
 

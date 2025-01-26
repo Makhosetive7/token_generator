@@ -57,10 +57,37 @@ public class LocalVendorServices {
         if (kilowattsToConvert > purchaseAccount.getKiloWatts()) {
             throw new IllegalArgumentException("Insufficient kilowatts to convert.");
         }
-        
+
         // Deduct the kilowatts
-        purchaseAccount.setKiloWatts(purchaseAccount.getKiloWatts() - kilowatts);
+        purchaseAccount.setKiloWatts(purchaseAccount.getKiloWatts() - kilowattsToConvert);
         tokenRepository.save(purchaseAccount);
+
+        // Add the kilowatts to the vendor account
+        vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() + kilowattsToConvert);
+        tokenRepository.save(vendorAccount);
+
+
+        //update users kilowatts and save the updated user
+        userRepository.findByAccountNumber(purchaseAccountNumber).ifPresentOrElse(user -> {
+            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
+            double newKiloWatts = currentKiloWatts - kilowattsToConvert;
+            user.setKiloWatts(newKiloWatts);
+            userRepository.save(user);
+            System.out.println("User updated: " + user);
+        }, () -> {
+            System.out.println("User not found with accountNumber: " + purchaseAccountNumber);
+        });
+
+        //update vendor kilowatts and save the updated user
+        userRepository.findByAccountNumber(vendorAccountNumber).ifPresentOrElse(user -> {
+            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
+            double newKiloWatts = currentKiloWatts + kilowattsToConvert;
+            user.setKiloWatts(newKiloWatts);
+            userRepository.save(user);
+            System.out.println("User updated: " + user);
+        }, () -> {
+            System.out.println("User not found with accountNumber: " + vendorAccountNumber);
+        });
 
         // Create and save the vendor purchase
         LocalVendorEntity purchaseProduct = new LocalVendorEntity();
