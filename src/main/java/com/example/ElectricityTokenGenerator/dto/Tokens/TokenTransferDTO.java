@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class TokenTransferDTO {
     private String senderAccountNumber;
     private String receiverAccountNumber;
-    private Double kilowatts;
+    private Double kiloWatts;
     private Long TransferTokenId;
     private LocalDateTime createdAt;
 }
