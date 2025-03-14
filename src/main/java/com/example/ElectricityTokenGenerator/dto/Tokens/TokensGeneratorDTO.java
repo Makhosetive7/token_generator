@@ -1,7 +1,5 @@
 package com.example.ElectricityTokenGenerator.dto.Tokens;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokensDTO {
+public class TokensGeneratorDTO {
     private String accountNumber;
-    private Double amountPaid;
-    private String tokenGenerated;
-    private Long serialNumber;
-    private LocalDateTime createdAt;
+    private Double amount;
 }

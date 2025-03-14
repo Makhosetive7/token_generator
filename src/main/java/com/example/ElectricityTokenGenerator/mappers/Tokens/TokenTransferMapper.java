@@ -5,37 +5,27 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransfer;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TokenTransferMapper {
 
-    TokenTransferMapper INSTANCE =  Mappers.getMapper(TokenTransferMapper.class);
+    TokenTransferMapper INSTANCE = Mappers.getMapper(TokenTransferMapper.class);
 
-    // Map TokenTransferEntity to TokenTransferDTO
-    @Mapping(source = "senderAccountNumber", target = "senderAccountNumber")
-    @Mapping(source = "receiverAccountNumber", target = "receiverAccountNumber")
+    // Map TokenTransferDTO to TokenTransfer entity
+    @Mapping(source = "senderAccountNumber", target = "sender.accountNumber")
+    @Mapping(source = "receiverAccountNumber", target = "receiver.accountNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "createdAt", target = "createdAt")
-    TokenTransferDTO toDto(TokenTransferEntity tokenTransferEntity);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "transferredTokenCode", ignore = true)
+    @Mapping(target = "amount", ignore = true)
+    @Mapping(target = "transferDate", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    TokenTransfer toEntity(TokenTransferDTO tokenTransferDTO);
 
-    // Map TokenTransferDTO to TokenTransferEntity
-    @Mapping(source = "senderAccountNumber", target = "senderAccountNumber")
-    @Mapping(source = "receiverAccountNumber", target = "receiverAccountNumber")
+    // Map TokenTransfer entity to TokenTransferDTO
+    @Mapping(source = "sender.accountNumber", target = "senderAccountNumber")
+    @Mapping(source = "receiver.accountNumber", target = "receiverAccountNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "createdAt", target = "createdAt")
-    TokenTransferEntity toEntity(TokenTransferDTO tokenTransferDTO);
-
-    // Custom mapping method for TokenEntities to String
-    default String map(TokenEntities tokenEntities) {
-        return tokenEntities.getAccountNumber();  // Assuming TokenEntities has a getAccountNumber method
-    }
-
-    // Custom mapping method for String to TokenEntities
-    default TokenEntities map(String accountNumber) {
-        TokenEntities tokenEntities = new TokenEntities();
-        tokenEntities.setAccountNumber(accountNumber);  // Assuming TokenEntities has a setAccountNumber method
-        return tokenEntities;
-    }
+    TokenTransferDTO toDto(TokenTransfer tokenTransfer);
 }

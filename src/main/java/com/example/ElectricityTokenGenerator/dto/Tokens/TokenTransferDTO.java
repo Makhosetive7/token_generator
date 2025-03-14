@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +11,4 @@ public class TokenTransferDTO {
     private String senderAccountNumber;
     private String receiverAccountNumber;
     private Double kiloWatts;
-    private Long TransferTokenId;
-    private LocalDateTime createdAt;
 }

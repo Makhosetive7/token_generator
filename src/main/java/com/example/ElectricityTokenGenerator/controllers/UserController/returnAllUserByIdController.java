@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.services.Users.returnUserByIdService;
 
 
@@ -27,8 +27,8 @@ public class returnAllUserByIdController {
 
         // return user by id
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntities> getUserById(@PathVariable Long id) {
-        Optional<UserEntities> user = returnUserByIdService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = returnUserByIdService.getUserById(id);
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

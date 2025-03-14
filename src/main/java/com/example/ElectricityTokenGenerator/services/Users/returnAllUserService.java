@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 
@@ -18,7 +18,7 @@ public class returnAllUserService {
     }
 
         //return all users
-    public List<UserEntities> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 }

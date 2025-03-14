@@ -3,11 +3,15 @@ package com.example.ElectricityTokenGenerator.services.Tokens;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
-import com.example.ElectricityTokenGenerator.enums.DonationsEnumerator;
+import com.example.ElectricityTokenGenerator.dto.Tokens.DonationsDTO;
+import com.example.ElectricityTokenGenerator.entity.Tokens.Donation;
+import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.enums.Donations;
+import com.example.ElectricityTokenGenerator.mappers.Tokens.DonationsMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
@@ -23,38 +27,48 @@ public class DonationsServices {
     private final TokenRepository tokenRepository;
     private final DonationsRepository donationsRepository;
     private final userRepository userRepository;
+    private final DonationsMapper donationsMapper; // inject donations mapper
 
-    public DonationsServices(DonationsRepository donationsRepository, TokenRepository tokenRepository,
-            userRepository userRepository) {
+    @Autowired
+    public DonationsServices(
+            DonationsRepository donationsRepository,
+            TokenRepository tokenRepository,
+            userRepository userRepository,
+            DonationsMapper donationsMapper) {
         this.donationsRepository = donationsRepository;
         this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
+        this.donationsMapper = donationsMapper;
+
     }
 
+/**
+     * Converting Available user kiloWatts and donating them to the need in monetary value
+     *
+     * @param senderAccountNumber The account number of the sender.
+     * @param receiverAccountNumber The account number of the receiver
+     * @param kiloWatts    Amount of kilOWatts to be converted.
+     * @param donationType The donation type.
+     * @param createdAt Date when the donation was made.
+     * @return The created token.
+     * @throws RuntimeException If the user is not found.
+     */
+
     @Transactional
-    public DonationsEntity createDonation(DonationsEnumerator donationType, String donationsAccountNumber,
-            String donatorsAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
+    public DonationsDTO createDonation(Donations donationType, String senderAccountNumber,
+            String receiverAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
 
-        // Validate that the account number matches the required account number for the
-        // given donation type
-        Optional<TokenEntities> donationsAccountOptional = tokenRepository
-                .findByAccountNumber(donationType.getRequiredAccountNumber());
-        if (donationsAccountOptional.isEmpty() ||
-                !donationsAccountOptional.get().getAccountNumber().equals(donationType.getRequiredAccountNumber())) {
-            throw new IllegalArgumentException("Provided account number does not match the required account number for "
-                    + donationType.name() + ".");
-        }
+                //Fetch sender account number from database
+                User sender = userRepository.findByAccountNumber(senderAccountNumber)
+                        .orElseThrow(() -> new RuntimeException("User (sender) not found with account number " + senderAccountNumber));
 
-        // Validate that the donators account exists
-        Optional<TokenEntities> donatorsAccountOptional = tokenRepository.findByAccountNumber(donatorsAccountNumber);
-        if (donatorsAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("Donators account not found.");
-        }
+                //Fetch receiver account number from database
+                User receiver = userRepository.findByAccountNumber(receiverAccountNumber)
+                        .orElseThrow(() -> new RuntimeException("User (receiver) not found with account number " + receiverAccountNumber));
 
-        TokenEntities donatorsAccount = donatorsAccountOptional.get();
 
-        // Validate the donation
-        if (donatorsAccount.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
+        //  Check if the sender has enough kiloWatts to convert and create the donation
+        if (senderAccountNumber.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
             throw new IllegalArgumentException(
                     "Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
         }
@@ -65,7 +79,7 @@ public class DonationsServices {
             throw new IllegalArgumentException("Donation amount must be at least $10.0.");
         }
 
-        // Update the user's kiloWatts and save the updated user
+        // Update the Sender kiloWatts and save the updated user
         userRepository.findByAccountNumber(donatorsAccountNumber).ifPresentOrElse(user -> {
             double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
             double newKiloWatts = currentKiloWatts + kiloWatts;
@@ -81,7 +95,7 @@ public class DonationsServices {
         tokenRepository.save(donatorsAccount);
 
         // Create the donation entity
-        DonationsEntity newDonation = new DonationsEntity();
+        Donation newDonation = new Donation();
         newDonation.setDonationType(donationType);
         newDonation.setDonatorsAccountNumber(donatorsAccount);
         newDonation.setDonationAccountNumber(donationsAccountOptional.get());

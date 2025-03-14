@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 @Service
@@ -18,8 +18,8 @@ public registerUserService(userRepository userRepository) {
 
 
         // register user
-    public UserEntities createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
-      UserEntities  user = new UserEntities();
+    public User createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
+      User  user = new User();
         user.setUserName(userName);
         user.setLastName(lastName);
         user.setPassword(password);

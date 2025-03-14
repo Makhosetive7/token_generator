@@ -1,6 +1,5 @@
 package com.example.ElectricityTokenGenerator.dto.Users;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class UsersDTO {
-    private Long Id;
-    private String userName;
-    private String accountNumber;
+public class UserDTO {
+    private String firstName;
+    private String lastName;
     private String email;
     private String phoneNumber;
-    private String homeAddress;
-    private String transfer_history;
-    private String donation_history;
+    private String accountNumber;
+    private Double kiloWatts;
+    private String role;
 }

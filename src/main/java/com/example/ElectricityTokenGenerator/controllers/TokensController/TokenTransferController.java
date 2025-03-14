@@ -3,7 +3,7 @@ package com.example.ElectricityTokenGenerator.controllers.TokensController;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransferEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransfer;
 import com.example.ElectricityTokenGenerator.services.Tokens.TokenTransferService;
 
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class TokenTransferController {
     }
     
         @PostMapping("/tokenTransfer")
-    public ResponseEntity<TokenTransferEntity> transferToken(@RequestBody TokenTransferDTO request) {
-        TokenTransferEntity transferredTokens = tokenTransferService.transferTokens(
+    public ResponseEntity<TokenTransfer> transferToken(@RequestBody TokenTransferDTO request) {
+        TokenTransfer transferredTokens = tokenTransferService.transferTokens(
             request.getSenderAccountNumber(),
             request.getReceiverAccountNumber(),
             request.getKiloWatts(),

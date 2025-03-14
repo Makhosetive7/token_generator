@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
+import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 
 @Service
@@ -17,7 +17,7 @@ public class returnTokensByIdServices {
     }
 
         // get tokens by id
-    public Optional<TokenEntities> getTokensById(Long id) {
+    public Optional<Token> getTokensById(Long id) {
         return tokenRepository.findById(id);
     }
 
