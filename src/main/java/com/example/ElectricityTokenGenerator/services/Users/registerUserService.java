@@ -5,7 +5,6 @@ import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -27,7 +26,6 @@ public class registerUserService {
         user.setPhoneNumber(userRegistrationDTO.getPhoneNumber());
         user.setAccountNumber(generateUniqueAccountNumber());
         user.setHomeAddress(userRegistrationDTO.getHomeAddress());
-        user.setCreatedAt(userRegistrationDTO.getCreatedAt());
 
         return userRepository.save(user);
     }

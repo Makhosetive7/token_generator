@@ -51,7 +51,7 @@ public class LocalVendorServices {
                         "User (buyer) not found with account number " + senderAccountNumber));
 
         // Fetch the receiver (Local Vendor) Account Number from database
-        Token vendorAccount = tokenRepository.findByAccountNumber(receiverAccountNumber)
+        User vendorAccount = userRepository.findByAccountNumber(receiverAccountNumber)
                 .orElseThrow(() -> new RuntimeException(
                         "Vendor account not found with account number " + receiverAccountNumber));
 
@@ -70,7 +70,7 @@ public class LocalVendorServices {
 
         // Update the vendor's account after purchase
         vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() + kilowatts);
-        tokenRepository.save(vendorAccount);
+        userRepository.save(vendorAccount);
 
         // Create and save the vendor purchase
         LocalVendor purchaseProduct = new LocalVendor();

@@ -17,11 +17,12 @@ public class LocalVendor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "vendor_account_number", nullable = false)
-    private Token vendorAccountNumber;
+    private User vendorAccountNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

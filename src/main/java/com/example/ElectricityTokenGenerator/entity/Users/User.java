@@ -75,9 +75,7 @@ public class User {
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Donation> donations;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
+  
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

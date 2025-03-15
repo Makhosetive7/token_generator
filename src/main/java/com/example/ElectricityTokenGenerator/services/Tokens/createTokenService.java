@@ -74,7 +74,7 @@ public class createTokenService {
 
     // Token Generation Logic (20-character alphanumeric token)
     private String generateUniqueToken() {
-        String tokenGenerated;
+        String tokenCode;
         Random random = new Random();
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -83,9 +83,9 @@ public class createTokenService {
             for (int i = 0; i < 20; i++) {
                 token.append(characters.charAt(random.nextInt(characters.length())));
             }
-            tokenGenerated = token.toString();
-        } while (tokenRepository.existsByTokenGenerated(tokenGenerated));
+            tokenCode= token.toString();
+        } while (tokenRepository.existsByTokenGenerated(tokenCode));
 
-        return tokenGenerated;
+        return tokenCode;
     }
 }

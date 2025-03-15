@@ -18,6 +18,7 @@ public class TokenGenerator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Long id;
 
     @Column(name = "generated_token_code", nullable = false, unique = true, length = 16)
