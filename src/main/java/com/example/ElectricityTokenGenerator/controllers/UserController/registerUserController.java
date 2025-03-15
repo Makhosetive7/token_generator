@@ -1,39 +1,65 @@
 package com.example.ElectricityTokenGenerator.controllers.UserController;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.services.Users.registerUserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
-@Controller
 @RequestMapping("/api/users")
 public class registerUserController {
-    
-    public final registerUserService registerUserService;
+
+    private final registerUserService registerUserService;
 
     public registerUserController(registerUserService registerUserService) {
         this.registerUserService = registerUserService;
     }
 
-     // user registration
+    /**
+     * Endpoint to register a new user.
+     *
+     * @param firstName   The first name of the user.
+     * @param lastName    The last name of the user.
+     * @param password    The password of the user.
+     * @param email       The email of the user.
+     * @param phoneNumber The phone number of the user.
+     * @param homeAddress The home address of the user.
+     * @param createdAt   The date and time of registration.
+     * @return The created user as a ResponseEntity.
+     */
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO request) {
-        User newUser = registerUserService.createUser(
-                request.getUserName(), 
-                request.getLastName(), 
-                request.getPassword(), 
-                request.getEmail(),
-                request.getPhoneNumber(), 
-                request.getHomeAddress()
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    public ResponseEntity<User> createUser(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String password,
+            @RequestParam String email,
+            @RequestParam String phoneNumber,
+            @RequestParam String homeAddress,
+            @RequestParam LocalDateTime createdAt) {
+
+        try {
+            // Create a UserRegistrationDTO object
+            UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
+            userRegistrationDTO.setFirstName(firstName);
+            userRegistrationDTO.setLastName(lastName);
+            userRegistrationDTO.setPassword(password);
+            userRegistrationDTO.setEmail(email);
+            userRegistrationDTO.setPhoneNumber(phoneNumber);
+            userRegistrationDTO.setHomeAddress(homeAddress);
+            userRegistrationDTO.setCreatedAt(createdAt);
+
+            // Call the service to register the user
+            User user = registerUserService.createUser(userRegistrationDTO);
+
+            // Return the created user with a 201 CREATED status
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (RuntimeException e) {
+            // Handle exceptions (e.g., user already exists)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }

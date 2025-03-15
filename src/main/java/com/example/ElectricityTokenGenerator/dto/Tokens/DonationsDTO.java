@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class DonationsDTO {
     private String senderAccountNumber; 
     private String receiverAccountNumber; 
-    private Double KiloWatts;
+    private Double kiloWatts;
+    private Double convertedValue;
     private Donations donationType; // Type of donation (e.g., EDUCATION_SUPPORT, HEALTH_SUPPORT)
     private LocalDateTime createdAt;
 

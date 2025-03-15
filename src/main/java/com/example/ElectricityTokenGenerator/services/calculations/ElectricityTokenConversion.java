@@ -9,8 +9,8 @@ public class ElectricityTokenConversion {
     private static final Double conversion_rate = 1.4;
 
     // method to convert amountPaid into kiloWatts
-    public Double convertAmountPaidToKilowatts(Double amountPaid) {
-        return amountPaid * conversion_rate;
+    public Double convertAmountPaidToKilowatts(Double amount) {
+        return amount * conversion_rate;
 
     }
 

@@ -3,38 +3,40 @@ package com.example.ElectricityTokenGenerator.entity.Tokens;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.enums.Donations;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "DONATIONS")
+@AllArgsConstructor
+@Table(name = "donations")
 public class Donation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User senderAccountNumber; // Sender of the donation (the user initiating the donation)
-
-    @Column(name = "receiver_account_number", nullable = false)
-    private User receiverAccountNumber; // Receiver account number (from Donations enum)
-
-    @Column(name = "kiloWatts", nullable = false)
-    private User kiloWatts; // Amount of energy donated (in kilo watts)
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private Donations donationType; // Type of donation (e.g., EDUCATION_SUPPORT, HEALTH_SUPPORT)
+    @Column(name = "donation_type", nullable = false)
+    private Donations donationType;
+
+    @ManyToOne
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver; // from donations enumerator
+
+    @Column(name = "kilo_watts", nullable = false)
+    private Double kiloWatts;
+
+    @Column(name = "converted_value", nullable = false)
+    private Double convertedValue;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt; // Timestamp of the donation
+    private LocalDateTime createdAt;
 }

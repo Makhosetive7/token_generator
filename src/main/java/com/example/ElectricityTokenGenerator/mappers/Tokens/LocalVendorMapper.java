@@ -7,24 +7,26 @@ import org.mapstruct.factory.Mappers;
 import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface LocalVendorMapper {
 
     LocalVendorMapper INSTANCE = Mappers.getMapper(LocalVendorMapper.class);
 
-    // Map LocalVendorDTO to LocalVendor entity
-    @Mapping(source = "senderAccount", target = "sender.accountNumber")
-    @Mapping(source = "vendorTypeEnumerator", target = "localVendor")
-    @Mapping(source = "amount", target = "amount")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "dateTime", ignore = true)
-    @Mapping(target = "receiverAccountNumber", ignore = true)
-    LocalVendor toEntity(LocalVendorDTO localVendorDTO);
-
     // Map LocalVendor entity to LocalVendorDTO
-    @Mapping(source = "sender.accountNumber", target = "senderAccount")
-    @Mapping(source = "localVendor", target = "vendorTypeEnumerator")
-    @Mapping(source = "amount", target = "amount")
+    @Mapping(source = "vendorAccountNumber.accountNumber", target = "vendorAccountNumber")
+    @Mapping(source = "purchaseAccountNumber", target = "purchaseAccountNumber")
+    @Mapping(source = "vendorTypeEnumerator", target = "vendorTypeEnumerator")
+    @Mapping(source = "convertedValue", target = "convertedValue")
+    @Mapping(source = "purchaseAmount", target = "purchaseAmount")
+    @Mapping(source = "createdAt", target = "createdAt")
     LocalVendorDTO toDto(LocalVendor localVendor);
 
+    // Map LocalVendorDTO to LocalVendor entity
+    @Mapping(source = "vendorAccountNumber", target = "vendorAccountNumber.accountNumber")
+    @Mapping(source = "purchaseAccountNumber", target = "purchaseAccountNumber")
+    @Mapping(source = "vendorTypeEnumerator", target = "vendorTypeEnumerator")
+    @Mapping(source = "convertedValue", target = "convertedValue")
+    @Mapping(source = "purchaseAmount", target = "purchaseAmount")
+    @Mapping(source = "createdAt", target = "createdAt")
+    LocalVendor toEntity(LocalVendorDTO localVendorDTO);
 }

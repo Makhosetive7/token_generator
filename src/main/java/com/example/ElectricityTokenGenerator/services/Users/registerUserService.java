@@ -1,37 +1,38 @@
 package com.example.ElectricityTokenGenerator.services.Users;
 
-import java.util.Random;
-
-import org.springframework.stereotype.Service;
-
+import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Service
 public class registerUserService {
-    
-private final userRepository userRepository;
 
-public registerUserService(userRepository userRepository) {
+    private final userRepository userRepository;
+
+    public registerUserService(userRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-
-        // register user
-    public User createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
-      User  user = new User();
-        user.setUserName(userName);
-        user.setLastName(lastName);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setPhoneNumber(phoneNumber);
-        user.setHomeAddress(homeAddress);
+    // Register user
+    public User createUser(UserRegistrationDTO userRegistrationDTO) {
+        User user = new User();
+        user.setFirstName(userRegistrationDTO.getFirstName());
+        user.setLastName(userRegistrationDTO.getLastName());
+        user.setPassword(userRegistrationDTO.getPassword());
+        user.setEmail(userRegistrationDTO.getEmail());
+        user.setPhoneNumber(userRegistrationDTO.getPhoneNumber());
         user.setAccountNumber(generateUniqueAccountNumber());
+        user.setHomeAddress(userRegistrationDTO.getHomeAddress());
+        user.setCreatedAt(userRegistrationDTO.getCreatedAt());
 
         return userRepository.save(user);
     }
 
-        private String generateUniqueAccountNumber() {
+    private String generateUniqueAccountNumber() {
         String accountNumber;
         Random random = new Random();
 
@@ -42,7 +43,4 @@ public registerUserService(userRepository userRepository) {
 
         return accountNumber;
     }
-
-
-
 }
