@@ -20,10 +20,10 @@ public registerUserService(userRepository userRepository) {
         // register user
     public UserEntities createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
       UserEntities  user = new UserEntities();
-        user.setUserName(userName);
+        user.setFirstName(userName);
         user.setLastName(lastName);
-        user.setPassword(password);
         user.setEmail(email);
+        user.setPassword(password);
         user.setPhoneNumber(phoneNumber);
         user.setHomeAddress(homeAddress);
         user.setAccountNumber(generateUniqueAccountNumber());

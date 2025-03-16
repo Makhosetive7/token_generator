@@ -1,17 +1,30 @@
 package com.example.ElectricityTokenGenerator.entity.Users;
 
+import java.time.LocalDateTime;
+import java.util.List;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
+import com.example.ElectricityTokenGenerator.entity.Tokens.DonationsEntity;
+import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @Entity
@@ -19,45 +32,50 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-public class UserEntities{
+public class UserEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "identity_number", unique = true, length = 10)
+    @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "FirstName", nullable = false, length = 20)
-    private String userName;
+    @NotBlank(message = "First name is required")
+    @Size(max = 20, message = "First name must be less than 20 characters")
+    @Column(name = "firstName", nullable = false, length = 20)
+    private String firstName;
 
-    @Column(name = "LastName", nullable = false, length = 20)
+    @NotBlank(message = "Last name is required")
+    @Size(max = 20, message = "Last name must be less than 20 characters")
+    @Column(name = "lastName", nullable = false, length = 20)
     private String lastName;
 
-    @Column(name = "Email", nullable = false)
+    @NotBlank(message = "Email is required")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "Password", nullable = false)
+    @NotBlank(message = "Password is required")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "AccountNumber", nullable = false, unique = true ,length = 15)
+    @NotBlank(message = "Account number is required")
+    @Size(max = 15, message = "Account number must be less than 15 characters")
+    @Column(name = "accountNumber", nullable = false, unique = true, length = 15)
     private String accountNumber;
 
-    @Column(name = "PhoneNumber", nullable = false, length = 20)
+    @NotBlank(message = "Phone number is required")
+    @Size(max = 20, message = "Phone number must be less than 20 characters")
+    @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Column(name = "HomeAddress")
+    @Column(name = "homeAddress")
     private String homeAddress;
 
-    @Column(name = "KiloWatts")
+    @Column(name = "amountPaid", nullable = false)
+    private Double amountPaid = 0.0;
+
+    @Column(name = "kiloWatts")
     private Double kiloWatts = 0.0;
 
-    @Column(name = "Role")
-    private String role;
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
 
-    @Column(name = "TransactionHistory")
-    private String transactionHistory;
-
-    @Column(name = "DonationHistory")
-    private String DonationHistory;
-
-    @Column(name = "LocalVendorHistory")
-    private String localVendorHistory;
 }

@@ -27,10 +27,10 @@ public class registerUserController {
     @PostMapping("/register")
     public ResponseEntity<UserEntities> createUser(@RequestBody userRegistrationDTO request) {
         UserEntities newUser = registerUserService.createUser(
-                request.getUserName(), 
+                request.getFirstName(), 
                 request.getLastName(), 
-                request.getPassword(), 
                 request.getEmail(),
+                request.getPassword(), 
                 request.getPhoneNumber(), 
                 request.getHomeAddress()
         );
