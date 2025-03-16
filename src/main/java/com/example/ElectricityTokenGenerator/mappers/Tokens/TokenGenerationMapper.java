@@ -12,25 +12,23 @@ public interface TokenGenerationMapper {
 
     TokenGenerationMapper INSTANCE = Mappers.getMapper(TokenGenerationMapper.class);
 
-    // Map TokenGenerationEntity to TokenGenerationDTO
-    @Mapping(source = "accountNumber", target = "accountNumber")
+    // Map TokenGeneratorEntity to TokensGenerationDTO
+    @Mapping(source = "accountNumber.accountNumber", target = "accountNumber")
     @Mapping(source = "amountPaid", target = "amountPaid")
     @Mapping(source = "tokenGenerated", target = "tokenGenerated")
     @Mapping(source = "serialNumber", target = "serialNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "expiredAt", target = "expiredAt")
-    TokensGenerationDTO toDto(TokenGeneratorEntity tokenGenerationEntity);
+    TokensGenerationDTO toDto(TokenGeneratorEntity tokenGeneratorEntity);
 
-
-    // Map TokenGenerationDTO to TokenGenerationEntity
-    @Mapping(source = "accountNumber", target = "accountNumber")
+    // Map TokensGenerationDTO to TokenGeneratorEntity
+    @Mapping(target = "accountNumber.accountNumber", source = "accountNumber")
     @Mapping(source = "amountPaid", target = "amountPaid")
     @Mapping(source = "tokenGenerated", target = "tokenGenerated")
     @Mapping(source = "serialNumber", target = "serialNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "expiredAt", target = "expiredAt")
-    TokenGeneratorEntity toEntity(TokensGenerationDTO tokenGenerationDTO);
-    
+    TokenGeneratorEntity toEntity(TokensGenerationDTO tokensGenerationDTO);
 }
