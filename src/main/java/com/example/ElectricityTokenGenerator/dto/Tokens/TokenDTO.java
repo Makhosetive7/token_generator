@@ -1,14 +1,13 @@
 package com.example.ElectricityTokenGenerator.dto.Tokens;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class TokenDTO {
     private String tokenBuyer; 
     private String tokenCode; 

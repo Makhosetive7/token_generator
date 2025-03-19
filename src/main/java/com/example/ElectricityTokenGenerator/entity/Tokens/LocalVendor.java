@@ -25,11 +25,8 @@ public class LocalVendor {
     private User vendorAccountNumber;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Add this field
-
-    @Column(name = "purchase_account_number", nullable = false)
-    private String purchaseAccountNumber;
+    @JoinColumn(name = "purchase_account_number", nullable = false)
+    private User purchaseAccountNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "vendor_type_enumerator", nullable = false)

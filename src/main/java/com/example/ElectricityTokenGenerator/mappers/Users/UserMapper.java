@@ -3,7 +3,6 @@ package com.example.ElectricityTokenGenerator.mappers.Users;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
 import com.example.ElectricityTokenGenerator.dto.Users.UserDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 
@@ -19,14 +18,10 @@ public interface UserMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "role", target = "role")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "homeAddress", ignore = true)
     @Mapping(target = "amountPaid", ignore = true)
-    @Mapping(target = "localVendorTransactions", ignore = true)
-    @Mapping(target = "donations", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     User toEntity(UserDTO userDTO);
 
@@ -37,6 +32,8 @@ public interface UserMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "role", target = "role")
+  
     UserDTO toDto(User user);
+
+   
 }

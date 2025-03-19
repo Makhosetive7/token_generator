@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.DonationsDTO;
+import com.example.ElectricityTokenGenerator.entity.Tokens.Donation;
 import com.example.ElectricityTokenGenerator.enums.Donations;
 import com.example.ElectricityTokenGenerator.services.Tokens.DonationsServices;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,20 +35,20 @@ public class DonationsController {
      * @return The created donation as a DonationsDTO.
      */
     @PostMapping("/createDonation")
-    public ResponseEntity<DonationsDTO> createDonation(
+    public ResponseEntity<Donation> createDonation(
             @RequestParam Donations donationType,
             @RequestParam String senderAccountNumber,
             @RequestParam String receiverAccountNumber,
             @RequestParam Double kiloWatts,
             @RequestParam LocalDateTime createdAt) {
         try {
-            DonationsDTO donationsDTO = donationsServices.createDonation(
+            Donation newDonations = donationsServices.createDonation(
                     donationType,
                     senderAccountNumber,
                     receiverAccountNumber,
                     kiloWatts,
                     createdAt);
-            return ResponseEntity.status(HttpStatus.CREATED).body(donationsDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

@@ -54,7 +54,7 @@ public class DonationsServices {
      */
 
     @Transactional
-    public DonationsDTO createDonation(Donations donationType, String senderAccountNumber,
+    public Donation createDonation(Donations donationType, String senderAccountNumber,
             String receiverAccountNumber, Double kiloWatts, LocalDateTime createdAt) {
 
         // Fetch sender account number from database
@@ -98,10 +98,7 @@ public class DonationsServices {
         newDonation.setConvertedValue(convertedValue);
         newDonation.setCreatedAt(createdAt);
 
-        // Save the donation to the database
-        Donation savedDonation = donationsRepository.save(newDonation);
 
-        // Map the Donation entity to DonationsDTO
-        return donationsMapper.toDto(savedDonation);
+        return donationsRepository.save(newDonation);
     }
 }

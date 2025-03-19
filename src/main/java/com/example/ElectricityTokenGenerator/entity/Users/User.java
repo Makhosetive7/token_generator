@@ -1,7 +1,5 @@
 package com.example.ElectricityTokenGenerator.entity.Users;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.Donation;
-import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
 import com.example.ElectricityTokenGenerator.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -68,14 +65,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LocalVendor> localVendorTransactions;
-
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Donation> donations;
-
-  
+    
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

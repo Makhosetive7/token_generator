@@ -17,7 +17,6 @@ import com.example.ElectricityTokenGenerator.services.calculations.ElectricityTo
 import jakarta.transaction.Transactional;
 
 @Service
-@Transactional
 public class createTokenService {
 
     private final TokenRepository tokenRepository;
@@ -39,12 +38,13 @@ public class createTokenService {
 
     /**
      * Create a new token for the given account number and amount paid.
+     * 
      * @param accountNumber The account number of the user.
      * @param amountPaid    The amount paid for the token.
      * @return The created token.
      * @throws RuntimeException If the user is not found.
      */
-
+    @Transactional
     public TokenDTO createTokens(String tokenBuyer, Double amount) {
         // Fetch user from database
         User user = userRepository.findByAccountNumber(tokenBuyer)
@@ -83,8 +83,8 @@ public class createTokenService {
             for (int i = 0; i < 20; i++) {
                 token.append(characters.charAt(random.nextInt(characters.length())));
             }
-            tokenCode= token.toString();
-        } while (tokenRepository.existsByTokenGenerated(tokenCode));
+            tokenCode = token.toString();
+        } while (tokenRepository.existsByTokenCode(tokenCode));
 
         return tokenCode;
     }

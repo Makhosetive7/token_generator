@@ -1,6 +1,5 @@
 package com.example.ElectricityTokenGenerator.services.Users;
 
-import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import org.springframework.stereotype.Service;
@@ -17,16 +16,15 @@ public class registerUserService {
     }
 
     // Register user
-    public User createUser(UserRegistrationDTO userRegistrationDTO) {
+    public User createUser(String firstName,String lastName,String password, String email , String phoneNumber, String homeAddress) {
         User user = new User();
-        user.setFirstName(userRegistrationDTO.getFirstName());
-        user.setLastName(userRegistrationDTO.getLastName());
-        user.setPassword(userRegistrationDTO.getPassword());
-        user.setEmail(userRegistrationDTO.getEmail());
-        user.setPhoneNumber(userRegistrationDTO.getPhoneNumber());
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setHomeAddress(homeAddress);
         user.setAccountNumber(generateUniqueAccountNumber());
-        user.setHomeAddress(userRegistrationDTO.getHomeAddress());
-
         return userRepository.save(user);
     }
 

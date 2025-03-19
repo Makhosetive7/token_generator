@@ -7,14 +7,14 @@ import org.mapstruct.factory.Mappers;
 import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface LocalVendorMapper {
 
     LocalVendorMapper INSTANCE = Mappers.getMapper(LocalVendorMapper.class);
 
     // Map LocalVendor entity to LocalVendorDTO
     @Mapping(source = "vendorAccountNumber.accountNumber", target = "vendorAccountNumber")
-    @Mapping(source = "purchaseAccountNumber", target = "purchaseAccountNumber")
+    @Mapping(source = "purchaseAccountNumber.accountNumber", target = "purchaseAccountNumber")
     @Mapping(source = "vendorTypeEnumerator", target = "vendorTypeEnumerator")
     @Mapping(source = "convertedValue", target = "convertedValue")
     @Mapping(source = "purchaseAmount", target = "purchaseAmount")
@@ -23,7 +23,7 @@ public interface LocalVendorMapper {
 
     // Map LocalVendorDTO to LocalVendor entity
     @Mapping(source = "vendorAccountNumber", target = "vendorAccountNumber.accountNumber")
-    @Mapping(source = "purchaseAccountNumber", target = "purchaseAccountNumber")
+    @Mapping(source = "purchaseAccountNumber", target = "purchaseAccountNumber.accountNumber")
     @Mapping(source = "vendorTypeEnumerator", target = "vendorTypeEnumerator")
     @Mapping(source = "convertedValue", target = "convertedValue")
     @Mapping(source = "purchaseAmount", target = "purchaseAmount")

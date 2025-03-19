@@ -3,15 +3,12 @@ package com.example.ElectricityTokenGenerator.dto.Tokens;
 import java.time.LocalDateTime;
 
 import com.example.ElectricityTokenGenerator.enums.Donations;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class DonationsDTO {
     private String senderAccountNumber; 
     private String receiverAccountNumber; 

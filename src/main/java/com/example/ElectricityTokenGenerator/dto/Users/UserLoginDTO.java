@@ -1,11 +1,10 @@
 package com.example.ElectricityTokenGenerator.dto.Users;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserLoginDTO {
     private String email;
     private String password;

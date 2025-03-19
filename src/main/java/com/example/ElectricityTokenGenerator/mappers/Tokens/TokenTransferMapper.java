@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransfer;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TokenTransferMapper {
 
     TokenTransferMapper INSTANCE = Mappers.getMapper(TokenTransferMapper.class);

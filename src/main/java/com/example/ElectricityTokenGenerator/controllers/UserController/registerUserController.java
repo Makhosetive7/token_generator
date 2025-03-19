@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
+import com.example.ElectricityTokenGenerator.dto.Users.userRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.services.Users.registerUserService;
 
@@ -25,8 +25,15 @@ public class registerUserController {
 
      // user registration
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO request) {
-        User newUser = registerUserService.createUser(request);
+    public ResponseEntity<User> createUser(@RequestBody userRegistrationDTO request) {
+        User newUser = registerUserService.createUser(
+                request.getFirstName(), 
+                request.getLastName(), 
+                request.getPassword(), 
+                request.getEmail(),
+                request.getPhoneNumber(), 
+                request.getHomeAddress()
+        );
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 }

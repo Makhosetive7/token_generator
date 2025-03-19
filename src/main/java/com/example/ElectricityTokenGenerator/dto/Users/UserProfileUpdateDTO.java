@@ -2,12 +2,13 @@ package com.example.ElectricityTokenGenerator.dto.Users;
 
 import javax.management.relation.Role;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+
+
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserProfileUpdateDTO {
     private String firstName;
     private String lastName;

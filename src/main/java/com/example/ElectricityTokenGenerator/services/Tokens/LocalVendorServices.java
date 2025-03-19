@@ -75,7 +75,7 @@ public class LocalVendorServices {
         // Create and save the vendor purchase
         LocalVendor purchaseProduct = new LocalVendor();
         purchaseProduct.setVendorAccountNumber(vendorAccount);
-        purchaseProduct.setPurchaseAccountNumber(sender.getAccountNumber());
+        purchaseProduct.setPurchaseAccountNumber(sender);
         purchaseProduct.setVendorTypeEnumerator(vendorType);
         purchaseProduct.setConvertedValue(convertedValue);
         purchaseProduct.setPurchaseAmount(kilowatts);

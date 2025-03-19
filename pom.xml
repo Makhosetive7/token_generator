@@ -73,6 +73,13 @@
             <scope>provided</scope>
         </dependency>
 
+            <!-- Validation constraints -->
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.2</version>
+    </dependency>
+
         <!-- Testing dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -80,6 +87,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    
 
     <build>
         <plugins>
