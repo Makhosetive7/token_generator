@@ -1,37 +1,34 @@
 package com.example.ElectricityTokenGenerator.services.Users;
 
-import java.util.Random;
-
+import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
-import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
+import java.util.Random;
 
 @Service
 public class registerUserService {
-    
-private final userRepository userRepository;
 
-public registerUserService(userRepository userRepository) {
+    private final userRepository userRepository;
+
+    public registerUserService(userRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-
-        // register user
-    public UserEntities createUser(String userName,String lastName,String password, String email , String phoneNumber, String homeAddress ) {
-      UserEntities  user = new UserEntities();
-        user.setUserName(userName);
+    // Register user
+    public User createUser(String firstName,String lastName,String password, String email , String phoneNumber, String homeAddress) {
+        User user = new User();
+        user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPassword(password);
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setHomeAddress(homeAddress);
         user.setAccountNumber(generateUniqueAccountNumber());
-
         return userRepository.save(user);
     }
 
-        private String generateUniqueAccountNumber() {
+    private String generateUniqueAccountNumber() {
         String accountNumber;
         Random random = new Random();
 
@@ -42,7 +39,4 @@ public registerUserService(userRepository userRepository) {
 
         return accountNumber;
     }
-
-
-
 }

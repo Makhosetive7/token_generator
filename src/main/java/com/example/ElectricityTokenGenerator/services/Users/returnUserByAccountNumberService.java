@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class returnUserByAccountNumberService {
     }
 
         //return user by account number
-    public Optional<UserEntities> getUserByAccountNumber(String accountNumber) {
+    public Optional<User> getUserByAccountNumber(String accountNumber) {
          return userRepository.findByAccountNumber(accountNumber); }
 
 }

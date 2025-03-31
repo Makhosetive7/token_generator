@@ -1,6 +1,6 @@
 package com.example.ElectricityTokenGenerator.enums;
 
-public enum DonationsEnumerator {
+public enum Donations {
     EDUCATION_SUPPORT("0076623901"),
     HEALTH_SUPPORT("0087632102"),
     WATER_PROJECT("0098765401"),
@@ -8,7 +8,7 @@ public enum DonationsEnumerator {
 
     private final String requiredAccountNumber;
 
-    DonationsEnumerator(String requiredAccountNumber) {
+    Donations(String requiredAccountNumber) {
         this.requiredAccountNumber = requiredAccountNumber;
     }
 

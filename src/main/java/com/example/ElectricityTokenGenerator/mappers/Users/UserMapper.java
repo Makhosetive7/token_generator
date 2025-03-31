@@ -1,32 +1,39 @@
 package com.example.ElectricityTokenGenerator.mappers.Users;
 
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import com.example.ElectricityTokenGenerator.dto.Users.UserDTO;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
 
-import com.example.ElectricityTokenGenerator.dto.Users.UsersDTO;
-import com.example.ElectricityTokenGenerator.entity.Users.UserEntities;
-
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    // Map UserEntity to UserDTO
-    @Mapping(source = "userName", target = "userName")
-    @Mapping(source = "accountNumber", target = "accountNumber")
+    // Map UserDTO to User entity
+    @Mapping(source = "firstName", target = "firstName")
+    @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
-    @Mapping(source = "homeAddress", target = "homeAddress")
-    @Mapping(source = "transfer_history", target = "transfer_history")
-    @Mapping(source = "donation_history", target = "donation_history")
-    UsersDTO toDto(UserEntities userEntities);
+    @Mapping(source = "accountNumber", target = "accountNumber")
+    @Mapping(source = "kiloWatts", target = "kiloWatts")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "homeAddress", ignore = true)
+    @Mapping(target = "amountPaid", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    User toEntity(UserDTO userDTO);
 
-    // Map UserDTO to UserEntity
-    @Mapping(source = "userName", target = "userName")
-    @Mapping(source = "accountNumber", target = "accountNumber")
+    // Map User entity to UserDTO
+    @Mapping(source = "firstName", target = "firstName")
+    @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
-    @Mapping(source = "homeAddress", target = "homeAddress")
-    @Mapping(source = "transfer_history", target = "transfer_history")
-    @Mapping(source = "donation_history", target = "donation_history")
-    UserEntities toEntity(UsersDTO userDTO);
+    @Mapping(source = "accountNumber", target = "accountNumber")
+    @Mapping(source = "kiloWatts", target = "kiloWatts")
+  
+    UserDTO toDto(User user);
+
+   
 }

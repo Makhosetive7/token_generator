@@ -1,6 +1,6 @@
 package com.example.ElectricityTokenGenerator.enums;
 
-public enum LocalVendorEnumerator {
+public enum LocalVendors {
     CHOPPIES("Choppies Supermarket"),
     ZAPALALA("Zapalala Wholesale"),
     EDGARS("Edgars Stores"),
@@ -8,7 +8,7 @@ public enum LocalVendorEnumerator {
 
     private final String displayName;
 
-    LocalVendorEnumerator(String displayName) {
+    LocalVendors(String displayName) {
         this.displayName = displayName;
     }
 

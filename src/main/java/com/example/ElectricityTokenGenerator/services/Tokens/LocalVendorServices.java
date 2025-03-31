@@ -1,8 +1,11 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
-import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendorEntity;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenEntities;
-import com.example.ElectricityTokenGenerator.enums.LocalVendorEnumerator;
+import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
+import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
+import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
+import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.enums.LocalVendors;
+import com.example.ElectricityTokenGenerator.mappers.Tokens.LocalVendorMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
@@ -11,94 +14,77 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 @Service
 public class LocalVendorServices {
 
     public static final Double CONVERSION_RATE = 2.5 / 5;
+    private final Double MINIMUM_KILOWATTS_CONVERTED = 250.0;
 
     private final LocalVendorRepository localVendorRepository;
     private final TokenRepository tokenRepository;
     private final userRepository userRepository;
+    private final LocalVendorMapper localVendorMapper;
 
-    public LocalVendorServices(LocalVendorRepository localVendorRepository, TokenRepository tokenRepository,
-            userRepository userRepository) {
+    public LocalVendorServices(
+            LocalVendorRepository localVendorRepository,
+            TokenRepository tokenRepository,
+            userRepository userRepository,
+            LocalVendorMapper localVendorMapper) {
         this.localVendorRepository = localVendorRepository;
         this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
+        this.localVendorMapper = localVendorMapper;
     }
 
     @Transactional
-    public LocalVendorEntity purchaseProduct(String vendorAccountNumber, String purchaseAccountNumber,
-            LocalVendorEnumerator vendorTypeEnumerator, Double convertedValue, Double kilowatts, Double purchaseAmount,
+    public LocalVendorDTO purchaseProduct(
+            String senderAccountNumber,
+            String receiverAccountNumber,
+            Double kilowatts,
+            LocalVendors vendorType,
             LocalDateTime createdAt) {
-        // Fetch the vendor Account Number
-        Optional<TokenEntities> vendorAccountOptional = tokenRepository.findByAccountNumber(vendorAccountNumber);
-        if (vendorAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("User account number not found.");
-        }
+        // Fetch the sender (Buyer) Account Number from database
+        User sender = userRepository.findByAccountNumber(senderAccountNumber)
+                .orElseThrow(() -> new RuntimeException(
+                        "User (buyer) not found with account number " + senderAccountNumber));
 
-        // Fetch buyer account number
-        Optional<TokenEntities> purchaseAccountOptional = tokenRepository.findByAccountNumber(purchaseAccountNumber);
-        if (purchaseAccountOptional.isEmpty()) {
-            throw new IllegalArgumentException("Purchase account number not found.");
-        }
-
-        TokenEntities vendorAccount = vendorAccountOptional.get();
-        TokenEntities purchaseAccount = purchaseAccountOptional.get();
-        
-       //calculate amount of kilowatts to be converted based  on purchase amount
-        Double kilowattsToConvert = purchaseAmount / CONVERSION_RATE;
+        // Fetch the receiver (Local Vendor) Account Number from database
+        User vendorAccount = userRepository.findByAccountNumber(receiverAccountNumber)
+                .orElseThrow(() -> new RuntimeException(
+                        "Vendor account not found with account number " + receiverAccountNumber));
 
         // Validate if the user has enough kilowatts to convert
-        if (kilowattsToConvert > purchaseAccount.getKiloWatts()) {
-            throw new IllegalArgumentException("Insufficient kilowatts to convert.");
+        if (sender.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
+            throw new IllegalArgumentException(
+                    "Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
         }
 
-        // Deduct the kilowatts
-        purchaseAccount.setKiloWatts(purchaseAccount.getKiloWatts() - kilowattsToConvert);
-        tokenRepository.save(purchaseAccount);
+        // Calculate the converted value based on the purchase amount
+        Double convertedValue = kilowatts * CONVERSION_RATE;
 
-        // Add the kilowatts to the vendor account
-        vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() + kilowattsToConvert);
-        tokenRepository.save(vendorAccount);
+        // Update the sender's account after purchase
+        sender.setKiloWatts(sender.getKiloWatts() - kilowatts);
+        userRepository.save(sender);
 
-
-        //update users kilowatts and save the updated user
-        userRepository.findByAccountNumber(purchaseAccountNumber).ifPresentOrElse(user -> {
-            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
-            double newKiloWatts = currentKiloWatts - kilowattsToConvert;
-            user.setKiloWatts(newKiloWatts);
-            userRepository.save(user);
-            System.out.println("User updated: " + user);
-        }, () -> {
-            System.out.println("User not found with accountNumber: " + purchaseAccountNumber);
-        });
-
-        //update vendor kilowatts and save the updated user
-        userRepository.findByAccountNumber(vendorAccountNumber).ifPresentOrElse(user -> {
-            double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
-            double newKiloWatts = currentKiloWatts + kilowattsToConvert;
-            user.setKiloWatts(newKiloWatts);
-            userRepository.save(user);
-            System.out.println("User updated: " + user);
-        }, () -> {
-            System.out.println("User not found with accountNumber: " + vendorAccountNumber);
-        });
+        // Update the vendor's account after purchase
+        vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() + kilowatts);
+        userRepository.save(vendorAccount);
 
         // Create and save the vendor purchase
-        LocalVendorEntity purchaseProduct = new LocalVendorEntity();
+        LocalVendor purchaseProduct = new LocalVendor();
         purchaseProduct.setVendorAccountNumber(vendorAccount);
-        purchaseProduct.setPurchaseAccountNumber(purchaseAccount);
-        purchaseProduct.setVendorTypeEnumerator(vendorTypeEnumerator);
-        purchaseProduct.setConvertedValue(kilowatts);
-        purchaseProduct.setPurchaseAmount(purchaseAmount);
+        purchaseProduct.setPurchaseAccountNumber(sender);
+        purchaseProduct.setVendorTypeEnumerator(vendorType);
+        purchaseProduct.setConvertedValue(convertedValue);
+        purchaseProduct.setPurchaseAmount(kilowatts);
         purchaseProduct.setCreatedAt(createdAt);
 
-        return localVendorRepository.save(purchaseProduct);
+        LocalVendor savedPurchase = localVendorRepository.save(purchaseProduct);
+
+        // Map the LocalVendor entity to LocalVendorDTO
+        return localVendorMapper.toDto(savedPurchase);
     }
 
 }

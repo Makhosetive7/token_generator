@@ -108,19 +108,19 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-"id": 1,
-"userName": "John",
-"lastName": "Doe",
-"email": "john@gmail.com",
-"password": "150376333",
-"accountNumber": "0718939103",
-"phoneNumber": "123456789",
-"homeAddress": "123 Main St",
-"tokenBalance": null,
-"role": null,
-"transactionHistory": null,
-"localVendorHistory": null,
-"donationHistory": null
+  "id": 1,
+  "userName": "John",
+  "lastName": "Doe",
+  "email": "john@gmail.com",
+  "password": "150376333",
+  "accountNumber": "0718939103",
+  "phoneNumber": "123456789",
+  "homeAddress": "123 Main St",
+  "tokenBalance": null,
+  "role": null,
+  "transactionHistory": null,
+  "localVendorHistory": null,
+  "donationHistory": null
 }
 ```
 
@@ -171,32 +171,23 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "id": 15,
-  "userName": "Imagine",
-  "lastName": "Imagine",
-  "accountNumber": "0292406856",
-  "phoneNumber": "0713000001",
-  "homeAddress": "1234 Elm Street"
+  "id": 2,
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "150376555",
+  "password": "jsne@example.com",
+  "accountNumber": "0919378862",
+  "phoneNumber": "123456789",
+  "homeAddress": "103 Main St",
+  "amountPaid": 0.0,
+  "kiloWatts": 0.0,
+  "updatedAt": null
 }
 ```
 
 ### Delete /api/users/account/{accountNumber}
 
 - This /api/users/account/{accountNumber} deletes a user account by account number
-
-### POST /api/users/register
-
-- This /api/users/register endpoint registers a new user into the Token Generator application system
-- The implementation of this endpoint is as follows:
-
-```json
-{
-  "userName": "Laurren",
-  "lastName": "Madlodlo_Omuhle",
-  "phoneNumber": "0713000000",
-  "homeAddress": "0000 Main Street"
-}
-```
 
 ## Tokens Endpoints Details
 

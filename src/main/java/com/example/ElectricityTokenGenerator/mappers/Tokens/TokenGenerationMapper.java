@@ -4,33 +4,27 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGenerationDTO;
-import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGeneratorEntity;
+import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TokenGenerationMapper {
 
     TokenGenerationMapper INSTANCE = Mappers.getMapper(TokenGenerationMapper.class);
 
-    // Map TokenGenerationEntity to TokenGenerationDTO
-    @Mapping(source = "accountNumber", target = "accountNumber")
-    @Mapping(source = "amountPaid", target = "amountPaid")
-    @Mapping(source = "tokenGenerated", target = "tokenGenerated")
-    @Mapping(source = "serialNumber", target = "serialNumber")
-    @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "createdAt", target = "createdAt")
-    @Mapping(source = "expiredAt", target = "expiredAt")
-    TokensGenerationDTO toDto(TokenGeneratorEntity tokenGenerationEntity);
-
-
-    // Map TokenGenerationDTO to TokenGenerationEntity
-    @Mapping(source = "accountNumber", target = "accountNumber")
-    @Mapping(source = "amountPaid", target = "amountPaid")
-    @Mapping(source = "tokenGenerated", target = "tokenGenerated")
-    @Mapping(source = "serialNumber", target = "serialNumber")
-    @Mapping(source = "kiloWatts", target = "kiloWatts")
-    @Mapping(source = "createdAt", target = "createdAt")
-    @Mapping(source = "expiredAt", target = "expiredAt")
-    TokenGeneratorEntity toEntity(TokensGenerationDTO tokenGenerationDTO);
+        // Map TokensGeneratorDTO to TokenGenerator entity
+        @Mapping(source = "accountNumber", target = "accountNumber.accountNumber")
+        @Mapping(source = "amount", target = "amount") 
+        @Mapping(target = "id", ignore = true) 
+        @Mapping(target = "generatedTokenCode", ignore = true) 
+        @Mapping(target = "kiloWatts", ignore = true) 
+        @Mapping(target = "generationDate", ignore = true)
+        @Mapping(target = "status", ignore = true) 
+        TokenGenerator toEntity(TokensGeneratorDTO tokensGeneratorDTO);
+    
+        // Map TokenGenerator entity to TokensGeneratorDTO
+        @Mapping(source = "accountNumber.accountNumber", target = "accountNumber")
+        @Mapping(source = "amount", target = "amount") 
+        TokensGeneratorDTO toDto(TokenGenerator tokenGenerator);
     
 }
