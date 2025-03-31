@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokenDTO;
+import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
 import com.example.ElectricityTokenGenerator.services.Tokens.createTokenService;
 
 
@@ -26,12 +26,12 @@ public class createTokensController {
 
         // Create new tokens
     @PostMapping("/generateToken")
-     public ResponseEntity<TokenDTO> createToken(
-            @RequestParam String tokenBuyer,
+     public ResponseEntity<TokensGeneratorDTO> createToken(
+            @RequestParam String accountNumber,
             @RequestParam Double amountPaid) {
         try {
-            TokenDTO tokenDTO = createTokenService.createTokens(tokenBuyer, amountPaid);
-            return ResponseEntity.status(HttpStatus.CREATED).body(tokenDTO);
+            TokensGeneratorDTO tokenGeneratorDTO = createTokenService.createTokens(accountNumber, amountPaid);
+            return ResponseEntity.status(HttpStatus.CREATED).body(tokenGeneratorDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

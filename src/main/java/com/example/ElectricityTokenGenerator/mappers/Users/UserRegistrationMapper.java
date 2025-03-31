@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.example.ElectricityTokenGenerator.dto.Users.userRegistrationDTO;
+import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 @Mapper(componentModel = "spring")
 public interface UserRegistrationMapper {
@@ -19,15 +19,9 @@ public interface UserRegistrationMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "homeAddress", target = "homeAddress")
-    @Mapping(source = "role", target = "role")
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "amountPaid", ignore = true)
     @Mapping(target = "kiloWatts", ignore = true)
-    @Mapping(target = "localVendorTransactions", ignore = true)
-    @Mapping(target = "donations", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    User toEntity(userRegistrationDTO userRegistrationDTO);
+    User toEntity(UserRegistrationDTO userRegistrationDTO);
 
     // Map User entity to UserRegistrationDTO
     @Mapping(source = "firstName", target = "firstName")
@@ -37,7 +31,6 @@ public interface UserRegistrationMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "homeAddress", target = "homeAddress")
-    @Mapping(source = "role", target = "role")
-    userRegistrationDTO toDto(User user);
+    UserRegistrationDTO toDto(User user);
 
 }

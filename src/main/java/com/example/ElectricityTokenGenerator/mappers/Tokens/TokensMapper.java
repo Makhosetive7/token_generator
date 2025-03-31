@@ -3,11 +3,13 @@ package com.example.ElectricityTokenGenerator.mappers.Tokens;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
 
 @Mapper(componentModel = "spring")
+@Component
 public interface TokensMapper {
 
     TokensMapper INSTANCE = Mappers.getMapper(TokensMapper.class);

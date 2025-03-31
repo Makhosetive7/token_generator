@@ -12,5 +12,4 @@ public class UserDTO {
     private String phoneNumber;
     private String accountNumber;
     private Double kiloWatts;
-    private String role;
 }

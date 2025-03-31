@@ -60,11 +60,6 @@ public class User {
 
     @Column(name = "kilo_watts")
     private Double kiloWatts = 0.0;
-
-    @NotNull(message = "Role is required")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

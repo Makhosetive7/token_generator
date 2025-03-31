@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokenDTO;
+import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.mappers.Tokens.TokenGenerationMapper;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokensMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
@@ -22,18 +25,18 @@ public class createTokenService {
     private final TokenRepository tokenRepository;
     private final ElectricityTokenConversion electricityTokenConversion;
     private final userRepository userRepository;
-    private final TokensMapper tokensMapper;// inject tokens mapper
+    private final TokenGenerationMapper tokenGenerationMapper;// inject tokens mapper
 
     @Autowired
     public createTokenService(
             TokenRepository tokenRepository,
             ElectricityTokenConversion electricityTokenConversion,
             userRepository userRepository,
-            TokensMapper tokensMapper) {
+            TokensMapper tokensMapper, TokenGenerationMapper tokenGenerationMapper) {
         this.tokenRepository = tokenRepository;
         this.electricityTokenConversion = electricityTokenConversion;
         this.userRepository = userRepository;
-        this.tokensMapper = tokensMapper;
+        this.tokenGenerationMapper = tokenGenerationMapper;
     }
 
     /**
@@ -45,22 +48,22 @@ public class createTokenService {
      * @throws RuntimeException If the user is not found.
      */
     @Transactional
-    public TokenDTO createTokens(String tokenBuyer, Double amount) {
+    public TokensGeneratorDTO createTokens(String accountNumber, Double amount) {
         // Fetch user from database
-        User user = userRepository.findByAccountNumber(tokenBuyer)
-                .orElseThrow(() -> new RuntimeException("User not found with account number: " + tokenBuyer));
+        User user = userRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new RuntimeException("User not found with account number: " + accountNumber));
 
         // Create a new token entity
-        Token token = new Token();
-        token.setTokenBuyer(user);
-        token.setTokenCode(generateUniqueToken());
-        token.setAmount(amount);
-        token.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amount));
-        token.setPurchaseDate(LocalDateTime.now());
-        token.setExpirationDate(LocalDateTime.now().plusDays(75));
+        TokenGenerator tokenGenerator = new TokenGenerator();
+        tokenGenerator.setAccountNumber(user);
+        // tokenGenerator.setTokenCode(generateUniqueToken());
+        tokenGenerator.setAmount(amount);
+        tokenGenerator.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amount));
+        // tokenGenerator.setPurchaseDate(LocalDateTime.now());
+        // tokenGenerator.setExpirationDate(LocalDateTime.now().plusDays(75));
 
         // Save the token to the database
-        tokenRepository.save(token);
+        tokenRepository.save(tokenGenerator);
 
         // Update the user's kiloWatts
         double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
@@ -69,7 +72,7 @@ public class createTokenService {
         userRepository.save(user);
 
         // Map the Token entity to TokenDTO
-        return tokensMapper.toDto(token);
+        return tokenGenerationMapper.toDto(tokenGenerator);
     }
 
     // Token Generation Logic (20-character alphanumeric token)
