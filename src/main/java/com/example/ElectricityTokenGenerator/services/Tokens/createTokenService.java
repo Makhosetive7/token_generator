@@ -1,14 +1,11 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ElectricityTokenGenerator.dto.Tokens.TokenDTO;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
-import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokenGenerationMapper;
@@ -56,7 +53,7 @@ public class createTokenService {
         // Create a new token entity
         TokenGenerator tokenGenerator = new TokenGenerator();
         tokenGenerator.setAccountNumber(user);
-        // tokenGenerator.setTokenCode(generateUniqueToken());
+       tokenGenerator.setGeneratedTokenCode(generateUniqueToken());
         tokenGenerator.setAmount(amount);
         tokenGenerator.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amount));
         // tokenGenerator.setPurchaseDate(LocalDateTime.now());
@@ -77,7 +74,7 @@ public class createTokenService {
 
     // Token Generation Logic (20-character alphanumeric token)
     private String generateUniqueToken() {
-        String tokenCode;
+        String accountNumber;
         Random random = new Random();
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -86,9 +83,9 @@ public class createTokenService {
             for (int i = 0; i < 20; i++) {
                 token.append(characters.charAt(random.nextInt(characters.length())));
             }
-            tokenCode = token.toString();
-        } while (tokenRepository.existsByTokenCode(tokenCode));
+            accountNumber = token.toString();
+        } while (userRepository.existsByAccountNumber(accountNumber));
 
-        return tokenCode;
+        return accountNumber;
     }
 }

@@ -8,4 +8,5 @@ import lombok.Data;
 public class TokensGeneratorDTO {
     private String accountNumber;
     private Double amount;
+    private String generatedTokenCode; 
 }

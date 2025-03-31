@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.ElectricityTokenGenerator.services.Tokens.returnAllTokensServices;
-import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
+import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 
 
 @RestController
@@ -20,7 +20,7 @@ public class returnAllTokensController {
 
     // Retrieve all tokens available in the system
     @GetMapping("/")
-    public List<Token> getAllTokens() {
+    public List<TokenGenerator> getAllTokens() {
         return returnAllTokensServices.getAllTokens();
     }
 }

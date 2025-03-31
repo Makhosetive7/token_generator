@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,27 +25,19 @@ public class createTokensController {
    }
 
 
-        // Create new tokens
+        // Create new token
     @PostMapping("/generateToken")
-     public ResponseEntity<TokensGeneratorDTO> createToken(
-            @RequestParam String accountNumber,
-            @RequestParam Double amountPaid) {
+    public ResponseEntity<TokensGeneratorDTO> createToken(
+            @RequestBody TokensGeneratorDTO request) {
         try {
-            TokensGeneratorDTO tokenGeneratorDTO = createTokenService.createTokens(accountNumber, amountPaid);
+            TokensGeneratorDTO tokenGeneratorDTO = createTokenService.createTokens(
+                request.getAccountNumber(), 
+                request.getAmount()
+            );
             return ResponseEntity.status(HttpStatus.CREATED).body(tokenGeneratorDTO);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-   
-    
-
-
-
-
-
-
-
-
 
 }
