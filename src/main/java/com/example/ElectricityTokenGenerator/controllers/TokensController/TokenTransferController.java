@@ -28,22 +28,23 @@ public class TokenTransferController {
      * @return The created token transfer as a TokenTransferDTO.
      */
     @PostMapping("/tokenTransfer")
-    public ResponseEntity<TokenTransferDTO> tokenTransfer(
-            @RequestParam String senderAccountNumber,
-            @RequestParam String receiverAccountNumber,
-            @RequestParam Double kilowatts,
-            @RequestParam LocalDateTime createdAt) {
-
+    public ResponseEntity<?> tokenTransfer(@RequestBody TokenTransferDTO tokenTransferDTO) {
         try {
-            // Call the service to transfer tokens
-            TokenTransferDTO tokenTransferDTO = tokenTransferService.transferTokens(
-                    senderAccountNumber, receiverAccountNumber, kilowatts, createdAt);
+            // Ensure required fields are present
+            if (tokenTransferDTO.getKiloWatts() == null) {
+                return ResponseEntity.badRequest().body("Kilowatts value is required.");
+            }
 
-            // Return the created token transfer with a 201 CREATED status
-            return ResponseEntity.status(HttpStatus.CREATED).body(tokenTransferDTO);
+            TokenTransferDTO result = tokenTransferService.transferTokens(
+                    tokenTransferDTO.getSenderAccountNumber(),
+                    tokenTransferDTO.getReceiverAccountNumber(),
+                    tokenTransferDTO.getKiloWatts(),
+                    tokenTransferDTO.getCreatedAt());
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (RuntimeException e) {
-            // Handle exceptions (e.g., user not found, insufficient kilowatts)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
         }
     }
 }

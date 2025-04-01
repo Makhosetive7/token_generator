@@ -5,13 +5,14 @@ import java.time.LocalDateTime;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ElectricityTokenGenerator.dto.Tokens.DonationsDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.Donation;
-import com.example.ElectricityTokenGenerator.enums.Donations;
 import com.example.ElectricityTokenGenerator.services.Tokens.DonationsServices;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("api/tokens/")
@@ -26,33 +27,28 @@ public class DonationsController {
     /**
      * Endpoint to create a new donation.
      *
-     * @param donationType          The type of donation (e.g., EDUCATION_SUPPORT,
-     *                              HEALTH_SUPPORT).
-     * @param senderAccountNumber   The account number of the sender.
-     * @param receiverAccountNumber The account number of the receiver.
-     * @param kiloWatts             The amount of kilowatts to donate.
-     * @param createdAt             The date and time when the donation was created.
-     * @return The created donation as a DonationsDTO.
+     * @param donationsDTO Contains:
+     *                     - donationType (e.g., EDUCATION_SUPPORT, HEALTH_SUPPORT)
+     *                     - senderAccountNumber
+     *                     - receiverAccountNumber
+     *                     - kiloWatts
+     *                     - createdAt
+     * @return The created donation as a Donation entity.
      */
     @PostMapping("/createDonation")
-    public ResponseEntity<Donation> createDonation(
-            @RequestParam Donations donationType,
-            @RequestParam String senderAccountNumber,
-            @RequestParam String receiverAccountNumber,
-            @RequestParam Double kiloWatts,
-            @RequestParam LocalDateTime createdAt) {
+    public ResponseEntity<?> createDonation(@RequestBody DonationsDTO donationsDTO) {
         try {
-            Donation newDonations = donationsServices.createDonation(
-                    donationType,
-                    senderAccountNumber,
-                    receiverAccountNumber,
-                    kiloWatts,
-                    createdAt);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newDonations);
+            Donation newDonation = donationsServices.createDonation(
+                    donationsDTO.getDonationType(),
+                    donationsDTO.getSenderAccountNumber(),
+                    donationsDTO.getReceiverAccountNumber(),
+                    donationsDTO.getKiloWatts(),
+                    donationsDTO.getCreatedAt());
+            return ResponseEntity.status(HttpStatus.CREATED).body(newDonation);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
         }
-
     }
-
 }

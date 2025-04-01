@@ -119,6 +119,9 @@
                         <version>${lombok.mapstruct.version}</version>
                     </path>
                 </annotationProcessorPaths>
+                <annotationProcessorArguments>
+                     <argument>-Amapstruct.verbose=true</argument>
+                </annotationProcessorArguments>
             </configuration>
         </plugin>
         <plugin>

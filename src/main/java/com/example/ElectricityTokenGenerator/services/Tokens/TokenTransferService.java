@@ -37,53 +37,63 @@ public class TokenTransferService {
     }
 
     @Transactional
-    public TokenTransferDTO transferTokens(
-            String senderAccountNumber,
-            String receiverAccountNumber,
-            Double kilowatts,
-            LocalDateTime createdAt) {
-    
-        // Fetch sender account number from database
-        User sender = userRepository.findByAccountNumber(senderAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "User (sender) not found with account number " + senderAccountNumber));
-    
-        // Fetch receiver account number from database
-        User receiver = userRepository.findByAccountNumber(receiverAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "User (receiver) not found with account number " + receiverAccountNumber));
-    
-        // Validate if sender and receiver accounts are not the same
-        if (senderAccountNumber.equals(receiverAccountNumber)) {
-            throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
-        }
-    
-        // Validate sender has enough kilowatts
-        if (sender.getKiloWatts() < MINIMUM_KILOWATTS_TRANSFER) {
-            throw new IllegalArgumentException(
-                    "Insufficient balance to transfer. User kiloWatts must not be less than 10.00.");
-        }
-    
-        // Update sender account after token transfer
-        sender.setKiloWatts(sender.getKiloWatts() - kilowatts);
-        userRepository.save(sender);
-    
-        // Update receiver account after receiving token transfer
-        receiver.setKiloWatts(receiver.getKiloWatts() + kilowatts);
-        userRepository.save(receiver);
-    
-        // Record the transfer
-        TokenTransfer tokenTransfer = new TokenTransfer();
-        tokenTransfer.setSender(sender); // Set the sender (User entity)
-        tokenTransfer.setReceiver(receiver); // Set the receiver (User entity)
-        tokenTransfer.setKiloWatts(kilowatts);
-        tokenTransfer.setCreatedAt(createdAt);
-    
-        // Save the token transfer to the database
-        TokenTransfer savedTransfer = tokenTransferRepository.save(tokenTransfer);
-    
-        // Map the TokenTransfer entity to TokenTransferDTO
-        return tokenTransferMapper.toDto(savedTransfer);
+public TokenTransferDTO transferTokens(
+        String senderAccountNumber,
+        String receiverAccountNumber,
+        Double kilowatts,
+        LocalDateTime createdAt) {
+
+    // Validate kilowatts is not null and is positive
+    if (kilowatts == null) {
+        throw new IllegalArgumentException("Kilowatts value must not be null.");
     }
+    if (kilowatts <= 0) {
+        throw new IllegalArgumentException("Kilowatts must be a positive number.");
+    }
+
+    // Fetch sender account number from database
+    User sender = userRepository.findByAccountNumber(senderAccountNumber)
+            .orElseThrow(() -> new RuntimeException(
+                    "User (sender) not found with account number " + senderAccountNumber));
+
+    // Fetch receiver account number from database
+    User receiver = userRepository.findByAccountNumber(receiverAccountNumber)
+            .orElseThrow(() -> new RuntimeException(
+                    "User (receiver) not found with account number " + receiverAccountNumber));
+
+    // Validate if sender and receiver accounts are not the same
+    if (senderAccountNumber.equals(receiverAccountNumber)) {
+        throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
+    }
+
+    // Validate sender balance
+    if (sender.getKiloWatts() < kilowatts) {
+        throw new IllegalArgumentException(
+                "Insufficient balance. Available: " + sender.getKiloWatts() +
+                        ", Attempted to transfer: " + kilowatts);
+    }
+
+    // Update sender account after token transfer
+    sender.setKiloWatts(sender.getKiloWatts() - kilowatts);
+    userRepository.save(sender);
+
+    // Update receiver account after receiving token transfer
+    receiver.setKiloWatts(receiver.getKiloWatts() + kilowatts);
+    userRepository.save(receiver);
+
+    // Record the transfer
+    TokenTransfer tokenTransfer = TokenTransfer.builder()
+            .sender(sender)
+            .receiver(receiver)
+            .kiloWatts(kilowatts)
+            .createdAt(createdAt)
+            .build();
+
+    // Save the token transfer to the database
+    TokenTransfer savedTransfer = tokenTransferRepository.save(tokenTransfer);
+
+    // Map the TokenTransfer entity to TokenTransferDTO
+    return tokenTransferMapper.toDto(savedTransfer);
+}
 
 }

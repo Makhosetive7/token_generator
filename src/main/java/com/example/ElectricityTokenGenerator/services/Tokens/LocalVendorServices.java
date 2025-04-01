@@ -2,12 +2,10 @@ package com.example.ElectricityTokenGenerator.services.Tokens;
 
 import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
-import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.enums.LocalVendors;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.LocalVendorMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
-import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 
 import jakarta.transaction.Transactional;
@@ -19,72 +17,77 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalVendorServices {
 
-    public static final Double CONVERSION_RATE = 2.5 / 5;
-    private final Double MINIMUM_KILOWATTS_CONVERTED = 250.0;
+    public static final Double CONVERSION_RATE = 0.5; 
 
     private final LocalVendorRepository localVendorRepository;
-    private final TokenRepository tokenRepository;
     private final userRepository userRepository;
     private final LocalVendorMapper localVendorMapper;
 
     public LocalVendorServices(
             LocalVendorRepository localVendorRepository,
-            TokenRepository tokenRepository,
             userRepository userRepository,
             LocalVendorMapper localVendorMapper) {
         this.localVendorRepository = localVendorRepository;
-        this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
         this.localVendorMapper = localVendorMapper;
     }
 
     @Transactional
     public LocalVendorDTO purchaseProduct(
-            String senderAccountNumber,
-            String receiverAccountNumber,
-            Double kilowatts,
+            String vendorAccountNumber,
+            String purchaseAccountNumber,
+            Double purchaseAmount,
             LocalVendors vendorType,
             LocalDateTime createdAt) {
-        // Fetch the sender (Buyer) Account Number from database
-        User sender = userRepository.findByAccountNumber(senderAccountNumber)
+        
+        // Validate input parameters
+        if (vendorAccountNumber == null || purchaseAccountNumber == null) {
+            throw new IllegalArgumentException("Account numbers must be provided");
+        }
+        if (purchaseAmount == null || purchaseAmount <= 0) {
+            throw new IllegalArgumentException("Purchase amount must be positive");
+        }
+        if (vendorType == null) {
+            throw new IllegalArgumentException("Vendor type must be specified");
+        }
+        
+        // Fetch accounts from database
+        User buyer = userRepository.findByAccountNumber(purchaseAccountNumber)
                 .orElseThrow(() -> new RuntimeException(
-                        "User (buyer) not found with account number " + senderAccountNumber));
+                        "Buyer account not found: " + purchaseAccountNumber));
 
-        // Fetch the receiver (Local Vendor) Account Number from database
-        User vendorAccount = userRepository.findByAccountNumber(receiverAccountNumber)
+        User vendor = userRepository.findByAccountNumber(vendorAccountNumber)
                 .orElseThrow(() -> new RuntimeException(
-                        "Vendor account not found with account number " + receiverAccountNumber));
+                        "Vendor account not found: " + vendorAccountNumber));
 
-        // Validate if the user has enough kilowatts to convert
-        if (sender.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
+        // Validate buyer's balance
+        if (buyer.getKiloWatts() < purchaseAmount) {
             throw new IllegalArgumentException(
-                    "Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
+                    String.format("Insufficient balance. Available: %.2f, Required: %.2f", 
+                            buyer.getKiloWatts(), purchaseAmount));
         }
 
-        // Calculate the converted value based on the purchase amount
-        Double convertedValue = kilowatts * CONVERSION_RATE;
+        // Calculate converted value
+        Double convertedValue = purchaseAmount * CONVERSION_RATE;
 
-        // Update the sender's account after purchase
-        sender.setKiloWatts(sender.getKiloWatts() - kilowatts);
-        userRepository.save(sender);
+        // Update balances
+        buyer.setKiloWatts(buyer.getKiloWatts() - purchaseAmount);
+        vendor.setKiloWatts(vendor.getKiloWatts() + purchaseAmount);
+        userRepository.save(buyer);
+        userRepository.save(vendor);
 
-        // Update the vendor's account after purchase
-        vendorAccount.setKiloWatts(vendorAccount.getKiloWatts() + kilowatts);
-        userRepository.save(vendorAccount);
+        // Create and save transaction
+        LocalVendor transaction = LocalVendor.builder()
+                .vendorAccountNumber(vendor)
+                .purchaseAccountNumber(buyer)
+                .vendorTypeEnumerator(vendorType)
+                .convertedValue(convertedValue)
+                .purchaseAmount(purchaseAmount)
+                .createdAt(createdAt)
+                .build();
 
-        // Create and save the vendor purchase
-        LocalVendor purchaseProduct = new LocalVendor();
-        purchaseProduct.setVendorAccountNumber(vendorAccount);
-        purchaseProduct.setPurchaseAccountNumber(sender);
-        purchaseProduct.setVendorTypeEnumerator(vendorType);
-        purchaseProduct.setConvertedValue(convertedValue);
-        purchaseProduct.setPurchaseAmount(kilowatts);
-        purchaseProduct.setCreatedAt(createdAt);
+        LocalVendor savedTransaction = localVendorRepository.save(transaction);
 
-        LocalVendor savedPurchase = localVendorRepository.save(purchaseProduct);
-
-        // Map the LocalVendor entity to LocalVendorDTO
-        return localVendorMapper.toDto(savedPurchase);
+        return localVendorMapper.toDto(savedTransaction);
     }
-
 }

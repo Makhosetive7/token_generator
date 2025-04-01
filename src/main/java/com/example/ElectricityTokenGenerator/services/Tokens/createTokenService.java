@@ -1,5 +1,6 @@
 package com.example.ElectricityTokenGenerator.services.Tokens;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.enums.TokenStatus;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokenGenerationMapper;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokensMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
@@ -46,46 +48,42 @@ public class createTokenService {
      */
     @Transactional
     public TokensGeneratorDTO createTokens(String accountNumber, Double amount) {
-        // Fetch user from database
         User user = userRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new RuntimeException("User not found with account number: " + accountNumber));
 
-        // Create a new token entity
-        TokenGenerator tokenGenerator = new TokenGenerator();
-        tokenGenerator.setAccountNumber(user);
-       tokenGenerator.setGeneratedTokenCode(generateUniqueToken());
-        tokenGenerator.setAmount(amount);
-        tokenGenerator.setKiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amount));
-        // tokenGenerator.setPurchaseDate(LocalDateTime.now());
-        // tokenGenerator.setExpirationDate(LocalDateTime.now().plusDays(75));
+        TokenGenerator tokenGenerator = TokenGenerator.builder()
+                .accountNumber(user)
+                .generatedTokenCode(generateUniqueToken())
+                .amount(amount)
+                .kiloWatts(electricityTokenConversion.convertAmountPaidToKilowatts(amount))
+                .generationDate(LocalDateTime.now())
+                .status(TokenStatus.Active)
+                .build();
 
-        // Save the token to the database
         tokenRepository.save(tokenGenerator);
 
-        // Update the user's kiloWatts
-        double currentKiloWatts = user.getKiloWatts() != null ? user.getKiloWatts() : 0.0;
-        double newKiloWatts = currentKiloWatts + electricityTokenConversion.convertAmountPaidToKilowatts(amount);
+        double newKiloWatts = (user.getKiloWatts() != null ? user.getKiloWatts() : 0.0) +
+                electricityTokenConversion.convertAmountPaidToKilowatts(amount);
         user.setKiloWatts(newKiloWatts);
         userRepository.save(user);
 
-        // Map the Token entity to TokenDTO
         return tokenGenerationMapper.toDto(tokenGenerator);
     }
 
     // Token Generation Logic (20-character alphanumeric token)
     private String generateUniqueToken() {
-        String accountNumber;
+        String token;
         Random random = new Random();
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         do {
-            StringBuilder token = new StringBuilder(20);
-            for (int i = 0; i < 20; i++) {
-                token.append(characters.charAt(random.nextInt(characters.length())));
+            StringBuilder tokenBuilder = new StringBuilder(16); // Match entity length
+            for (int i = 0; i < 16; i++) {
+                tokenBuilder.append(characters.charAt(random.nextInt(characters.length())));
             }
-            accountNumber = token.toString();
-        } while (userRepository.existsByAccountNumber(accountNumber));
+            token = tokenBuilder.toString();
+        } while (tokenRepository.existsByGeneratedTokenCode(token));
 
-        return accountNumber;
+        return token;
     }
 }

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TokenRepository extends JpaRepository<TokenGenerator, Long> {
-   
+    boolean existsByGeneratedTokenCode(String generatedTokenCode);
 }

@@ -94,7 +94,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
  {
-        "userName": "John",
+        "firstName": "John",
         "lastName": "Doe",
         "password": "150376333",
         "email": "john@gmail.com",
@@ -109,18 +109,16 @@ This Spring Boot application generates user-specific tokens linked to individual
 ```json
 {
   "id": 1,
-  "userName": "John",
+  "firstName": "John",
   "lastName": "Doe",
   "email": "john@gmail.com",
   "password": "150376333",
-  "accountNumber": "0718939103",
+  "accountNumber": "0132261964",
   "phoneNumber": "123456789",
   "homeAddress": "123 Main St",
-  "tokenBalance": null,
-  "role": null,
-  "transactionHistory": null,
-  "localVendorHistory": null,
-  "donationHistory": null
+  "amountPaid": 0.0,
+  "kiloWatts": 0.0,
+  "updatedAt": null
 }
 ```
 
@@ -265,10 +263,10 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "senderAccountNumber": "0287205907",
-  "receiverAccountNumber": "0611376174",
-  "kilowatts": 100,
-  "transferTokenId": "1234567890"
+  "senderAccountNumber": "0611597940",
+  "receiverAccountNumber": "0132261964",
+  "kiloWatts": 750.0,
+  "createdAt": "2025-04-01T17:20:51"
 }
 ```
 
@@ -276,30 +274,10 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "receiverAccountNumber": {
-    "accountNumber": 611376174,
-    "amountPaid": 1007.0,
-    "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
-    "serialNumber": "0945436946",
-    "kiloWatts": 1509.8,
-    "createdAt": "2024-12-10T01:38:01.579584",
-    "expiredAt": "2025-02-23T01:38:01.579584",
-    "id": 20
-  },
-  "senderAccountNumber": {
-    "accountNumber": 287205907,
-    "amountPaid": 1009.0,
-    "tokenGenerated": "NQY8BF213K74HNGPCP1N",
-    "serialNumber": "0536367267",
-    "kiloWatts": 1312.6,
-    "createdAt": "2024-12-10T01:38:41.15296",
-    "expiredAt": "2025-02-23T01:38:41.15296",
-    "id": 21
-  },
-  "kiloWatts": 100.0,
-  "createdAt": null,
-  "id": 1,
-  "transferTokenId": 1234567890
+  "senderAccountNumber": "0611597940",
+  "receiverAccountNumber": "0132261964",
+  "kiloWatts": 750.0,
+  "createdAt": "2025-04-01T17:20:51"
 }
 ```
 
@@ -310,9 +288,11 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "donatorsAccountNumber": "0611376174",
-  "kiloWatts": 100.0,
-  "donationType": "HEALTH_PROGRAMS"
+  "donationType": "EDUCATION_SUPPORT",
+  "senderAccountNumber": "0611597940",
+  "receiverAccountNumber": "0014233643",
+  "kiloWatts": 50.0,
+  "createdAt": "2025-04-01T17:10:51"
 }
 ```
 
@@ -321,31 +301,36 @@ This Spring Boot application generates user-specific tokens linked to individual
 ```json
 {
   "id": 1,
-  "donationAccountNumber": {
-    "accountNumber": 287205907,
-    "amountPaid": 1009.0,
-    "tokenGenerated": "NQY8BF213K74HNGPCP1N",
-    "serialNumber": "0536367267",
-    "kiloWatts": 1312.6,
-    "createdAt": "2024-12-10T01:38:41.15296",
-    "expiredAt": "2025-02-23T01:38:41.15296",
-    "id": 21
+  "donationType": "EDUCATION_SUPPORT",
+  "sender": {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Dee",
+    "email": "jane@gmail.com",
+    "password": "150376443",
+    "accountNumber": "0611597940",
+    "phoneNumber": "333456789",
+    "homeAddress": "123 Main Street",
+    "amountPaid": 0.0,
+    "kiloWatts": 1400.0,
+    "updatedAt": null
   },
-  "donatorsAccountNumber": {
-    "accountNumber": 611376174,
-    "amountPaid": 1007.0,
-    "tokenGenerated": "O0LY9KJ72W3ZDOONBYPT",
-    "serialNumber": "0945436946",
-    "kiloWatts": 1409.8,
-    "createdAt": "2024-12-10T01:38:01.579584",
-    "expiredAt": "2025-02-23T01:38:01.579584",
-    "id": 20
+  "receiver": {
+    "id": 3,
+    "firstName": "Education_Support",
+    "lastName": "Education_Support",
+    "email": "education@gmail.com",
+    "password": "150376356",
+    "accountNumber": "0014233643",
+    "phoneNumber": "121457789",
+    "homeAddress": "12334 Main St",
+    "amountPaid": 0.0,
+    "kiloWatts": 50.0,
+    "updatedAt": null
   },
-  "kiloWatts": null,
-  "amountDonated": 50.0,
-  "convertedValue": null,
-  "donationType": "HEALTH_PROGRAMS",
-  "createdAt": "2024-12-11T02:17:39.4127519"
+  "kiloWatts": 50.0,
+  "convertedValue": 25.0,
+  "createdAt": "2025-04-01T17:10:51"
 }
 ```
 
@@ -356,10 +341,11 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "vendorAccountNumber": "0248086285",
-  "purchaseAccountNumber": "0984145938",
-  "vendorTypeEnumerator": "CHOPPIES",
-  "purchaseAmount": 200
+  "vendorAccountNumber": "0908477102",
+  "purchaseAccountNumber": "0611597940",
+  "vendorTypeEnumerator": "ZAPALALA",
+  "purchaseAmount": 30.0,
+  "createdAt": "2025-04-01T17:10:51"
 }
 ```
 
