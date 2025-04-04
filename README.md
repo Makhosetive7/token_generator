@@ -214,7 +214,7 @@ This Spring Boot application generates user-specific tokens linked to individual
 ```json
 {
   "accountNumber": "0347133011",
-  "amountPaid": 2500,
+  "amount": 2500,
   "serialNumber": 1234567898
 }
 ```
@@ -241,14 +241,25 @@ This Spring Boot application generates user-specific tokens linked to individual
 
 ```json
 {
-  "accountNumber": 347133011,
-  "amountPaid": 2500.0,
-  "tokenGenerated": "LEIKIV4ZSOD2476SU2PM",
-  "serialNumber": "0415404665",
-  "kiloWatts": 3500.0,
-  "createdAt": "2024-12-09T15:03:27.727753",
-  "expiredAt": "2025-02-22T15:03:27.727753",
-  "id": 15
+    "id": 3,
+    "generatedTokenCode": "PRUZ81UNJLR1VWUG",
+    "amount": 2750.0,
+    "kiloWatts": 3849.9999999999995,
+    "generationDate": "2025-04-04T01:33:37.325244",
+    "accountNumber": {
+        "id": 3,
+        "firstName": "Michael",
+        "lastName": "Brown",
+        "email": "michael@gmail.com",
+        "password": "120575555",
+        "accountNumber": "0859399667",
+        "phoneNumber": "555123456",
+        "homeAddress": "78 Jason Moyo St, Harare",
+        "amountPaid": 0.0,
+        "kiloWatts": 3849.9999999999995,
+        "updatedAt": null
+    },
+    "status": "Active"
 }
 ```
 
