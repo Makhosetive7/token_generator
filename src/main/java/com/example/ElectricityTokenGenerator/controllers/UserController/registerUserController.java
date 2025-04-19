@@ -12,8 +12,11 @@ import com.example.ElectricityTokenGenerator.dto.Users.UserRegistrationDTO;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.services.Users.registerUserService;
 
+import jakarta.annotation.security.PermitAll;
+
 @RestController
 @Controller
+@PermitAll
 @RequestMapping("/api/users")
 public class registerUserController {
     

@@ -2,7 +2,9 @@ package com.example.ElectricityTokenGenerator.services.Users;
 
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -10,17 +12,21 @@ import java.util.Random;
 public class registerUserService {
 
     private final userRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public registerUserService(userRepository userRepository) {
+    public registerUserService(userRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    // Register user
-    public User createUser(String firstName,String lastName,String password, String email , String phoneNumber, String homeAddress) {
+    @Transactional
+    public User createUser(String firstName, String lastName, String password,
+            String email, String phoneNumber, String homeAddress) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setHomeAddress(homeAddress);
@@ -32,7 +38,6 @@ public class registerUserService {
         String accountNumber;
         Random random = new Random();
 
-        // Ensure the account number is unique
         do {
             accountNumber = String.format("%010d", random.nextInt(1000000000));
         } while (userRepository.existsByAccountNumber(accountNumber));
