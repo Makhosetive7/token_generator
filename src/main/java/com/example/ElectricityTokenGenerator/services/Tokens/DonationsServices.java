@@ -9,6 +9,9 @@ import com.example.ElectricityTokenGenerator.dto.Tokens.DonationsDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.Donation;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.enums.Donations;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InsufficientBalanceException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.MinimumTransferException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.UserNotFoundException;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.DonationsMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.DonationsRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
@@ -59,25 +62,22 @@ public class DonationsServices {
 
         // Fetch sender account number from database
         User sender = userRepository.findByAccountNumber(senderAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "User (sender) not found with account number " + senderAccountNumber));
+                .orElseThrow(() -> new UserNotFoundException(senderAccountNumber + " not found"));
 
         // Fetch receiver account number from database
         User receiver = userRepository.findByAccountNumber(receiverAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "User (receiver) not found with account number " + receiverAccountNumber));
+                .orElseThrow(() -> new UserNotFoundException(receiverAccountNumber));
 
         // Check if the sender has enough kiloWatts to convert and create the donation
         if (sender.getKiloWatts() < MINIMUM_KILOWATTS_CONVERTED) {
-            throw new IllegalArgumentException(
-                    "Insufficient kilowatts to convert. User must have at least 250 kilowatts.");
+            throw new InsufficientBalanceException(senderAccountNumber + " has insufficient balance.");
         }
 
         // Convert kiloWatts to monetary value and check if it is a valid donation
         Double convertedValue = kiloWatts * CONVERSION_RATE;
 
         if (convertedValue <= 0 || convertedValue < MINIMUM_DONATION_AMOUNT) {
-            throw new IllegalArgumentException("Donation amount must be at least $10.0.");
+            throw new MinimumTransferException(receiverAccountNumber + " has insufficient balance.");
         }
 
         // Update the receiver's account after donation

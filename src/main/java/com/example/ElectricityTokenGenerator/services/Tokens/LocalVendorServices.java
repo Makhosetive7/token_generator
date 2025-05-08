@@ -4,6 +4,10 @@ import com.example.ElectricityTokenGenerator.dto.Tokens.LocalVendorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.LocalVendor;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.enums.LocalVendors;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InvalidKilowattValueException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InvalidPurchaseAmountException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InvalidTransferException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.UserNotFoundException;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.LocalVendorMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.LocalVendorRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
@@ -17,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalVendorServices {
 
-    public static final Double CONVERSION_RATE = 0.5; 
+    public static final Double CONVERSION_RATE = 0.5;
 
     private final LocalVendorRepository localVendorRepository;
     private final userRepository userRepository;
@@ -39,31 +43,31 @@ public class LocalVendorServices {
             Double purchaseAmount,
             LocalVendors vendorType,
             LocalDateTime createdAt) {
-        
+
         // Validate input parameters
         if (vendorAccountNumber == null || purchaseAccountNumber == null) {
-            throw new IllegalArgumentException("Account numbers must be provided");
+            throw new UserNotFoundException(purchaseAccountNumber + " or " + vendorAccountNumber + " not found");
         }
         if (purchaseAmount == null || purchaseAmount <= 0) {
-            throw new IllegalArgumentException("Purchase amount must be positive");
+            throw new InvalidPurchaseAmountException(" Invalid transfer amount: " + purchaseAmount);
         }
         if (vendorType == null) {
-            throw new IllegalArgumentException("Vendor type must be specified");
+            throw new UserNotFoundException(vendorAccountNumber + " not found");
         }
-        
+
         // Fetch accounts from database
         User buyer = userRepository.findByAccountNumber(purchaseAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "Buyer account not found: " + purchaseAccountNumber));
+                .orElseThrow(() -> new UserNotFoundException(
+                        purchaseAccountNumber + " not found"));
 
         User vendor = userRepository.findByAccountNumber(vendorAccountNumber)
-                .orElseThrow(() -> new RuntimeException(
-                        "Vendor account not found: " + vendorAccountNumber));
+                .orElseThrow(() -> new UserNotFoundException(
+                        vendorAccountNumber + " not found"));
 
         // Validate buyer's balance
         if (buyer.getKiloWatts() < purchaseAmount) {
-            throw new IllegalArgumentException(
-                    String.format("Insufficient balance. Available: %.2f, Required: %.2f", 
+            throw new InvalidKilowattValueException(
+                    String.format("Insufficient balance. Available: %.2f, Required: %.2f",
                             buyer.getKiloWatts(), purchaseAmount));
         }
 

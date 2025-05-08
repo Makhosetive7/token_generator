@@ -10,6 +10,7 @@ import com.example.ElectricityTokenGenerator.dto.Tokens.TokensGeneratorDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenGenerator;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.enums.TokenStatus;
+import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.UserNotFoundException;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokenGenerationMapper;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokensMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
@@ -49,7 +50,7 @@ public class createTokenService {
     @Transactional
     public TokensGeneratorDTO createTokens(String accountNumber, Double amount) {
         User user = userRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("User not found with account number: " + accountNumber));
+                .orElseThrow(() -> new UserNotFoundException(accountNumber + " not found"));
 
         TokenGenerator tokenGenerator = TokenGenerator.builder()
                 .accountNumber(user)
