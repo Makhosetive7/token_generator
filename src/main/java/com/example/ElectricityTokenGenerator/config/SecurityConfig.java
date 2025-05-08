@@ -22,10 +22,20 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/register").permitAll() 
-                .anyRequest().authenticated()
-                )
-                .httpBasic(); 
+                        .requestMatchers("/api/users/register").permitAll()
+                        .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers("/api/users/allUsers").permitAll()
+                        .requestMatchers("/api/users/{id}").permitAll()
+                        .requestMatchers("/api/tokens/").permitAll()
+                        .requestMatchers("/api/tokens/{id}").permitAll()
+                        .requestMatchers("/api/tokens/generateToken/").permitAll()
+                        .requestMatchers("/api/tokens/TokenTransfer").permitAll()
+                        .requestMatchers("/api/tokens/createDonation").permitAll()
+                        .requestMatchers("api/tokens/localVendor/purchase").permitAll()
+                        .requestMatchers("/api/users/{id}").permitAll()
+                        .requestMatchers("/api/tokens/delete/{id}").permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic();
 
         return http.build();
     }
