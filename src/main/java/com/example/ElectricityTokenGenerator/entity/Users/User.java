@@ -23,32 +23,21 @@ public class User {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @NotBlank(message = "First name is required")
-    @Size(max = 20, message = "First name must be less than 20 characters")
     @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
-    @Size(max = 20, message = "Last name must be less than 20 characters")
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Password is required")
     @Column(name = "password", nullable = false)
     private String password;
 
-    @NotBlank(message = "Account number is required")
-    @Size(max = 15, message = "Account number must be less than 15 characters")
     @Column(name = "account_number", nullable = false, unique = true, length = 15)
     private String accountNumber;
 
-    @NotBlank(message = "Phone number is required")
-    @Size(max = 20, message = "Phone number must be less than 20 characters")
     @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
