@@ -10,10 +10,14 @@ import com.example.ElectricityTokenGenerator.dto.Tokens.TokenTransferDTO;
 import com.example.ElectricityTokenGenerator.entity.Tokens.Token;
 import com.example.ElectricityTokenGenerator.entity.Tokens.TokenTransfer;
 import com.example.ElectricityTokenGenerator.entity.Users.User;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InsufficientBalanceException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.InvalidTransferException;
 import com.example.ElectricityTokenGenerator.mappers.Tokens.TokenTransferMapper;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenRepository;
 import com.example.ElectricityTokenGenerator.repository.Tokens.TokenTransferRepository;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
+
+import jakarta.transaction.InvalidTransactionException;
 
 @Service
 public class TokenTransferService {
@@ -63,12 +67,12 @@ public TokenTransferDTO transferTokens(
 
     // Validate if sender and receiver accounts are not the same
     if (senderAccountNumber.equals(receiverAccountNumber)) {
-        throw new IllegalArgumentException("Sender and receiver account cannot be the same.");
+        throw new InvalidTransferException("Sender and receiver accounts cannot be the same.");
     }
 
     // Validate sender balance
-    if (sender.getKiloWatts() < kilowatts) {
-        throw new IllegalArgumentException(
+    if (sender.getKiloWatts() <= kilowatts) {
+        throw new InsufficientBalanceException(
                 "Insufficient balance. Available: " + sender.getKiloWatts() +
                         ", Attempted to transfer: " + kilowatts);
     }
