@@ -12,6 +12,7 @@ import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.I
 import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.MinimumTransferException;
 import com.example.ElectricityTokenGenerator.exceptionHandling.TokensException.TokenExpiredException;
 import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.AccountAlreadyExistsException;
+import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.InvalidPasswordException;
 import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.UserNotFoundException;
 
 @RestControllerAdvice
@@ -24,6 +25,13 @@ public class GlobalException {
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         logger.warn("User not found: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    //Invalid password exception
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<String> handleInvalidPasswordException(InvalidPasswordException ex) {
+        logger.warn("Invalid password: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     // Account already exists exception
