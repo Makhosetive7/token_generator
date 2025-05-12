@@ -23,11 +23,11 @@ public class loginUserService {
     public User loginUser(String email, String password) {
         // check user availabilty from database
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+                .orElseThrow(() -> new UserNotFoundException(": " + email));
                 
         // check if the password is correct
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidPasswordException("Invalid password");
+            throw new InvalidPasswordException(": " + password);
         }
 
         return user;
