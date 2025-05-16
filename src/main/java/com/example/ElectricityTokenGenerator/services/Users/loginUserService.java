@@ -13,7 +13,10 @@ import com.example.ElectricityTokenGenerator.exceptionHandling.UsersException.Us
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import com.example.ElectricityTokenGenerator.utils.JWTUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class loginUserService {
 
     private final userRepository userRepository;
@@ -21,26 +24,18 @@ public class loginUserService {
     private final JWTUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public loginUserService(userRepository userRepository, PasswordEncoder passwordEncoder, JWTUtil jwtUtil,
-            AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
     public AuthResponseDTO loginUser(String email, String password) {
-        // check user availabilty from database
+        // check user availability from database
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
 
         // check if the password is correct
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidPasswordException(": " + password);
+            throw new InvalidPasswordException("Invalid password");
         }
 
         // Authenticate using Spring Security's AuthenticationManager
-        Authentication authentication = authenticationManager.authenticate(
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password));
 
         String accessToken = jwtUtil.generateToken(user);

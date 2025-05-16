@@ -15,22 +15,18 @@ import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.services.Users.loginUserService;
 
 import jakarta.annotation.security.PermitAll;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@Controller
-@PermitAll
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class loginUserController {
 
-    public final loginUserService loginUserService;
-
-    public loginUserController(loginUserService loginUserService) {
-        this.loginUserService = loginUserService;
-    }
+    private final loginUserService loginUserService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody UserLoginDTO request) {
-        AuthResponseDTO authResponseDTO = loginUserService.loginUser(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(authResponseDTO);
+        AuthResponseDTO authResponse = loginUserService.loginUser(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(authResponse);
     }
 }

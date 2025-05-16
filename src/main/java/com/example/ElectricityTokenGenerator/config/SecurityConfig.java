@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JWTAuthenticationFilter jwtAuthFilter;
-    private final AuthenticationProvider authenticationProvider;
     private final UserDetailsService userDetailsService;
     private final LogoutHandler logoutHandler;
 
@@ -49,26 +48,23 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/login").permitAll()
                         .requestMatchers("/api/users/allUsers").permitAll()
                         .requestMatchers("/api/users/{id}").permitAll()
-                        .requestMatchers("/api/tokens/").permitAll()
-                        .requestMatchers("/api/tokens/{id}").permitAll()
-                        .requestMatchers("/api/tokens/generateToken/").permitAll()
+                        .requestMatchers("/api/tokens/**").permitAll()
+                        .requestMatchers("/api/tokens/generateToken/**").permitAll()
                         .requestMatchers("/api/tokens/TokenTransfer").permitAll()
                         .requestMatchers("/api/tokens/createDonation").permitAll()
-                        .requestMatchers("api/tokens/localVendor/purchase").permitAll()
+                        .requestMatchers("/api/tokens/localVendor/purchase").permitAll()
                         .requestMatchers("/api/users/{id}").permitAll()
                         .requestMatchers("/api/tokens/delete/{id}").permitAll()
                         .anyRequest().authenticated())
-
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
+                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout
-                        .logoutUrl("/api/auth/logout")
+                        .logoutUrl("/api/users/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler(
-                                (request, response, authentication) -> SecurityContextHolder.clearContext()))
-                .httpBasic();
+                                (request, response, authentication) -> SecurityContextHolder.clearContext()));
 
         return http.build();
     }

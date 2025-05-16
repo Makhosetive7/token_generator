@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
