@@ -35,7 +35,8 @@ public class registerUserController {
                 request.getPassword(), 
                 request.getEmail(),
                 request.getPhoneNumber(), 
-                request.getHomeAddress()
+                request.getHomeAddress(),
+                request.getRole()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }

@@ -2,8 +2,10 @@ package com.example.ElectricityTokenGenerator.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,7 +26,12 @@ public class SecurityConfig {
 
     private final JWTAuthenticationFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
-    private final LogoutHandler logoutHandler;
+    // private final LogoutHandler logoutHandler;
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -59,12 +66,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> logout
-                        .logoutUrl("/api/users/logout")
-                        .addLogoutHandler(logoutHandler)
-                        .logoutSuccessHandler(
-                                (request, response, authentication) -> SecurityContextHolder.clearContext()));
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        // .logout(logout -> logout
+        // .logoutUrl("/api/users/logout")
+        // .addLogoutHandler(logoutHandler)
+        // .logoutSuccessHandler(
+        // (request, response, authentication) ->
+        // SecurityContextHolder.clearContext()));
 
         return http.build();
     }
