@@ -19,8 +19,10 @@ public interface UserRegistrationMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "homeAddress", target = "homeAddress")
+ 
     @Mapping(target = "amountPaid", ignore = true)
     @Mapping(target = "kiloWatts", ignore = true)
+    
     User toEntity(UserRegistrationDTO userRegistrationDTO);
 
     // Map User entity to UserRegistrationDTO
@@ -31,6 +33,7 @@ public interface UserRegistrationMapper {
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "accountNumber", target = "accountNumber")
     @Mapping(source = "homeAddress", target = "homeAddress")
+
     UserRegistrationDTO toDto(User user);
 
 }

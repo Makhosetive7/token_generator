@@ -1,5 +1,7 @@
 package com.example.ElectricityTokenGenerator.dto.Users;
 
+import com.example.ElectricityTokenGenerator.enums.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -32,4 +34,8 @@ public class UserRegistrationDTO {
     private String phoneNumber;
     private String accountNumber;
     private String homeAddress;
+    private Role role;
+
+
+    // Additional fields can be added as needed
 }

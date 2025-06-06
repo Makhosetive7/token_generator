@@ -1,5 +1,8 @@
 package com.example.ElectricityTokenGenerator.services.Users;
 
+import com.example.ElectricityTokenGenerator.enums.Role;
+
+
 import com.example.ElectricityTokenGenerator.entity.Users.User;
 import com.example.ElectricityTokenGenerator.repository.Users.userRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +25,7 @@ public class registerUserService {
 
     @Transactional
     public User createUser(String firstName, String lastName, String password,
-            String email, String phoneNumber, String homeAddress) {
+            String email, String phoneNumber, String homeAddress, Role role) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -30,6 +33,7 @@ public class registerUserService {
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setHomeAddress(homeAddress);
+        user.setRole(role);
         user.setAccountNumber(generateUniqueAccountNumber());
         return userRepository.save(user);
     }
