@@ -1,4 +1,4 @@
-w# **Title** : Token Generating System
+# **Title** : Token Generating System
 
 # **Author** : Makhosetive Sibanda
 
